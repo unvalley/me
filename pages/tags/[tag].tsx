@@ -1,5 +1,5 @@
 import { TagSEO } from '@/components/SEO'
-import { siteMetadata } from '@/data/siteMetadata'
+import siteMetadata from '@/data/siteMetadata'
 import ListLayout from '@/layouts/ListLayout'
 import kebabCase from '@/lib/utils/kebabCase'
 import { getAllTags, allCoreContent } from '@/lib/utils/contentlayer'

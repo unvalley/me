@@ -1,4 +1,4 @@
-import { siteMetadata } from '@/data/siteMetadata'
+import siteMetadata from '@/data/siteMetadata'
 import ListLayout from '@/layouts/ListLayout'
 import { PageSEO } from '@/components/SEO'
 import { sortedBlogPost, allCoreContent } from '@/lib/utils/contentlayer'

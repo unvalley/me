@@ -1,5 +1,5 @@
 import { PageSEO } from '@/components/SEO'
-import { siteMetadata } from '@/data/siteMetadata'
+import siteMetadata from '@/data/siteMetadata'
 import ListLayout from '@/layouts/ListLayout'
 import { allCoreContent } from '@/lib/utils/contentlayer'
 import { POSTS_PER_PAGE } from '../../blog'

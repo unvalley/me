@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { siteMetadata } from '@/data/siteMetadata'
+import siteMetadata from '@/data/siteMetadata'
 import { CoreContent } from '@/lib/utils/contentlayer'
 import type { Blog, Authors } from 'contentlayer/generated'
 interface CommonSEOProps {
