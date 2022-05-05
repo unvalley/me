@@ -32,7 +32,7 @@ export const getStaticProps = async (context) => {
 
 export default function Tag({ posts, tag }: InferGetStaticPropsType<typeof getStaticProps>) {
   // Capitalize first letter and convert space to dash
-  const title = tag[0].toUpperCase() + tag.split(' ').join('-').slice(1)
+  const title = tag.split(' ').join('-')
   return (
     <>
       <TagSEO
