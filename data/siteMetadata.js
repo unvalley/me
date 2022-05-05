@@ -2,13 +2,13 @@ const siteMetadata = {
   title: 'unvalley personal blog',
   author: 'unvalley',
   headerTitle: 'unvalley blog',
-  description: `A unvalley's personal blog written about software engineering and others`,
+  description: `A unvalley's personal blog about software engineering and others`,
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://unvalley.me',
   siteRepo: 'https://github.com/unvalley/unvalley-me',
   siteLogo: '/static/images/logo.png',
-  image: '/static/images/avatar.png',
+  image: '/static/images/unvalley.png',
   socialBanner: '/static/images/twitter-card.png',
   github: 'https://github.com/unvalley',
   twitter: 'https://twitter.com/unvalley_',
@@ -25,7 +25,7 @@ const siteMetadata = {
   newsletter: {
     // supports mailchimp, buttondown, convertkit, klaviyo, revue
     // Please add your .env file and modify it according to your selection
-    provider: 'buttondown',
+    provider: '',
   },
   comment: {
     // If you want to use an analytics provider you have to add it to the

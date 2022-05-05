@@ -1,0 +1,102 @@
+---
+title: TypeScript で DDD を学ぶための OSS 紹介
+date: '2022-05-05'
+tags: ['typescript', 'ddd']
+draft: false
+summary: ddd-forumというリポジトリを紹介します．
+images: []
+layout: PostLayout
+---
+
+この記事では，TS で DDD が実践された OSS であ
+る[stemmlerjs/ddd-forum](https://github.com/stemmlerjs/ddd-forum)を紹介します．
+
+## ドメイン駆動設計を TypeScript で学びたい
+
+ドメイン駆動設計（DDD）とは，エリック・エヴァンスの提唱したソフトウェア設計手法
+です．
+
+[ エリック・エヴァンスのドメイン駆動設計](https://amzn.to/2OXmUeV)の原著が発売さ
+れたのは 2004 年ですが，2021 年現在においても，DDD の解説書籍の発売やカンファレ
+ンスが開かれるなど，勢いを増し続けています．
+
+DDD にまつわる書籍では，サンプルコードとして，Java や C#が用いられることが多いで
+す．
+
+例えば，Evans 本と[実践ドメイン駆動設計](https://amzn.to/3agF3vS)は Java で書か
+れています．
+
+僕は普段は，バックエンドもフロントエンドも TS を書くことがとても多いです．最近は
+TS を使われている方は多くなってきているのではないでしょうか．
+
+TS は，Java や C# と大きく離れた言語ではないと思うので，同じような雰囲気でなんと
+なくは読めると思います．それでも，当然ですが各言語にそれぞれ特性があるので，慣れ
+ている言語で設計手法（ここでは DDD）に触れたいです．
+
+そんなある日，[stemmlerjs/ddd-forum](https://github.com/stemmlerjs/ddd-forum) と
+いう TypeScript で DDD を実践されたリポジトリを見つけました．
+
+## ddd-forum について
+
+[![stemmlerjs/ddd-forum - GitHub](https://gh-card.dev/repos/stemmlerjs/ddd-forum.svg)](https://github.com/stemmlerjs/ddd-forum)
+
+About にあるように，TypeScript で，DDD で作った Hacker news Like な WebApp です
+．
+
+README を参照すると Backend は，以下が使われています．
+
+- Sequelize
+- Express.js
+- Redis
+
+Frontend は，以下が使われています．
+
+- React.js
+- Redux
+- Sass
+
+アーキテクチャとして採用されているのは
+，[Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+です．
+
+- [Clean Architecture 達人に学ぶソフトウェアの構造と設計](https://amzn.to/3C78uw4)
+- [実践クリーンアーキテクチャ - nrslib](https://nrslib.com/clean-architecture/)
+
+作者の stemmlerjs さんは，ブログなども多く執筆されていたり，SOLID 原則をテーマと
+した Node.js での設計についての本を書かれています．バックエンドもフロントエンド
+も参考になる情報を発信されているので，ありがたい限り．
+
+- https://khalilstemmler.com/
+
+## ddd-forum を読む
+
+Frontend は，React が使われていますが，ClassComponent のままであるため，FC 中心
+の現在，あまり熱心に読む必要は無いと思います．
+
+僕は主に
+Backend([src/](https://github.com/stemmlerjs/ddd-forum/tree/master/src))のみを読
+んでいます．
+
+DDD をなす要素である Entity や ValueObject, Aggregator, Identifier などのベース
+が，shared/core に用意されています． modules 配下に置く subdomain 内にて
+，shared/core のベースを利用しています．
+
+また，Rust や Scala などにあるような Result, Either などが class 表現されており
+，エラーハンドリングが綺麗に設計されています．
+
+- https://github.com/stemmlerjs/ddd-forum/blob/master/src/shared/core/Result.ts
+
+Guard というクラスを用意し，そのメソッドに複数のバリデーションが記述されています
+．この Guard クラスを様々なところから利用し，リクエストなどに対するバリデーショ
+ンを一元的に行っています．
+
+undefined や null，値の大小や境界値の判別などを行うコードの数はどうしても多くな
+りがちだと思います．それ故，チーム開発だとメンバー各人の条件が用意され，コードに
+統一感がなくなってしまいます．
+
+コードの各所で，統一されたバリデーションを用いることで，かなりスッキリするなと思
+いました．参画しているプロダクトの開発においても，取り入れたいです．
+
+とても良いリポジトリだと思います．作者の方に感謝です．
+
+以上，ddd-forum の紹介でした．
