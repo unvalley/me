@@ -19,18 +19,57 @@ export const getStaticProps = async () => {
 }
 
 export default function Home({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const headingColorClass =
+    'bg-gradient-to-r from-blue-600 to-orange-600 dark:bg-gradient-to-l dark:from-emerald-500 dark:to-lime-600'
   return (
     <>
       <PageSEO title={siteMetadata.title} description={siteMetadata.description} />
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+          <p
+            className={`mb-8 bg-clip-text text-4xl font-extrabold leading-[60px] tracking-tight text-transparent ${headingColorClass} md:text-6xl md:leading-[86px]`}
+          >
+            What's up bro
+          </p>
+          {/* <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
             Latest
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
             {siteMetadata.description}
+          </p> */}
+          <p className="mt-4 mb-8">
+            This is a{' '}
+            <a
+              href="https://twitter.com/unvalley_"
+              target="_blank"
+              rel="noreferrer"
+              className="text-primary-500"
+            >
+              @unvalley_
+            </a>{' '}
+            's blog.
+            <br />
+            I'm in love with software engineering, testing, refactoring.
           </p>
+          <div className="flex flex-col">
+            {/* <Link href="/projects" className="hover:underline">
+              <Twemoji emoji="hammer-and-wrench" /> What have I built?
+            </Link>
+            <Link href="/blog" className="hover:underline">
+              <Twemoji emoji="memo" /> My writings
+            </Link>
+            <Link href="/snippets" className="hover:underline">
+              <Twemoji emoji="dna" /> Useful snippets collected by me
+            </Link>
+            <Link href="/about" className="hover:underline">
+              <Twemoji emoji="face-with-monocle" /> More about me and myself
+            </Link>
+            <Link href="/resume" className="hover:underline">
+              <Twemoji emoji="briefcase" /> My resume
+            </Link> */}
+          </div>
         </div>
+        <hr />
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!posts.length && 'No posts found.'}
           {posts.slice(0, MAX_DISPLAY).map((post) => {
