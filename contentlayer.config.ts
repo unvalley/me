@@ -30,7 +30,7 @@ const computedFields: ComputedFields = {
 
 export const Blog = defineDocumentType(() => ({
   name: 'Blog',
-  filePathPattern: 'blog/**/*.mdx',
+  filePathPattern: 'blog/*.mdx',
   contentType: 'mdx',
   fields: {
     title: { type: 'string', required: true },
@@ -67,10 +67,12 @@ export const Authors = defineDocumentType(() => ({
 
 export default makeSource({
   contentDirPath: 'data',
-  contentDirInclude: ['blog', 'authors'],
   documentTypes: [Blog, Authors],
   mdx: {
-    cwd: process.cwd(),
+    esbuildOptions(options) {
+      options.target = 'esnext'
+      return options
+    },
     remarkPlugins: [
       remarkExtractFrontmatter,
       remarkGfm,
