@@ -32,7 +32,7 @@ export default function Home({ posts }: InferGetStaticPropsType<typeof getStatic
             What's up bro
           </p>
           <p className="mt-4 mb-8">
-            This is a{' '}
+            This is an{' '}
             <a
               href="https://twitter.com/unvalley_"
               target="_blank"
@@ -42,8 +42,6 @@ export default function Home({ posts }: InferGetStaticPropsType<typeof getStatic
               @unvalley_
             </a>{' '}
             's blog.
-            <br />
-            I'm in love with software engineering, testing, refactoring.
           </p>
           <div className="flex flex-col">
             {/* <Link href="/projects" className="hover:underline">
