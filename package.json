@@ -11,7 +11,8 @@
         "analyze": "cross-env ANALYZE=true next build",
         "lint": "rome check ./components",
         "lint:fix": "rome check --apply-unsafe ./pages ./components ./scripts ./lib ./layouts",
-        "format": "rome format --write ./pages ./components ./scripts ./lib ./layouts"
+        "format": "rome format --write ./pages ./components ./scripts ./lib ./layouts",
+        "post:new": "node ./scripts/compose.js"
     },
     "dependencies": {
         "@fontsource/inter": "4.5.2",
