@@ -14,14 +14,16 @@ import LayoutWrapper from '@/components/LayoutWrapper'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider attribute="class" defaultTheme={siteMetadata.theme}>
+    <>
       <Head>
         <meta content="width=device-width, initial-scale=1" name="viewport" />
       </Head>
       <Analytics />
-      <LayoutWrapper>
-        <Component {...pageProps} />
-      </LayoutWrapper>
-    </ThemeProvider>
+      <ThemeProvider attribute="class" defaultTheme={siteMetadata.theme}>
+        <LayoutWrapper>
+          <Component {...pageProps} />
+        </LayoutWrapper>
+      </ThemeProvider>
+    </>
   )
 }

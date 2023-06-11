@@ -27,7 +27,7 @@
     "mdx-bundler": "^8.0.0",
     "next": "^13.1.6",
     "next-contentlayer": "^0.2.9",
-    "next-themes": "^0.0.14",
+    "next-themes": "^0.2.1",
     "postcss": "^8.4.5",
     "preact": "^10.6.2",
     "react": "^18.2.0",
