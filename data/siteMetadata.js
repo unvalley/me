@@ -9,7 +9,7 @@ const siteMetadata = {
   siteRepo: 'https://github.com/unvalley/unvalley-me',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/unvalley.png',
-  socialBanner: '/static/images/twitter-card.png',
+  socialBanner: '',
   github: 'https://github.com/unvalley',
   twitter: 'https://twitter.com/unvalley_',
   locale: 'en-US',

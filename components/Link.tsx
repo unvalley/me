@@ -11,7 +11,7 @@ const CustomLink = ({
 
   if (isInternalLink) {
     return (
-      <Link href={href} passHref>
+      <Link href={href} passHref legacyBehavior>
         <a {...rest} />
       </Link>
     )
