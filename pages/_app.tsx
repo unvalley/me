@@ -13,9 +13,10 @@ import Analytics from "@/components/analytics";
 import siteMetadata from "@/data/siteMetadata";
 
 export default function App({ Component, pageProps }: AppProps) {
+    // TODO: fix theme
     return (
         <>
-            <ThemeProvider attribute="class" defaultTheme={siteMetadata.theme}>
+            <ThemeProvider attribute="class" defaultTheme={"dark"}>
                 <Head>
                     <meta
                         content="width=device-width, initial-scale=1"
