@@ -6,6 +6,7 @@ import { allCoreContent, sortedBlogPost } from "@/lib/utils/contentlayer";
 import formatDate from "@/lib/utils/formatDate";
 import { allBlogs } from "contentlayer/generated";
 import { InferGetStaticPropsType } from "next";
+import { PageTitle } from "@/components/PageTitle";
 
 const MAX_DISPLAY = 5;
 
@@ -13,7 +14,6 @@ export const getStaticProps = async () => {
     // TODO: move computation to get only the essential frontmatter to contentlayer.config
     const sortedPosts = sortedBlogPost(allBlogs);
     const posts = allCoreContent(sortedPosts);
-
     return { props: { posts } };
 };
 
@@ -30,23 +30,30 @@ export default function Home({
             />
             <div className="divide-y">
                 <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-                    <p
-                        className={`mb-8 bg-clip-text text-4xl font-extrabold leading-[60px] tracking-tight text-transparent ${headingColorClass} md:text-6xl md:leading-[86px]`}
+                    <h1
+                        className="text-4xl
+                        leading-9
+                        tracking-tight
+                        text-gray-900
+                        dark:text-gray-100
+                        sm:text-3xl
+                        sm:leading-10
+                        md:text-4xl
+                        md:leading-14
+                        font-helvetica
+                        uppercase
+                        "
                     >
-                        What's up
-                    </p>
-                    <p className="mt-4 mb-8">
-                        This is an{" "}
                         <a
                             href="https://x.com/unvalley_"
                             target="_blank"
                             rel="noreferrer"
                             className="text-primary-500"
                         >
-                            @unvalley_
+                            unvalley
                         </a>{" "}
-                        's blog.
-                    </p>
+                        is a software engineer driven by coffee and music.
+                    </h1>
                 </div>
                 <ul>
                     {!posts.length && "No posts found."}
@@ -67,7 +74,7 @@ export default function Home({
                                     </dl>
                                     <div className="space-y-3 xl:col-span-3">
                                         <div>
-                                            <h3 className="text-2xl font-bold leading-8 tracking-tight">
+                                            <h3 className="text-2xl leading-8 tracking-tight">
                                                 <CustomLink
                                                     href={`/blog/${slug}`}
                                                     className="text-gray-900 dark:text-gray-100"

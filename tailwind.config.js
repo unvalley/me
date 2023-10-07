@@ -31,6 +31,7 @@ module.exports = {
       fontFamily: {
         //@ts-ignore
         sans: ['InterVariable', ...defaultTheme.fontFamily.sans],
+        helvetica: ['Helvetica Neue', 'Helvetica']
       },
       colors: {
         primary: colors.teal,

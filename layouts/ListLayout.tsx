@@ -52,6 +52,7 @@ export default function ListLayout({
                             viewBox="0 0 24 24"
                             stroke="currentColor"
                         >
+                            <title>Search</title>
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
@@ -72,15 +73,15 @@ export default function ListLayout({
                                         <dt className="sr-only">
                                             Published on
                                         </dt>
-                                        <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                                        <span className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                                             <time dateTime={date}>
                                                 {formatDate(date)}
                                             </time>
-                                        </dd>
+                                        </span>
                                     </dl>
                                     <div className="space-y-3 xl:col-span-3">
                                         <div>
-                                            <h3 className="text-2xl font-bold leading-8 tracking-tight">
+                                            <h3 className="text-2xl leading-8 tracking-tight">
                                                 <CustomLink
                                                     href={`/blog/${slug}`}
                                                     className="text-gray-900 dark:text-gray-100"

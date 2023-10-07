@@ -32,12 +32,9 @@ export default function AuthorLayout({ children, content }: Props) {
                             height={150}
                             className="h-48 w-48 rounded-full"
                         />
-                        <h3 className="pt-4 pb-2 text-2xl font-bold leading-8 tracking-tight">
+                        <h3 className="pt-4 pb-2 text-2xl leading-8 tracking-tight">
                             {name}
                         </h3>
-                        <div className="text-gray-500 dark:text-gray-400">
-                            {job}
-                        </div>
                     </div>
                     <div className="prose max-w-none pt-8 pb-8 dark:prose-dark xl:col-span-2">
                         {children}
