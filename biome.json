@@ -10,6 +10,9 @@
             "security": {
                 "noDangerouslySetInnerHtml": "off"
             },
+            "suspicious": {
+                "noExplicitAny": "warn"
+            },
             "a11y": {
                 "noSvgWithoutTitle": "warn",
                 "useButtonType": "warn"
