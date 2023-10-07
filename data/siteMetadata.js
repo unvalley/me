@@ -1,7 +1,7 @@
 const siteMetadata = {
     title: "unvalley.me",
     author: "unvalley",
-    headerTitle: "unvalley.me",
+    headerTitle: "UNV",
     description: `A unvalley's personal blog about software engineering and others.`,
     language: "en-us",
     theme: "system", // system, dark or light
