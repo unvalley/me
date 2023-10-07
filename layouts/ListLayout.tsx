@@ -1,4 +1,4 @@
-import Link from "@/components/Link";
+import { CustomLink } from "@/components/Link";
 import Pagination from "@/components/Pagination";
 import Tag from "@/components/Tag";
 import { CoreContent } from "@/lib/utils/contentlayer";
@@ -82,12 +82,12 @@ export default function ListLayout({
                                     <div className="space-y-3 xl:col-span-3">
                                         <div>
                                             <h3 className="text-2xl font-bold leading-8 tracking-tight">
-                                                <Link
+                                                <CustomLink
                                                     href={`/blog/${slug}`}
                                                     className="text-gray-900 dark:text-gray-100"
                                                 >
                                                     {title}
-                                                </Link>
+                                                </CustomLink>
                                             </h3>
                                             <div className="flex flex-wrap">
                                                 {tags.map((tag) => (

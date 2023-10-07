@@ -1,4 +1,4 @@
-import Link from "@/components/Link";
+import { CustomLink } from "@/components/Link";
 
 interface Props {
     totalPages: number;
@@ -22,7 +22,7 @@ export default function Pagination({ totalPages, currentPage }: Props) {
                     </button>
                 )}
                 {prevPage && (
-                    <Link
+                    <CustomLink
                         href={
                             currentPage - 1 === 1
                                 ? "/blog/"
@@ -30,7 +30,7 @@ export default function Pagination({ totalPages, currentPage }: Props) {
                         }
                     >
                         <button type="submit">Previous</button>
-                    </Link>
+                    </CustomLink>
                 )}
                 <span>
                     {currentPage} of {totalPages}
@@ -45,9 +45,9 @@ export default function Pagination({ totalPages, currentPage }: Props) {
                     </button>
                 )}
                 {nextPage && (
-                    <Link href={`/blog/page/${currentPage + 1}`}>
+                    <CustomLink href={`/blog/page/${currentPage + 1}`}>
                         <button>Next</button>
-                    </Link>
+                    </CustomLink>
                 )}
             </nav>
         </div>

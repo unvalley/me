@@ -1,4 +1,4 @@
-import Link from "@/components/Link";
+import { CustomLink } from "@/components/Link";
 import { PageTitle } from "@/components/PageTitle";
 import { BlogSEO } from "@/components/SEO";
 import { ScrollTop } from "@/components/ScrollTop";
@@ -58,22 +58,22 @@ export default function PostLayout({ content, next, prev, children }: Props) {
                             <div className="flex flex-col text-sm font-medium sm:flex-row sm:justify-between sm:text-base">
                                 {prev && (
                                     <div className="pt-4 xl:pt-8">
-                                        <Link
+                                        <CustomLink
                                             href={`/blog/${prev.slug}`}
                                             className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                                         >
                                             &larr; {prev.title}
-                                        </Link>
+                                        </CustomLink>
                                     </div>
                                 )}
                                 {next && (
                                     <div className="pt-4 xl:pt-8">
-                                        <Link
+                                        <CustomLink
                                             href={`/blog/${next.slug}`}
                                             className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                                         >
                                             {next.title} &rarr;
-                                        </Link>
+                                        </CustomLink>
                                     </div>
                                 )}
                             </div>

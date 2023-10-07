@@ -1,4 +1,4 @@
-import Link from "./Link";
+import { CustomLink } from "./Link";
 import { headerNavLinks } from "@/data/index";
 import { useState } from "react";
 
@@ -60,13 +60,13 @@ export const MobileNav = () => {
                 <nav className="fixed mt-8 h-full">
                     {headerNavLinks.map((link) => (
                         <div key={link.title} className="px-12 py-4">
-                            <Link
+                            <CustomLink
                                 href={link.href}
                                 className="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
                                 onClick={onToggleNav}
                             >
                                 {link.title}
-                            </Link>
+                            </CustomLink>
                         </div>
                     ))}
                 </nav>

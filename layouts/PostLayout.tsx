@@ -1,5 +1,5 @@
 import { Image } from "@/components/Image";
-import Link from "@/components/Link";
+import { CustomLink } from "@/components/Link";
 import { PageTitle } from "@/components/PageTitle";
 import { BlogSEO } from "@/components/SEO";
 import { ScrollTop } from "@/components/ScrollTop";
@@ -105,7 +105,7 @@ export default function PostLayout({
                                                 </dt>
                                                 <dd>
                                                     {author.x && (
-                                                        <Link
+                                                        <CustomLink
                                                             href={
                                                                 author.x
                                                             }
@@ -115,7 +115,7 @@ export default function PostLayout({
                                                                 "https://x.com/",
                                                                 "@",
                                                             )}
-                                                        </Link>
+                                                        </CustomLink>
                                                     )}
                                                 </dd>
                                             </dl>
@@ -129,13 +129,13 @@ export default function PostLayout({
                                 {children}
                             </div>
                             <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
-                                <Link href={discussUrl(slug)} rel="nofollow">
+                                <CustomLink href={discussUrl(slug)} rel="nofollow">
                                     {"Discuss on x"}
-                                </Link>
+                                </CustomLink>
                                 {" • "}
-                                <Link href={editUrl(slug)}>
+                                <CustomLink href={editUrl(slug)}>
                                     {"View on GitHub"}
-                                </Link>
+                                </CustomLink>
                             </div>
                         </div>
                         <footer>
@@ -160,11 +160,11 @@ export default function PostLayout({
                                                     Previous Article
                                                 </h2>
                                                 <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                                                    <Link
+                                                    <CustomLink
                                                         href={`/blog/${prev.slug}`}
                                                     >
                                                         {prev.title}
-                                                    </Link>
+                                                    </CustomLink>
                                                 </div>
                                             </div>
                                         )}
@@ -174,11 +174,11 @@ export default function PostLayout({
                                                     Next Article
                                                 </h2>
                                                 <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                                                    <Link
+                                                    <CustomLink
                                                         href={`/blog/${next.slug}`}
                                                     >
                                                         {next.title}
-                                                    </Link>
+                                                    </CustomLink>
                                                 </div>
                                             </div>
                                         )}
@@ -186,12 +186,12 @@ export default function PostLayout({
                                 )}
                             </div>
                             <div className="pt-4 xl:pt-8">
-                                <Link
+                                <CustomLink
                                     href="/blog"
                                     className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                                 >
                                     &larr; Back to the blog
-                                </Link>
+                                </CustomLink>
                             </div>
                         </footer>
                     </div>

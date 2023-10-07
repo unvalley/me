@@ -1,4 +1,4 @@
-import Link from "@/components/Link";
+import { CustomLink } from "@/components/Link";
 import { PageSEO } from "@/components/SEO";
 import Tag from "@/components/Tag";
 import siteMetadata from "@/data/siteMetadata";
@@ -88,12 +88,12 @@ export default function Home({
                                             <div className="space-y-6">
                                                 <div>
                                                     <h2 className="text-2xl font-bold leading-8 tracking-tight">
-                                                        <Link
+                                                        <CustomLink
                                                             href={`/blog/${slug}`}
                                                             className="text-gray-900 dark:text-gray-100"
                                                         >
                                                             {title}
-                                                        </Link>
+                                                        </CustomLink>
                                                     </h2>
                                                     <div className="flex flex-wrap">
                                                         {tags.map((tag) => (
@@ -109,13 +109,13 @@ export default function Home({
                                                 </div>
                                             </div>
                                             <div className="text-base font-medium leading-6">
-                                                <Link
+                                                <CustomLink
                                                     href={`/blog/${slug}`}
                                                     className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                                                     aria-label={`Read "${title}"`}
                                                 >
                                                     Read more &rarr;
-                                                </Link>
+                                                </CustomLink>
                                             </div>
                                         </div>
                                     </div>
@@ -127,13 +127,13 @@ export default function Home({
             </div>
             {posts.length > MAX_DISPLAY && (
                 <div className="flex justify-end text-base font-medium leading-6">
-                    <Link
+                    <CustomLink
                         href="/blog"
                         className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                         aria-label="all posts"
                     >
                         All Posts &rarr;
-                    </Link>
+                    </CustomLink>
                 </div>
             )}
         </>

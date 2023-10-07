@@ -1,4 +1,4 @@
-import Link from "./Link";
+import {CustomLink} from "./Link";
 import SocialIcon from "@/components/social-icons";
 import siteMetadata from "@/data/siteMetadata";
 
@@ -23,7 +23,7 @@ export default function Footer() {
                     <div>{" • "}</div>
                     <div>{`© ${new Date().getFullYear()}`}</div>
                     <div>{" • "}</div>
-                    <Link href="/">{siteMetadata.title}</Link>
+                    <CustomLink href="/">{siteMetadata.title}</CustomLink>
                 </div>
             </div>
         </footer>
