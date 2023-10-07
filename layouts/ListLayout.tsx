@@ -1,6 +1,6 @@
 import { CustomLink } from "@/components/Link";
 import Pagination from "@/components/Pagination";
-import Tag from "@/components/Tag";
+import { Tag } from "@/components/Tag";
 import { CoreContent } from "@/lib/utils/contentlayer";
 import formatDate from "@/lib/utils/formatDate";
 import type { Blog } from "contentlayer/generated";

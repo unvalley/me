@@ -1,6 +1,6 @@
 import { CustomLink } from "@/components/Link";
 import { PageSEO } from "@/components/SEO";
-import Tag from "@/components/Tag";
+import { Tag } from "@/components/Tag";
 import siteMetadata from "@/data/siteMetadata";
 import { getAllTags } from "@/lib/utils/contentlayer";
 import kebabCase from "@/lib/utils/kebabCase";
