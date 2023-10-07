@@ -2,12 +2,13 @@ import { ReactNode } from "react";
 
 type Props = {
     children: ReactNode;
+    className: string;
 };
 
-export const PageTitle = ({ children }: Props) => {
+export const PageTitle = ({ children, className }: Props) => {
     return (
         <h1
-            className="text-3xl
+            className={`text-3xl
         leading-9
         tracking-tight
         text-gray-900
@@ -17,7 +18,8 @@ export const PageTitle = ({ children }: Props) => {
         md:text-3xl
         md:leading-14
         font-helvetica
-        "
+         ${className}
+        `}
         >
             {children}
         </h1>

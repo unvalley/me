@@ -30,7 +30,7 @@ export default function Home({
             />
             <div className="divide-y">
                 <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-                    <PageTitle>
+                    <PageTitle className="uppercase">
                         <a
                             href="https://x.com/unvalley_"
                             target="_blank"
