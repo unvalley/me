@@ -1,7 +1,7 @@
 import Link from "@/components/Link";
 import { PageTitle }  from "@/components/PageTitle";
 import { BlogSEO } from "@/components/SEO";
-import ScrollTopAndComment from "@/components/ScrollTopAndComment";
+import { ScrollTop } from "@/components/ScrollTop";
 import SectionContainer from "@/components/SectionContainer";
 import siteMetadata from "@/data/siteMetadata";
 import { CoreContent } from "@/lib/utils/contentlayer";
@@ -25,7 +25,7 @@ export default function PostLayout({ content, next, prev, children }: Props) {
                 url={`${siteMetadata.siteUrl}/blog/${slug}`}
                 {...content}
             />
-            <ScrollTopAndComment />
+            <ScrollTop />
             <article>
                 <div>
                     <header>

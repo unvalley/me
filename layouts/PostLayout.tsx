@@ -2,7 +2,7 @@ import { Image } from "@/components/Image";
 import Link from "@/components/Link";
 import { PageTitle } from "@/components/PageTitle";
 import { BlogSEO } from "@/components/SEO";
-import ScrollTopAndComment from "@/components/ScrollTopAndComment";
+import { ScrollTop } from "@/components/ScrollTop";
 import SectionContainer from "@/components/SectionContainer";
 import Tag from "@/components/Tag";
 import siteMetadata from "@/data/siteMetadata";
@@ -48,7 +48,7 @@ export default function PostLayout({
                 authorDetails={authorDetails}
                 {...content}
             />
-            <ScrollTopAndComment />
+            <ScrollTop />
             <article>
                 <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
                     <header className="pt-6 xl:pb-6">
