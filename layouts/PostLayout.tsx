@@ -132,10 +132,6 @@ export default function PostLayout({
                                 <CustomLink href={discussUrl(slug)} rel="nofollow">
                                     {"Discuss on x"}
                                 </CustomLink>
-                                {" • "}
-                                <CustomLink href={editUrl(slug)}>
-                                    {"View on GitHub"}
-                                </CustomLink>
                             </div>
                         </div>
                         <footer>
