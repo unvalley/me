@@ -1,4 +1,4 @@
-import Image from "./Image";
+import { Image } from "./Image";
 import Link from "./Link";
 
 export const Card = ({ title, description, imgSrc, href }) => (

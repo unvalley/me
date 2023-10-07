@@ -1,9 +1,9 @@
 import Footer from "./Footer";
 import Link from "./Link";
-import MobileNav from "./MobileNav";
+import { MobileNav } from "./MobileNav";
 import SectionContainer from "./SectionContainer";
 import ThemeSwitch from "./ThemeSwitch";
-import headerNavLinks from "@/data/headerNavLinks";
+import { headerNavLinks } from "@/data/index";
 import siteMetadata from "@/data/siteMetadata";
 import { ReactNode } from "react";
 
@@ -11,7 +11,7 @@ interface Props {
     children: ReactNode;
 }
 
-const LayoutWrapper = ({ children }: Props) => {
+export const LayoutWrapper = ({ children }: Props) => {
     return (
         <SectionContainer>
             <div className="flex h-screen flex-col justify-between">
@@ -52,5 +52,3 @@ const LayoutWrapper = ({ children }: Props) => {
         </SectionContainer>
     );
 };
-
-export default LayoutWrapper;

@@ -8,7 +8,7 @@ import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 
-import LayoutWrapper from "@/components/LayoutWrapper";
+import { LayoutWrapper } from "@/components/LayoutWrapper";
 import { Analytics } from "@/components/analytics";
 
 export default function App({ Component, pageProps }: AppProps) {

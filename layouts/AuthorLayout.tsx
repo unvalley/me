@@ -1,4 +1,4 @@
-import Image from "@/components/Image";
+import { Image } from "@/components/Image";
 import { PageSEO } from "@/components/SEO";
 import SocialIcon from "@/components/social-icons";
 import type { Authors } from "contentlayer/generated";

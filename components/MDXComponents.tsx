@@ -1,4 +1,4 @@
-import Image from "./Image";
+import { Image } from "./Image";
 import CustomLink from "./Link";
 import Pre from "./Pre";
 import { TableOfContentsInline } from "./TableOfContentsInline";

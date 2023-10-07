@@ -1,4 +1,4 @@
-import Image from "@/components/Image";
+import { Image } from "@/components/Image";
 import Link from "@/components/Link";
 import { PageTitle } from "@/components/PageTitle";
 import { BlogSEO } from "@/components/SEO";

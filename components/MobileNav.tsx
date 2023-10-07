@@ -1,8 +1,8 @@
 import Link from "./Link";
-import headerNavLinks from "@/data/headerNavLinks";
+import { headerNavLinks } from "@/data/index";
 import { useState } from "react";
 
-const MobileNav = () => {
+export const MobileNav = () => {
     const [navShow, setNavShow] = useState(false);
 
     const onToggleNav = () => {
@@ -74,5 +74,3 @@ const MobileNav = () => {
         </div>
     );
 };
-
-export default MobileNav;
