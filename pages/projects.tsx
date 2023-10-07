@@ -15,7 +15,7 @@ export default function Projects() {
                 <div className="space-y-2 pt-6 pb-8 md:space-y-5">
                     <PageTitle>Projects</PageTitle>
                 </div>
-                <div className="container py-12">
+                <div className="container py-8">
                     <div className="-m-4 flex flex-wrap">
                         {projectsData.map((d) => (
                             <Card

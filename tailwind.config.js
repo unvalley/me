@@ -54,12 +54,12 @@ module.exports = {
               color: theme('colors.gray.900'),
             },
             h2: {
-              fontWeight: '700',
+              fontWeight: '550',
               letterSpacing: theme('letterSpacing.tight'),
               color: theme('colors.gray.900'),
             },
             h3: {
-              fontWeight: '600',
+              fontWeight: '400',
               color: theme('colors.gray.900'),
             },
             'h4,h5,h6': {
