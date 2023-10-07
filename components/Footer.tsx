@@ -9,12 +9,7 @@ export default function Footer() {
                 <div className="mb-3 flex space-x-4">
                     <SocialIcon
                         kind="github"
-                        href={siteMetadata.github}
-                        size={6}
-                    />
-                    <SocialIcon
-                        kind="twitter"
-                        href={siteMetadata.twitter}
+                        href={siteMetadata.blogGithub}
                         size={6}
                     />
                 </div>
