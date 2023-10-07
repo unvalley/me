@@ -1,22 +1,20 @@
 import Image from "./Image";
 import CustomLink from "./Link";
-import { BlogNewsletterForm } from "./NewsletterForm";
 import Pre from "./Pre";
-import TOCInline from "./TOCInline";
+import { TableOfContentsInline } from "./TableOfContentsInline";
 import { coreContent } from "@/lib/utils/contentlayer";
 import type { Authors, Blog } from "contentlayer/generated";
 import { ComponentMap } from "mdx-bundler/client";
 import { useMDXComponent } from "next-contentlayer/hooks";
-/* eslint-disable react/display-name */
 import React from "react";
 
-interface MDXLayout {
+type MDXLayout = {
     layout: string;
     content: Blog | Authors;
     [key: string]: unknown;
 }
 
-interface Wrapper {
+type Wrapper = {
     layout: string;
     [key: string]: unknown;
 }
@@ -28,11 +26,10 @@ const Wrapper = ({ layout, content, ...rest }: MDXLayout) => {
 
 export const MDXComponents: ComponentMap = {
     Image,
-    TOCInline,
+    TOCInline: TableOfContentsInline,
     a: CustomLink,
     pre: Pre,
     wrapper: Wrapper,
-    BlogNewsletterForm,
 };
 
 export const MDXLayoutRenderer = ({ layout, content, ...rest }: MDXLayout) => {

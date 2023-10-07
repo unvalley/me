@@ -1,11 +1,10 @@
 import Image from "@/components/Image";
 import Link from "@/components/Link";
-import PageTitle from "@/components/PageTitle";
+import { PageTitle } from "@/components/PageTitle";
 import { BlogSEO } from "@/components/SEO";
 import ScrollTopAndComment from "@/components/ScrollTopAndComment";
 import SectionContainer from "@/components/SectionContainer";
 import Tag from "@/components/Tag";
-import Comments from "@/components/comments";
 import siteMetadata from "@/data/siteMetadata";
 import { CoreContent } from "@/lib/utils/contentlayer";
 import type { Authors, Blog } from "contentlayer/generated";
@@ -138,7 +137,6 @@ export default function PostLayout({
                                     {"View on GitHub"}
                                 </Link>
                             </div>
-                            <Comments frontMatter={content} />
                         </div>
                         <footer>
                             <div className="divide-gray-200 text-sm font-medium leading-5 dark:divide-gray-700 xl:col-start-1 xl:row-start-2 xl:divide-y">

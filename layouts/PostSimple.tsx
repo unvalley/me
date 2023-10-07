@@ -1,9 +1,8 @@
 import Link from "@/components/Link";
-import PageTitle from "@/components/PageTitle";
+import { PageTitle }  from "@/components/PageTitle";
 import { BlogSEO } from "@/components/SEO";
 import ScrollTopAndComment from "@/components/ScrollTopAndComment";
 import SectionContainer from "@/components/SectionContainer";
-import Comments from "@/components/comments";
 import siteMetadata from "@/data/siteMetadata";
 import { CoreContent } from "@/lib/utils/contentlayer";
 import formatDate from "@/lib/utils/formatDate";
@@ -55,7 +54,6 @@ export default function PostLayout({ content, next, prev, children }: Props) {
                                 {children}
                             </div>
                         </div>
-                        <Comments frontMatter={content} />
                         <footer>
                             <div className="flex flex-col text-sm font-medium sm:flex-row sm:justify-between sm:text-base">
                                 {prev && (

@@ -1,7 +1,9 @@
-import { Toc } from "types/Toc";
-
-interface TOCInlineProps {
-    toc: Toc;
+type TableOfContentsInlineProps = {
+    toc: {
+        value: string
+        depth: number
+        url: string
+    }[];
     indentDepth?: number;
     fromHeading?: number;
     toHeading?: number;
@@ -14,7 +16,7 @@ interface TOCInlineProps {
  * Exclude titles matching this string (new RegExp('^(' + string + ')$', 'i')).
  * If an array is passed the array gets joined with a pipe (new RegExp('^(' + array.join('|') + ')$', 'i')).
  *
- * @param {TOCInlineProps} {
+ * @param {TableOfContentsInlineProps} {
  *   toc,
  *   indentDepth = 3,
  *   fromHeading = 1,
@@ -24,14 +26,14 @@ interface TOCInlineProps {
  * }
  *
  */
-const TOCInline = ({
+export const TableOfContentsInline = ({
     toc,
     indentDepth = 3,
     fromHeading = 1,
     toHeading = 6,
     asDisclosure = false,
     exclude = "",
-}: TOCInlineProps) => {
+}: TableOfContentsInlineProps) => {
     const re = Array.isArray(exclude)
         ? new RegExp(`^(${exclude.join("|")})$`, "i")
         : new RegExp(`^(${exclude})$`, "i");
@@ -71,5 +73,3 @@ const TOCInline = ({
         </>
     );
 };
-
-export default TOCInline;

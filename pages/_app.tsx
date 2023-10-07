@@ -9,8 +9,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 
 import LayoutWrapper from "@/components/LayoutWrapper";
-import Analytics from "@/components/analytics";
-import siteMetadata from "@/data/siteMetadata";
+import { Analytics } from "@/components/analytics";
 
 export default function App({ Component, pageProps }: AppProps) {
     return (

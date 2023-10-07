@@ -2,14 +2,13 @@ import slugger from "github-slugger";
 import { Heading } from "mdast";
 import { toString } from "mdast-util-to-string";
 import { remark } from "remark";
-import { Toc } from "types/Toc";
 import { Parent } from "unist";
 import { visit } from "unist-util-visit";
 import { VFile } from "vfile";
 
 export function remarkTocHeadings() {
     return (tree: Parent, file: VFile) => {
-        const toc: Toc = [];
+        const toc: {value: string, depth: number, url: string }[] = [];
         visit(tree, "heading", (node: Heading) => {
             const textContent = toString(node);
             toc.push({

@@ -1,4 +1,4 @@
-import Card from "@/components/Card";
+import { Card } from "@/components/Card";
 import { PageSEO } from "@/components/SEO";
 import projectsData from "@/data/projectsData";
 import siteMetadata from "@/data/siteMetadata";
