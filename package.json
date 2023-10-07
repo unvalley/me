@@ -26,8 +26,6 @@
         "next": "^13.1.6",
         "next-contentlayer": "^0.2.9",
         "next-themes": "^0.2.1",
-        "nextra": "^2.13.2",
-        "nextra-theme-docs": "^2.13.2",
         "postcss": "^8.4.5",
         "preact": "^10.16.0",
         "react": "^18.2.0",
