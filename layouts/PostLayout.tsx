@@ -13,7 +13,7 @@ import { ReactNode } from "react";
 const editUrl = (slug) =>
     `${siteMetadata.siteRepo}/blob/master/data/blog/${slug}`;
 const discussUrl = (slug) =>
-    `https://mobile.twitter.com/search?q=${encodeURIComponent(
+    `https://mobile.x.com/search?q=${encodeURIComponent(
         `${siteMetadata.siteUrl}/blog/${slug}`,
     )}`;
 
@@ -101,18 +101,18 @@ export default function PostLayout({
                                                     {author.name}
                                                 </dd>
                                                 <dt className="sr-only">
-                                                    Twitter
+                                                    x
                                                 </dt>
                                                 <dd>
-                                                    {author.twitter && (
+                                                    {author.x && (
                                                         <Link
                                                             href={
-                                                                author.twitter
+                                                                author.x
                                                             }
                                                             className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                                                         >
-                                                            {author.twitter.replace(
-                                                                "https://twitter.com/",
+                                                            {author.x.replace(
+                                                                "https://x.com/",
                                                                 "@",
                                                             )}
                                                         </Link>
@@ -130,7 +130,7 @@ export default function PostLayout({
                             </div>
                             <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
                                 <Link href={discussUrl(slug)} rel="nofollow">
-                                    {"Discuss on Twitter"}
+                                    {"Discuss on x"}
                                 </Link>
                                 {" • "}
                                 <Link href={editUrl(slug)}>

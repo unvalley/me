@@ -38,7 +38,7 @@ export default function Home({
                     <p className="mt-4 mb-8">
                         This is an{" "}
                         <a
-                            href="https://twitter.com/unvalley_"
+                            href="https://x.com/unvalley_"
                             target="_blank"
                             rel="noreferrer"
                             className="text-primary-500"

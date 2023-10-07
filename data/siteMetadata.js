@@ -11,7 +11,7 @@ const siteMetadata = {
   image: '/static/images/unvalley.png',
   socialBanner: '',
   github: 'https://github.com/unvalley',
-  twitter: 'https://twitter.com/unvalley_',
+  x: 'https://x.com/unvalley_',
   locale: 'en-US',
   analytics: {
     // If you want to use an analytics provider you have to add it to the
