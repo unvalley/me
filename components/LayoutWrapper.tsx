@@ -1,5 +1,5 @@
 import Footer from "./Footer";
-import {CustomLink } from "./Link";
+import { CustomLink } from "./Link";
 import { MobileNav } from "./MobileNav";
 import SectionContainer from "./SectionContainer";
 import ThemeSwitch from "./ThemeSwitch";
@@ -17,7 +17,10 @@ export const LayoutWrapper = ({ children }: Props) => {
             <div className="flex h-screen flex-col justify-between">
                 <header className="flex items-center justify-between py-10">
                     <div>
-                        <CustomLink href="/" aria-label={siteMetadata.headerTitle}>
+                        <CustomLink
+                            href="/"
+                            aria-label={siteMetadata.headerTitle}
+                        >
                             <div className="flex items-center justify-between">
                                 {typeof siteMetadata.headerTitle ===
                                 "string" ? (

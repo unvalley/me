@@ -30,6 +30,9 @@ export default function PostLayout({ content, next, prev, children }: Props) {
                 <div>
                     <header>
                         <div className="space-y-1 border-b border-gray-200 pb-10 text-center dark:border-gray-700">
+                            <div>
+                                <PageTitle>{title}</PageTitle>
+                            </div>
                             <dl>
                                 <div>
                                     <dt className="sr-only">Published on</dt>
@@ -40,9 +43,6 @@ export default function PostLayout({ content, next, prev, children }: Props) {
                                     </dd>
                                 </div>
                             </dl>
-                            <div>
-                                <PageTitle>{title}</PageTitle>
-                            </div>
                         </div>
                     </header>
                     <div

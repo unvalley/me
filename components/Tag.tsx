@@ -3,7 +3,7 @@ import Link from "next/link";
 
 type Props = {
     text: string;
-}
+};
 
 export const Tag = ({ text }: Props) => {
     return (

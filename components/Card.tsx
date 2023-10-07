@@ -1,5 +1,5 @@
 import { Image } from "./Image";
-import {CustomLink} from "./Link";
+import { CustomLink } from "./Link";
 
 export const Card = ({ title, description, imgSrc, href }) => (
     <div className="md p-4 md:w-1/2" style={{ maxWidth: "544px" }}>

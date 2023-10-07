@@ -98,15 +98,11 @@ export default function PostLayout({
                                                 <dd className="text-gray-900 dark:text-gray-100">
                                                     {author.name}
                                                 </dd>
-                                                <dt className="sr-only">
-                                                    x
-                                                </dt>
+                                                <dt className="sr-only">x</dt>
                                                 <dd>
                                                     {author.x && (
                                                         <CustomLink
-                                                            href={
-                                                                author.x
-                                                            }
+                                                            href={author.x}
                                                             className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                                                         >
                                                             {author.x.replace(
@@ -127,7 +123,10 @@ export default function PostLayout({
                                 {children}
                             </div>
                             <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
-                                <CustomLink href={discussUrl(slug)} rel="nofollow">
+                                <CustomLink
+                                    href={discussUrl(slug)}
+                                    rel="nofollow"
+                                >
                                     {"Discuss on x"}
                                 </CustomLink>
                             </div>

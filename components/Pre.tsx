@@ -2,7 +2,7 @@ import { ReactNode, useRef, useState } from "react";
 
 type Props = {
     children: ReactNode;
-}
+};
 
 export const Pre = ({ children }: Props) => {
     const textInput = useRef(null);
