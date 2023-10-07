@@ -3,6 +3,7 @@ import { PageTitle } from "@/components/PageTitle";
 import { BlogSEO } from "@/components/SEO";
 import { ScrollTop } from "@/components/ScrollTop";
 import SectionContainer from "@/components/SectionContainer";
+import { Tag } from "@/components/Tag";
 import siteMetadata from "@/data/siteMetadata";
 import { CoreContent } from "@/lib/utils/contentlayer";
 import formatDate from "@/lib/utils/formatDate";
@@ -17,7 +18,7 @@ interface Props {
 }
 
 export default function PostLayout({ content, next, prev, children }: Props) {
-    const { slug, date, title } = content;
+    const { slug, date, title, tags } = content;
 
     return (
         <SectionContainer>
@@ -55,6 +56,15 @@ export default function PostLayout({ content, next, prev, children }: Props) {
                             </div>
                         </div>
                         <footer>
+                            {tags && (
+                                <div className="py-4 xl:py-8">
+                                    <div className="flex flex-wrap">
+                                        {tags.map((tag) => (
+                                            <Tag key={tag} text={tag} />
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                             <div className="flex flex-col text-sm font-medium sm:flex-row sm:justify-between sm:text-base">
                                 {prev && (
                                     <div className="pt-4 xl:pt-8">

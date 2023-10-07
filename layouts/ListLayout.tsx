@@ -1,4 +1,5 @@
 import { CustomLink } from "@/components/Link";
+import { PageTitle } from "@/components/PageTitle";
 import Pagination from "@/components/Pagination";
 import { Tag } from "@/components/Tag";
 import { CoreContent } from "@/lib/utils/contentlayer";
@@ -35,9 +36,7 @@ export default function ListLayout({
         <>
             <div className="divide-y">
                 <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-                    <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-                        {title}
-                    </h1>
+                    <PageTitle>{title}</PageTitle>
                     <div className="relative max-w-lg">
                         <input
                             aria-label="Search articles"

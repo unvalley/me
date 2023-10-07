@@ -39,7 +39,7 @@ export default function Blog({
                 posts={posts}
                 initialDisplayPosts={initialDisplayPosts}
                 pagination={pagination}
-                title="All Posts"
+                title="All Blog Posts"
             />
         </>
     );

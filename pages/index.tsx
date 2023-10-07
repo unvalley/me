@@ -28,7 +28,7 @@ export default function Home({
                 title={siteMetadata.title}
                 description={siteMetadata.description}
             />
-            <div className="divide-y divide-gray-200 dark:divide-gray-700">
+            <div className="divide-y">
                 <div className="space-y-2 pt-6 pb-8 md:space-y-5">
                     <p
                         className={`mb-8 bg-clip-text text-4xl font-extrabold leading-[60px] tracking-tight text-transparent ${headingColorClass} md:text-6xl md:leading-[86px]`}
@@ -48,13 +48,12 @@ export default function Home({
                         's blog.
                     </p>
                 </div>
-                <hr />
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700">
                     {!posts.length && "No posts found."}
                     {posts.slice(0, MAX_DISPLAY).map((post) => {
                         const { slug, date, title, summary, tags } = post;
                         return (
-                            <li key={slug} className="py-12">
+                            <li key={slug} className="py-6">
                                 <article>
                                     <div className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
                                         <dl>
@@ -67,29 +66,27 @@ export default function Home({
                                                 </time>
                                             </dd>
                                         </dl>
-                                        <div className="space-y-5 xl:col-span-3">
-                                            <div className="space-y-6">
-                                                <div>
-                                                    <h2 className="text-2xl font-bold leading-8 tracking-tight">
-                                                        <CustomLink
-                                                            href={`/blog/${slug}`}
-                                                            className="text-gray-900 dark:text-gray-100"
-                                                        >
-                                                            {title}
-                                                        </CustomLink>
-                                                    </h2>
-                                                    <div className="flex flex-wrap">
-                                                        {tags.map((tag) => (
-                                                            <Tag
-                                                                key={tag}
-                                                                text={tag}
-                                                            />
-                                                        ))}
-                                                    </div>
+                                        <div className="space-y-3 xl:col-span-3">
+                                            <div>
+                                                <h2 className="text-2xl font-bold leading-8 tracking-tight">
+                                                    <CustomLink
+                                                        href={`/blog/${slug}`}
+                                                        className="text-gray-900 dark:text-gray-100"
+                                                    >
+                                                        {title}
+                                                    </CustomLink>
+                                                </h2>
+                                                <div className="flex flex-wrap">
+                                                    {tags.map((tag) => (
+                                                        <Tag
+                                                            key={tag}
+                                                            text={tag}
+                                                        />
+                                                    ))}
                                                 </div>
-                                                <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                                                    {summary}
-                                                </div>
+                                            </div>
+                                            <div className="prose max-w-none text-gray-500 dark:text-gray-400">
+                                                {summary}
                                             </div>
                                         </div>
                                     </div>
