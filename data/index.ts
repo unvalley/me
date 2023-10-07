@@ -1,7 +1,7 @@
 export const headerNavLinks = [
-    { href: "/blog", title: "Blog" },
-    { href: "/projects", title: "Projects" },
-    { href: "/about", title: "About" },
+    { href: "/blog", title: "BLOG" },
+    { href: "/projects", title: "PROJECTS" },
+    { href: "/about", title: "ABOUT" },
 ];
 
 export const projectsData = [

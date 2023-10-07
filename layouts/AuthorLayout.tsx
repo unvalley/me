@@ -21,7 +21,7 @@ export default function AuthorLayout({ children, content }: Props) {
             />
             <div className="divide-y">
                 <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-                    <PageTitle>About</PageTitle>
+                    <PageTitle>ABOUT</PageTitle>
                 </div>
                 <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
                     <div className="flex flex-col items-center pt-8">

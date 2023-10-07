@@ -17,7 +17,6 @@ export const PageTitle = ({ children }: Props) => {
         md:text-3xl
         md:leading-14
         font-helvetica
-        uppercase
         "
         >
             {children}

@@ -13,7 +13,7 @@ export default function Projects() {
             />
             <div className="divide-y divide-gray-200 dark:divide-gray-700">
                 <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-                    <PageTitle>Projects</PageTitle>
+                    <PageTitle>PROJECTS</PageTitle>
                 </div>
                 <div className="container py-8">
                     <div className="-m-4 flex flex-wrap">
