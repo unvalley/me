@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 type Props = {
     children: ReactNode;
-}
+};
 
 export const PageTitle = ({ children }: Props) => {
     return (
@@ -10,4 +10,4 @@ export const PageTitle = ({ children }: Props) => {
             {children}
         </h1>
     );
-}
+};

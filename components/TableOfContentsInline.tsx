@@ -1,15 +1,15 @@
 type TableOfContentsInlineProps = {
     toc: {
-        value: string
-        depth: number
-        url: string
+        value: string;
+        depth: number;
+        url: string;
     }[];
     indentDepth?: number;
     fromHeading?: number;
     toHeading?: number;
     asDisclosure?: boolean;
     exclude?: string | string[];
-}
+};
 
 /**
  * Generates an inline table of contents

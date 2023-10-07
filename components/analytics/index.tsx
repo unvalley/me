@@ -12,5 +12,7 @@ declare global {
 const isProduction = process.env.NODE_ENV === "production";
 
 export const Analytics = () => {
-    return isProduction && siteMetadata.analytics.googleAnalyticsId ? <GoogleAnalyticsScript /> : null
+    return isProduction && siteMetadata.analytics.googleAnalyticsId ? (
+        <GoogleAnalyticsScript />
+    ) : null;
 };

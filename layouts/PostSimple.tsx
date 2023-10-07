@@ -1,5 +1,5 @@
 import Link from "@/components/Link";
-import { PageTitle }  from "@/components/PageTitle";
+import { PageTitle } from "@/components/PageTitle";
 import { BlogSEO } from "@/components/SEO";
 import { ScrollTop } from "@/components/ScrollTop";
 import SectionContainer from "@/components/SectionContainer";

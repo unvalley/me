@@ -12,12 +12,12 @@ type MDXLayout = {
     layout: string;
     content: Blog | Authors;
     [key: string]: unknown;
-}
+};
 
 type Wrapper = {
     layout: string;
     [key: string]: unknown;
-}
+};
 
 const Wrapper = ({ layout, content, ...rest }: MDXLayout) => {
     const Layout = require(`../layouts/${layout}`).default;

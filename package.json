@@ -9,9 +9,9 @@
         "rss": "cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/generate-rss.mjs",
         "serve": "next start",
         "analyze": "cross-env ANALYZE=true next build",
-        "lint": "rome check ./components",
-        "lint:fix": "rome check --apply-unsafe ./pages ./components ./scripts ./lib ./layouts",
-        "format": "rome format --write ./pages ./components ./scripts ./lib ./layouts",
+        "lint": "biome lint ./components",
+        "lint:fix": "biome lint --apply-unsafe ./pages ./components ./scripts ./lib ./layouts",
+        "format": "biome format --write ./pages ./components ./scripts ./lib ./layouts",
         "post:new": "node ./scripts/compose.js"
     },
     "dependencies": {
@@ -49,6 +49,7 @@
         "unist-util-visit": "^4.0.0"
     },
     "devDependencies": {
+        "@biomejs/biome": "1.2.2",
         "@next/bundle-analyzer": "12.1.4",
         "@svgr/webpack": "^6.1.2",
         "@types/react": "^18.0.27",

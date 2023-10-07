@@ -8,7 +8,7 @@ import { VFile } from "vfile";
 
 export function remarkTocHeadings() {
     return (tree: Parent, file: VFile) => {
-        const toc: {value: string, depth: number, url: string }[] = [];
+        const toc: { value: string; depth: number; url: string }[] = [];
         visit(tree, "heading", (node: Heading) => {
             const textContent = toString(node);
             toc.push({

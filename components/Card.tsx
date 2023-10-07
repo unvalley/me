@@ -54,4 +54,3 @@ export const Card = ({ title, description, imgSrc, href }) => (
         </div>
     </div>
 );
-
