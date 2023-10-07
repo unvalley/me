@@ -1,10 +1,10 @@
 import { ReactNode, useRef, useState } from "react";
 
-interface Props {
+type Props = {
     children: ReactNode;
 }
 
-const Pre = ({ children }: Props) => {
+export const Pre = ({ children }: Props) => {
     const textInput = useRef(null);
     const [hovered, setHovered] = useState(false);
     const [copied, setCopied] = useState(false);
@@ -76,5 +76,3 @@ const Pre = ({ children }: Props) => {
         </div>
     );
 };
-
-export default Pre;

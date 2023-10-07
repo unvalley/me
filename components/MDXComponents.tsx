@@ -1,6 +1,6 @@
 import { Image } from "./Image";
-import CustomLink from "./Link";
-import Pre from "./Pre";
+import { CustomLink } from "./Link";
+import { Pre } from "./Pre";
 import { TableOfContentsInline } from "./TableOfContentsInline";
 import { coreContent } from "@/lib/utils/contentlayer";
 import type { Authors, Blog } from "contentlayer/generated";

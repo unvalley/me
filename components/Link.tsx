@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { AnchorHTMLAttributes, DetailedHTMLProps } from "react";
 
-const CustomLink = ({
+export const CustomLink = ({
     href,
     ...rest
 }: DetailedHTMLProps<
@@ -28,5 +28,3 @@ const CustomLink = ({
         <a target="_blank" rel="noopener noreferrer" href={href} {...rest} />
     );
 };
-
-export default CustomLink;
