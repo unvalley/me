@@ -47,23 +47,6 @@ export default function Home({
                         </a>{" "}
                         's blog.
                     </p>
-                    <div className="flex flex-col">
-                        {/* <Link href="/projects" className="hover:underline">
-              <Twemoji emoji="hammer-and-wrench" /> What have I built?
-            </Link>
-            <Link href="/blog" className="hover:underline">
-              <Twemoji emoji="memo" /> My writings
-            </Link>
-            <Link href="/snippets" className="hover:underline">
-              <Twemoji emoji="dna" /> Useful snippets collected by me
-            </Link>
-            <Link href="/about" className="hover:underline">
-              <Twemoji emoji="face-with-monocle" /> More about me and myself
-            </Link>
-            <Link href="/resume" className="hover:underline">
-              <Twemoji emoji="briefcase" /> My resume
-            </Link> */}
-                    </div>
                 </div>
                 <hr />
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -107,15 +90,6 @@ export default function Home({
                                                 <div className="prose max-w-none text-gray-500 dark:text-gray-400">
                                                     {summary}
                                                 </div>
-                                            </div>
-                                            <div className="text-base font-medium leading-6">
-                                                <CustomLink
-                                                    href={`/blog/${slug}`}
-                                                    className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                                                    aria-label={`Read "${title}"`}
-                                                >
-                                                    Read more &rarr;
-                                                </CustomLink>
                                             </div>
                                         </div>
                                     </div>

@@ -1,5 +1,5 @@
 import Footer from "./Footer";
-import { CustomLink } from "./Link";
+import {CustomLink } from "./Link";
 import { MobileNav } from "./MobileNav";
 import SectionContainer from "./SectionContainer";
 import ThemeSwitch from "./ThemeSwitch";

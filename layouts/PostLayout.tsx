@@ -10,8 +10,6 @@ import { CoreContent } from "@/lib/utils/contentlayer";
 import type { Authors, Blog } from "contentlayer/generated";
 import { ReactNode } from "react";
 
-const editUrl = (slug) =>
-    `${siteMetadata.siteRepo}/blob/master/data/blog/${slug}`;
 const discussUrl = (slug) =>
     `https://mobile.x.com/search?q=${encodeURIComponent(
         `${siteMetadata.siteUrl}/blog/${slug}`,
