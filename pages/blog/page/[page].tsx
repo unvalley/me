@@ -1,7 +1,7 @@
 import { POSTS_PER_PAGE } from "../../blog";
 import { PageSEO } from "@/components/SEO";
 import siteMetadata from "@/data/siteMetadata";
-import ListLayout from "@/layouts/ListLayout";
+import ListLayout from "@/components/layouts/ListLayout";
 import { allCoreContent } from "@/lib/utils/contentlayer";
 import { allBlogs } from "contentlayer/generated";
 import { InferGetStaticPropsType } from "next";

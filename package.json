@@ -10,8 +10,8 @@
         "serve": "next start",
         "analyze": "cross-env ANALYZE=true next build",
         "lint": "biome lint ./components",
-        "lint:fix": "biome lint --apply-unsafe ./pages ./components ./scripts ./lib ./layouts",
-        "format": "biome format --write ./pages ./components ./scripts ./lib ./layouts",
+        "lint:fix": "biome lint --apply-unsafe ./pages ./components ./scripts ./lib",
+        "format": "biome format --write ./pages ./components ./scripts ./lib",
         "post:new": "node ./scripts/compose.js"
     },
     "dependencies": {

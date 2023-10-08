@@ -1,6 +1,6 @@
 import { TagSEO } from "@/components/SEO";
 import siteMetadata from "@/data/siteMetadata";
-import ListLayout from "@/layouts/ListLayout";
+import ListLayout from "@/components/layouts/ListLayout";
 import { allCoreContent, getAllTags } from "@/lib/utils/contentlayer";
 import kebabCase from "@/lib/utils/kebabCase";
 import { allBlogs } from "contentlayer/generated";
