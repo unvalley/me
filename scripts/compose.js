@@ -49,7 +49,7 @@ const genFrontMatter = (answers) => {
         frontMatter = `${frontMatter}\nauthors: [${authorArray}]`;
     }
 
-    frontMatter = frontMatter + "\n---";
+    frontMatter = `${frontMatter}\n---`;
 
     return frontMatter;
 };
