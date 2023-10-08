@@ -1,5 +1,6 @@
 export const headerNavLinks = [
     { href: "/blog", title: "BLOG" },
+    { href: "/tools", title: "TOOLS" },
     { href: "/about", title: "ABOUT" },
 ];
 
@@ -18,5 +19,64 @@ export const projectsData = [
             "A simple and tiny tab management chrome extension (OSS). ",
         imgSrc: "/static/images/tabx_.png",
         href: "https://tabx.app/",
+    },
+];
+
+export const toolsData: {
+    name: string;
+    description: string;
+    imgSrc: string;
+    href: string;
+    affiliate: boolean;
+    category: "services" | "daily";
+}[] = [
+    {
+        name: "Todoist",
+        description: "A To-Do List to Organize Your Work & Life",
+        imgSrc: "",
+        href: "https://todoist.com",
+        affiliate: false,
+        category: "services",
+    },
+    {
+        name: "Vivaldi",
+        description: "A Powerful, Personal and Private web browser",
+        imgSrc: "",
+        href: "https://vivaldi.com",
+        affiliate: false,
+        category: "services",
+    },
+    {
+        name: "Spotify",
+        description:
+            "Mainly for music. Introducing serendipity by recommendation.",
+        imgSrc: "",
+        href: "https://spotify.com",
+        affiliate: false,
+        category: "services",
+    },
+    {
+        name: "Shokz OPNCOMM2",
+        description: "A headset provided by the company. Comfortable.",
+        imgSrc: "",
+        href: "",
+        affiliate: false,
+        category: "daily",
+    },
+    {
+        name: "Maison Margiela 'REPLICA' Lazy Sunday Morning",
+        description: "Daily use fragrance",
+        imgSrc: "",
+        href: "https://amzn.to/46C9mI0",
+        affiliate: true,
+        category: "daily",
+    },
+    {
+        name: "CASIO A168WA-1A2WJR Silver",
+        description: "Cheep but enough and tough.",
+        imgSrc: "",
+        href: "https://amzn.to/3LRamjy",
+        affiliate: true,
+        category: "daily",
     },
 ];
