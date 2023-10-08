@@ -34,7 +34,7 @@ module.exports = {
         helvetica: ['Helvetica Neue', 'Helvetica']
       },
       colors: {
-        primary: colors.teal,
+        primary: colors.slate,
         gray: colors.neutral,
       },
       typography: (theme) => ({
@@ -42,9 +42,9 @@ module.exports = {
           css: {
             color: theme('colors.gray.700'),
             a: {
-              color: theme('colors.primary.500'),
+              color: theme('colors.primary.800'),
               '&:hover': {
-                color: `${theme('colors.primary.600')} !important`,
+                color: `${theme('colors.primary.500')} !important`,
               },
               code: { color: theme('colors.primary.400') },
             },

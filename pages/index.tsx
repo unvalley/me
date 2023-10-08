@@ -31,14 +31,12 @@ export default function Home({
             <div className="divide-y">
                 <div className="space-y-2 pt-6 pb-8 md:space-y-5">
                     <PageTitle className="uppercase">
-                        <a
+                        <CustomLink
                             href="https://x.com/unvalley_"
-                            target="_blank"
-                            rel="noreferrer"
                             className="text-primary-500"
                         >
                             unvalley
-                        </a>{" "}
+                        </CustomLink>{" "}
                         is a software engineer driven by coffee and music.
                     </PageTitle>
                 </div>
