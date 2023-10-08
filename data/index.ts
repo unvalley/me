@@ -56,6 +56,15 @@ export const toolsData: {
         category: "services",
     },
     {
+        name: "PostCoffee",
+        description:
+            "A coffee subscription for specialty coffee based on preferences (Japan Only).",
+        imgSrc: "",
+        href: "https://postcoffee.co/subscription/",
+        affiliate: false,
+        category: "services",
+    },
+    {
         name: "Shokz OPNCOMM2",
         description: "A headset provided by the company. Comfortable.",
         imgSrc: "",
