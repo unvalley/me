@@ -58,7 +58,7 @@ export const toolsData: {
     {
         name: "PostCoffee",
         description:
-            "A coffee subscription for specialty coffee based on preferences (Japan Only).",
+            "A coffee subscription for specialty coffee based on preferences (Japan Only). You can use my coupon code: coffee-u8wgk7",
         imgSrc: "",
         href: "https://postcoffee.co/subscription/",
         affiliate: false,
