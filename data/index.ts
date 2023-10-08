@@ -1,6 +1,5 @@
 export const headerNavLinks = [
     { href: "/blog", title: "BLOG" },
-    { href: "/projects", title: "PROJECTS" },
     { href: "/about", title: "ABOUT" },
 ];
 
@@ -10,7 +9,7 @@ export const projectsData = [
         title: "Biome",
         description:
             "One toolchain for your web project. I'm involved as a core contributor.",
-        imgSrc: "/static/images/biome-640x400.png",
+        imgSrc: "/static/images/biome-192x192.png",
         href: "https://biomejs.dev",
     },
     {
