@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 type Props = {
     children: ReactNode;
-    className: string;
+    className?: string;
 };
 
 export const PageTitle = ({ children, className }: Props) => {
