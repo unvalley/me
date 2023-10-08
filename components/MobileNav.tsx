@@ -31,6 +31,7 @@ export const MobileNav = () => {
                     fill="currentColor"
                     className="text-gray-900 dark:text-gray-100"
                 >
+                    <title>"navigation"</title>
                     {navShow ? (
                         <path
                             fillRule="evenodd"
@@ -62,7 +63,7 @@ export const MobileNav = () => {
                         <div key={link.title} className="px-12 py-4">
                             <CustomLink
                                 href={link.href}
-                                className="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
+                                className="text-2xl text-primary-700 dark:text-gray-100 font-helvetica"
                                 onClick={onToggleNav}
                             >
                                 {link.title}
