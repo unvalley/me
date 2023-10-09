@@ -65,6 +65,15 @@ export const toolsData: {
         category: "services",
     },
     {
+        name: "Scrapbox",
+        description:
+            "An app that turns your notes into knowledge. I have accumulated almost all of my experience and knowledge.",
+        imgSrc: "",
+        href: "https://scrapbox.io",
+        affiliate: false,
+        category: "services",
+    },
+    {
         name: "Shokz OPNCOMM2",
         description: "A headset provided by the company. Comfortable.",
         imgSrc: "",
