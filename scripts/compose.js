@@ -93,7 +93,6 @@ inquirer
         },
     ])
     .then((answers) => {
-        // Remove special characters and replace space with -
         const fileName = Math.floor(Date.now() / 1000);
         const frontMatter = genFrontMatter(answers);
         if (!fs.existsSync("data/blog"))
