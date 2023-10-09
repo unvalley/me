@@ -57,11 +57,6 @@ const genFrontMatter = (answers) => {
 inquirer
     .prompt([
         {
-            name: "title",
-            message: "Enter post title:",
-            type: "input",
-        },
-        {
             name: "extension",
             message: "Choose post extension:",
             type: "list",
@@ -99,11 +94,7 @@ inquirer
     ])
     .then((answers) => {
         // Remove special characters and replace space with -
-        const fileName = answers.title
-            .toLowerCase()
-            .replace(/[^a-zA-Z0-9 ]/g, "")
-            .replace(/ /g, "-")
-            .replace(/-+/g, "-");
+        const fileName = Math.floor(Date.now() / 1000);
         const frontMatter = genFrontMatter(answers);
         if (!fs.existsSync("data/blog"))
             fs.mkdirSync("data/blog", { recursive: true });
