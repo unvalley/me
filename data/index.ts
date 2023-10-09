@@ -115,7 +115,7 @@ export const toolsData: {
     },
     {
         name: "CASIO A168WA-1A2WJR Silver",
-        description: "Cheep but enough and tough.",
+        description: "Cheap but enough and tough.",
         imgSrc: "",
         href: "https://amzn.to/3LRamjy",
         affiliate: true,
