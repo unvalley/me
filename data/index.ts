@@ -31,14 +31,6 @@ export const toolsData: {
     category: "services" | "daily";
 }[] = [
     {
-        name: "Todoist",
-        description: "A To-Do List to Organize Your Work & Life",
-        imgSrc: "",
-        href: "https://todoist.com",
-        affiliate: false,
-        category: "services",
-    },
-    {
         name: "Vivaldi",
         description: "A Powerful, Personal and Private web browser",
         imgSrc: "",
@@ -56,20 +48,36 @@ export const toolsData: {
         category: "services",
     },
     {
-        name: "PostCoffee",
-        description:
-            "A coffee subscription for specialty coffee based on preferences (Japan Only). You can use my coupon code: coffee-u8wgk7",
-        imgSrc: "",
-        href: "https://postcoffee.co/subscription/",
-        affiliate: false,
-        category: "services",
-    },
-    {
         name: "Scrapbox",
         description:
             "An app that turns your notes into knowledge. I have accumulated almost all of my experience and knowledge.",
         imgSrc: "",
         href: "https://scrapbox.io",
+        affiliate: false,
+        category: "services",
+    },
+    {
+        name: "Todoist",
+        description: "A To-Do List to Organize Your Work & Life",
+        imgSrc: "",
+        href: "https://todoist.com",
+        affiliate: false,
+        category: "services",
+    },
+    {
+        name: "Raycast",
+        description: "A blazingly fast, totally extendable launcher.",
+        imgSrc: "",
+        href: "https://www.raycast.com",
+        affiliate: false,
+        category: "services",
+    },
+    {
+        name: "PostCoffee",
+        description:
+            "A coffee subscription for specialty coffee based on preferences (Japan Only). You can use my coupon code: coffee-u8wgk7",
+        imgSrc: "",
+        href: "https://postcoffee.co/subscription/",
         affiliate: false,
         category: "services",
     },
