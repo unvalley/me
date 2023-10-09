@@ -73,6 +73,22 @@ export const toolsData: {
         category: "services",
     },
     {
+        name: "AltTab",
+        description: "Windows alt-tab on macOS.",
+        imgSrc: "",
+        href: "https://alt-tab-macos.netlify.app",
+        affiliate: false,
+        category: "services",
+    },
+    {
+        name: "Bitwarden",
+        description: "A freemium open-source password manager.",
+        imgSrc: "",
+        href: "https://bitwarden.com",
+        affiliate: false,
+        category: "services",
+    },
+    {
         name: "PostCoffee",
         description:
             "A coffee subscription for specialty coffee based on preferences (Japan Only). You can use my coupon code: coffee-u8wgk7",
