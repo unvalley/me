@@ -20,6 +20,12 @@ export const projectsData = [
         imgSrc: "/static/images/tabx_.png",
         href: "https://tabx.app/",
     },
+    {
+        title: "UNV (This blog)",
+        description: "A personal blog built with Next.js and MDX. This is based on timlrx/tailwind-nextjs-starter-blog but I updated a lot.",
+        imgSrc: "",
+        href: "https://github.com/unvalley/me",
+    },
 ];
 
 export const toolsData: {
