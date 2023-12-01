@@ -8,7 +8,7 @@ const siteMetadata = {
     siteUrl: "https://unvalley.me",
     siteRepo: "https://github.com/unvalley/unvalley-me",
     siteLogo: "/static/images/logo.png",
-    image: "/static/images/unvalley.png",
+    image: "/static/images/unvalley_512x512.png",
     socialBanner: "",
     github: "https://github.com/unvalley",
     blogGithub: "https://github.com/unvalley/me",
