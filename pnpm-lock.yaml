@@ -26,6 +26,9 @@ dependencies:
   image-size:
     specifier: 1.0.0
     version: 1.0.0
+  js-yaml:
+    specifier: ^4.1.0
+    version: 4.1.0
   mdx-bundler:
     specifier: ^8.0.0
     version: 8.1.0(esbuild@0.14.54)
