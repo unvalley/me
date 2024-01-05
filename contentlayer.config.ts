@@ -5,15 +5,9 @@ import {
 } from "contentlayer/source-files";
 import readingTime from "reading-time";
 import path from "path";
-// Remark packages
 import remarkGfm from "remark-gfm";
 import remarkFootnotes from "remark-footnotes";
 import remarkMath from "remark-math";
-import remarkExtractFrontmatter from "./lib/remark-extract-frontmatter";
-import remarkCodeTitles from "./lib/remark-code-title";
-import { extractTocHeadings } from "./lib/remark-toc-headings";
-import remarkImgToJsx from "./lib/remark-img-to-jsx";
-// Rehype packages
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeKatex from "rehype-katex";
@@ -29,7 +23,8 @@ const computedFields: ComputedFields = {
         type: "string",
         resolve: (doc) => doc._raw.flattenedPath.replace(/^.+?(\/)/, ""),
     },
-    toc: { type: "string", resolve: (doc) => extractTocHeadings(doc.body.raw) },
+    // FIXME:
+    toc: { type: "string", resolve: (doc) => "" },
 };
 
 export const Blog = defineDocumentType(() => ({
@@ -78,12 +73,9 @@ export default makeSource({
             return options;
         },
         remarkPlugins: [
-            remarkExtractFrontmatter,
             remarkGfm,
-            remarkCodeTitles,
             [remarkFootnotes, { inlineNotes: true }],
             remarkMath,
-            remarkImgToJsx,
         ],
         rehypePlugins: [
             rehypeSlug,
