@@ -5,7 +5,7 @@ import siteMetadata from "@/data/siteMetadata";
 import { getAllTags } from "@/lib/utils/contentlayer";
 import kebabCase from "@/lib/utils/kebabCase";
 import { allBlogs } from "contentlayer/generated";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 
 // TODO: refactor into contentlayer once compute over all docs is enabled
 

@@ -4,7 +4,7 @@ import siteMetadata from "@/data/siteMetadata";
 import ListLayout from "@/components/layouts/ListLayout";
 import { allCoreContent } from "@/lib/utils/contentlayer";
 import { allBlogs } from "contentlayer/generated";
-import { InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 
 export const getStaticPaths = async () => {
     const totalPosts = allBlogs;

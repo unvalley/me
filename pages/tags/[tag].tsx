@@ -4,7 +4,7 @@ import ListLayout from "@/components/layouts/ListLayout";
 import { allCoreContent, getAllTags } from "@/lib/utils/contentlayer";
 import kebabCase from "@/lib/utils/kebabCase";
 import { allBlogs } from "contentlayer/generated";
-import { InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 
 export async function getStaticPaths() {
     const tags = await getAllTags(allBlogs);

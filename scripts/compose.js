@@ -103,9 +103,8 @@ inquirer
         fs.writeFile(filePath, frontMatter, { flag: "wx" }, (err) => {
             if (err) {
                 throw err;
-            } else {
-                console.log(`Blog post generated successfully at ${filePath}`);
             }
+                console.log(`Blog post generated successfully at ${filePath}`);
         });
     })
     .catch((error) => {

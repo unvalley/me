@@ -4,7 +4,7 @@ import { Pre } from "./Pre";
 import { TableOfContentsInline } from "./TableOfContentsInline";
 import { coreContent } from "@/lib/utils/contentlayer";
 import type { Authors, Blog } from "contentlayer/generated";
-import { ComponentMap } from "mdx-bundler/client";
+import type { ComponentMap } from "mdx-bundler/client";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import React from "react";
 
