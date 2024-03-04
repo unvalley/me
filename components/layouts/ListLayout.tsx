@@ -2,10 +2,10 @@ import { CustomLink } from "@/components/Link";
 import { PageTitle } from "@/components/PageTitle";
 import Pagination from "@/components/Pagination";
 import { Tag } from "@/components/Tag";
-import { CoreContent } from "@/lib/utils/contentlayer";
+import type { CoreContent } from "@/lib/utils/contentlayer";
 import formatDate from "@/lib/utils/formatDate";
 import type { Blog } from "contentlayer/generated";
-import { ComponentProps, useState } from "react";
+import { type ComponentProps, useState } from "react";
 
 interface Props {
     posts: CoreContent<Blog>[];

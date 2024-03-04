@@ -6,9 +6,9 @@ import { ScrollTop } from "@/components/ScrollTop";
 import SectionContainer from "@/components/SectionContainer";
 import { Tag } from "@/components/Tag";
 import siteMetadata from "@/data/siteMetadata";
-import { CoreContent } from "@/lib/utils/contentlayer";
+import type { CoreContent } from "@/lib/utils/contentlayer";
 import type { Authors, Blog } from "contentlayer/generated";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 const discussUrl = (slug) =>
     `https://mobile.x.com/search?q=${encodeURIComponent(

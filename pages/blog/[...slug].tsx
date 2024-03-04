@@ -2,7 +2,7 @@ import { MDXLayoutRenderer } from "@/components/MDXComponents";
 import { PageTitle } from "@/components/PageTitle";
 import { coreContent, sortedBlogPost } from "@/lib/utils/contentlayer";
 import { allAuthors, allBlogs } from "contentlayer/generated";
-import { InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 
 const DEFAULT_LAYOUT = "PostLayout";
 

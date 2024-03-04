@@ -1,5 +1,5 @@
 import siteMetadata from "@/data/siteMetadata";
-import { CoreContent } from "@/lib/utils/contentlayer";
+import type { CoreContent } from "@/lib/utils/contentlayer";
 import type { Authors, Blog } from "contentlayer/generated";
 import Head from "next/head";
 import { useRouter } from "next/router";

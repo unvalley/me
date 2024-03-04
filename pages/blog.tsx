@@ -3,9 +3,11 @@ import siteMetadata from "@/data/siteMetadata";
 import ListLayout from "@/components/layouts/ListLayout";
 import { allCoreContent, sortedBlogPost } from "@/lib/utils/contentlayer";
 import { allBlogs } from "contentlayer/generated";
-import { InferGetStaticPropsType } from "next";
+import type { InferGetStaticPropsType } from "next";
 
 export const POSTS_PER_PAGE = 8;
+
+export type X = any
 
 export const getStaticProps = async () => {
     const posts = sortedBlogPost(allBlogs);

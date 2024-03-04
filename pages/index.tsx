@@ -5,10 +5,14 @@ import siteMetadata from "@/data/siteMetadata";
 import { allCoreContent, sortedBlogPost } from "@/lib/utils/contentlayer";
 import formatDate from "@/lib/utils/formatDate";
 import { allBlogs } from "contentlayer/generated";
-import { InferGetStaticPropsType } from "next";
 import { PageTitle } from "@/components/PageTitle";
-
+import type { InferGetStaticPropsType } from "next";
+import type { FC } from "react";
 const MAX_DISPLAY = 5;
+
+const App: FC = () => {
+    return <div />;
+};
 
 export const getStaticProps = async () => {
     // TODO: move computation to get only the essential frontmatter to contentlayer.config
@@ -48,7 +52,7 @@ export default function Home({
                             frameBorder="0"
                             allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                             loading="lazy"
-                        ></iframe>
+                        />
                     </div>
                 </div>
                 <ul>

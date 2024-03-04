@@ -3,7 +3,7 @@ import { PageTitle } from "@/components/PageTitle";
 import { PageSEO } from "@/components/SEO";
 import SocialIcon from "@/components/social-icons";
 import type { Authors } from "contentlayer/generated";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { projectsData } from "@/data/index";
 import { CustomLink } from "@/components/Link";
 

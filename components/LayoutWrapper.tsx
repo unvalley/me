@@ -5,7 +5,7 @@ import SectionContainer from "./SectionContainer";
 import ThemeSwitch from "./ThemeSwitch";
 import { headerNavLinks } from "@/data/index";
 import siteMetadata from "@/data/siteMetadata";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 interface Props {
     children: ReactNode;
