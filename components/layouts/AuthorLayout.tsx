@@ -45,7 +45,7 @@ export default function AuthorLayout({ children, content }: Props) {
 						PROJECTS
 					</h2>
 					{projectsData.map((project) => (
-						<div key={project.title} className="mb-4 space-y-2">
+						<div key={project.title} className="mb-4 space-y-2 -m-4">
 							<CustomLink
 								href={project.href}
 								className="flex items-center gap-x-4 p-4 rounded-lg border border-transparent hover:bg-primary-100 dark:hover:bg-primary-900 group"
@@ -66,7 +66,7 @@ export default function AuthorLayout({ children, content }: Props) {
 						TALKS
 					</h2>
 					{talks.map((talk) => (
-						<div key={talk.title} className="mb-4 space-y-2">
+						<div key={talk.title} className="mb-4 space-y-2 -m-4">
 							<CustomLink
 								href={talk.href}
 								className="flex items-center gap-x-4 p-4 rounded-lg border border-transparent hover:bg-primary-100 dark:hover:bg-primary-900 group"
