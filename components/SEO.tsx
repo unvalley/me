@@ -1,8 +1,12 @@
-import siteMetadata from "@/data/siteMetadata";
+import siteMetadata, { description, title } from "@/data/siteMetadata";
 import type { CoreContent } from "@/lib/utils/contentlayer";
 import type { Authors, Blog } from "contentlayer/generated";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import link from "next/link";
+import router, { useRouter } from "next/router";
+import script from "next/script";
+import { type } from "rehype-citation/node/src/citation-js/core/plugins/input";
+
 interface CommonSEOProps {
     title: string;
     description: string;
