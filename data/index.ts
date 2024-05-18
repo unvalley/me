@@ -70,10 +70,10 @@ export const toolsData: {
 	category: "services" | "daily";
 }[] = [
 	{
-		name: "Vivaldi",
-		description: "A Powerful, Personal and Private web browser",
+		name: "Arc",
+		description: "Arc is the Chrome replacement I’ve been waiting for.",
 		imgSrc: "",
-		href: "https://vivaldi.com",
+		href: "https://arc.net/",
 		affiliate: false,
 		category: "services",
 	},
@@ -141,6 +141,14 @@ export const toolsData: {
 			"A heads-up display of the most important updates to your codebase.",
 		imgSrc: "",
 		href: "https://neat.run",
+		affiliate: false,
+		category: "services",
+	},
+	{
+		name: "Timing",
+		description: "Timing saves you time by automatically tracking your time.",
+		imgSrc: "",
+		href: "https://timingapp.com/?lang=en",
 		affiliate: false,
 		category: "services",
 	},

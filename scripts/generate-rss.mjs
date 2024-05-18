@@ -7,22 +7,22 @@ import path from "path";
 
 // TODO: refactor into contentlayer once compute over all docs is enabled
 export async function getAllTags() {
-    const tagCount = {};
-    // Iterate through each post, putting all found tags into `tags`
-    allBlogs.forEach((file) => {
-        if (file.tags && file.draft !== true) {
-            file.tags.forEach((tag) => {
-                const formattedTag = GithubSlugger.slug(tag);
-                if (formattedTag in tagCount) {
-                    tagCount[formattedTag] += 1;
-                } else {
-                    tagCount[formattedTag] = 1;
-                }
-            });
-        }
-    });
+	const tagCount = {};
+	// Iterate through each post, putting all found tags into `tags`
+	allBlogs.forEach((file) => {
+		if (file.tags && file.draft !== true) {
+			file.tags.forEach((tag) => {
+				const formattedTag = GithubSlugger.slug(tag);
+				if (formattedTag in tagCount) {
+					tagCount[formattedTag] += 1;
+				} else {
+					tagCount[formattedTag] = 1;
+				}
+			});
+		}
+	});
 
-    return tagCount;
+	return tagCount;
 }
 
 const generateRssItem = (post) => `
@@ -54,28 +54,28 @@ const generateRss = (posts, page = "feed.xml") => `
 `;
 
 async function generate() {
-    // RSS for blog post
-    if (allBlogs.length > 0) {
-        const rss = generateRss(allBlogs);
-        writeFileSync("./public/feed.xml", rss);
-    }
+	// RSS for blog post
+	if (allBlogs.length > 0) {
+		const rss = generateRss(allBlogs);
+		writeFileSync("./public/feed.xml", rss);
+	}
 
-    // RSS for tags
-    // TODO: use AllTags from contentlayer when computed docs is ready
-    if (allBlogs.length > 0) {
-        const tags = await getAllTags();
-        for (const tag of Object.keys(tags)) {
-            const filteredPosts = allBlogs.filter(
-                (post) =>
-                    post.draft !== true &&
-                    post.tags.map((t) => GithubSlugger.slug(t)).includes(tag),
-            );
-            const rss = generateRss(filteredPosts, `tags/${tag}/feed.xml`);
-            const rssPath = path.join("public", "tags", tag);
-            mkdirSync(rssPath, { recursive: true });
-            writeFileSync(path.join(rssPath, "feed.xml"), rss);
-        }
-    }
+	// RSS for tags
+	// TODO: use AllTags from contentlayer when computed docs is ready
+	if (allBlogs.length > 0) {
+		const tags = await getAllTags();
+		for (const tag of Object.keys(tags)) {
+			const filteredPosts = allBlogs.filter(
+				(post) =>
+					post.draft !== true &&
+					post.tags.map((t) => GithubSlugger.slug(t)).includes(tag),
+			);
+			const rss = generateRss(filteredPosts, `tags/${tag}/feed.xml`);
+			const rssPath = path.join("public", "tags", tag);
+			mkdirSync(rssPath, { recursive: true });
+			writeFileSync(path.join(rssPath, "feed.xml"), rss);
+		}
+	}
 }
 
 generate();

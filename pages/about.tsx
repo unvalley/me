@@ -5,17 +5,17 @@ import type { InferGetStaticPropsType } from "next";
 const DEFAULT_LAYOUT = "AuthorLayout";
 
 export const getStaticProps = async () => {
-    const author = allAuthors.find((p) => p.slug === "default");
-    return { props: { author } };
+	const author = allAuthors.find((p) => p.slug === "default");
+	return { props: { author } };
 };
 
 export default function About({
-    author,
+	author,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-    return (
-        <MDXLayoutRenderer
-            layout={author.layout || DEFAULT_LAYOUT}
-            content={author}
-        />
-    );
+	return (
+		<MDXLayoutRenderer
+			layout={author.layout || DEFAULT_LAYOUT}
+			content={author}
+		/>
+	);
 }

@@ -6,7 +6,8 @@ export const CustomLink = ({
 	...rest
 }: DetailedHTMLProps<
 	AnchorHTMLAttributes<HTMLAnchorElement>,
-	HTMLAnchorElement>) => {
+	HTMLAnchorElement
+>) => {
 	const isInternalLink = href?.startsWith("/");
 	const isAnchorLink = href?.startsWith("#");
 
