@@ -43,17 +43,6 @@ export default function Home({
 						</CustomLink>{" "}
 						is a software engineer driven by coffee and music.
 					</PageTitle>
-					<div>
-						<iframe
-							style={{ borderRadius: "12px" }}
-							src="https://open.spotify.com/embed/playlist/1A20JkLvuRpEeWdCpf4NBP?utm_source=generator"
-							width="100%"
-							height="152"
-							frameBorder="0"
-							allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-							loading="lazy"
-						/>
-					</div>
 				</div>
 				<ul>
 					{!posts.length && "No posts found."}
