@@ -10,6 +10,7 @@
         "serve": "next start",
         "analyze": "cross-env ANALYZE=true next build",
         "lint": "biome lint ./components",
+        "staged": "biome lint ./components --staged",
         "lint:fix": "biome lint --apply-unsafe ./pages ./components ./scripts ./lib",
         "format": "biome format --write ./pages ./components ./scripts ./lib",
         "post:new": "node ./scripts/compose.js"
@@ -45,7 +46,7 @@
         "unist-util-visit": "^4.0.0"
     },
     "devDependencies": {
-        "@biomejs/biome": "^1.5.3",
+        "@biomejs/biome": "1.7.3",
         "@next/bundle-analyzer": "12.1.4",
         "@svgr/webpack": "^6.1.2",
         "@types/react": "^18.0.27",
