@@ -4,7 +4,7 @@ import { coreContent, sortedBlogPost } from "@/lib/utils/contentlayer";
 import { allAuthors, allBlogs } from "contentlayer/generated";
 import type { InferGetStaticPropsType } from "next";
 
-const DEFAULT_LAYOUT = "PostLayout";
+const DEFAULT_LAYOUT = "PostSimple";
 
 export async function getStaticPaths() {
 	return {
