@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 const inquirer = require("inquirer");
 const dedent = require("dedent");
 
@@ -39,7 +39,7 @@ const genFrontMatter = (answers) => {
   title: ${answers.title ? answers.title : "Untitled"}
   date: '${date}'
   tags: [${answers.tags ? tags : ""}]
-  draft: ${answers.draft === "yes" ? true : false}
+  draft: ${answers.draft === "yes"}
   summary: ${answers.summary ? answers.summary : " "}
   images: []
   layout: ${answers.layout}

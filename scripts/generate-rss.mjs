@@ -1,9 +1,9 @@
 import { allBlogs } from "../.contentlayer/generated/index.mjs";
 import siteMetadata from "../data/siteMetadata.js";
 import { escape } from "./htmlEscaper.mjs";
-import { mkdirSync, writeFileSync } from "fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import GithubSlugger from "github-slugger";
-import path from "path";
+import path from "node:path";
 
 // TODO: refactor into contentlayer once compute over all docs is enabled
 export async function getAllTags() {

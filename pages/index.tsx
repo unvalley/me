@@ -24,8 +24,6 @@ export const getStaticProps = async () => {
 export default function Home({
 	posts,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-	const headingColorClass =
-		"bg-gradient-to-r from-blue-600 to-orange-600 dark:bg-gradient-to-l dark:from-emerald-500 dark:to-lime-600";
 	return (
 		<>
 			<PageSEO

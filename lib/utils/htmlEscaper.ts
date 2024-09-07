@@ -9,7 +9,7 @@ const esca = {
 	">": "&gt;",
 	"'": "&#39;",
 	'"': "&quot;",
-};
+} as any;
 const pe = (m: keyof typeof esca) => esca[m];
 
 /**

@@ -24,7 +24,7 @@ export const getStaticProps = async (context) => {
 		params: { page },
 	} = context;
 	const posts = allCoreContent(allBlogs);
-	const pageNumber = parseInt(page as string);
+	const pageNumber = Number.parseInt(page as string);
 	const initialDisplayPosts = posts.slice(
 		POSTS_PER_PAGE * (pageNumber - 1),
 		POSTS_PER_PAGE * pageNumber,

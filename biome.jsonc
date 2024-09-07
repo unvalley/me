@@ -1,0 +1,29 @@
+{
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+            "complexity": {
+                "noForEach": "warn"
+            },
+            "a11y": {
+                "useButtonType": "warn"
+            },
+            "performance": {
+                "noAccumulatingSpread": "warn"
+            },
+            "suspicious": {
+                "noExplicitAny": "warn"
+            },
+            "security": {
+                "noDangerouslySetInnerHtml": "warn"
+            }
+		}
+	},
+    "vcs": {
+        "enabled": true,
+        "clientKind": "git",
+        "useIgnoreFile": true
+    }
+}

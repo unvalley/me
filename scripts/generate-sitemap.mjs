@@ -1,6 +1,6 @@
 import { allBlogs } from "../.contentlayer/generated/index.mjs";
 import siteMetadata from "../data/siteMetadata.js";
-import { writeFileSync } from "fs";
+import { writeFileSync } from "node:fs";
 import globby from "globby";
 
 async function generate() {

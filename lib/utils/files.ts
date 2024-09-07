@@ -1,12 +1,12 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 const pipe =
 	(...fns) =>
 	(x) =>
 		fns.reduce((v, f) => f(v), x);
 
-const flattenArray = (input) =>
+const flattenArray = (input: any) =>
 	input.reduce(
 		(acc, item) => [...acc, ...(Array.isArray(item) ? item : [item])],
 		[],

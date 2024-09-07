@@ -9,12 +9,13 @@ import type { GetStaticProps, InferGetStaticPropsType } from "next";
 
 // TODO: refactor into contentlayer once compute over all docs is enabled
 
-export const getStaticProps: GetStaticProps<{ tags: Record<string, number> }> =
-	async () => {
-		const tags = await getAllTags(allBlogs);
+export const getStaticProps: GetStaticProps<{
+	tags: Record<string, number>;
+}> = async () => {
+	const tags = await getAllTags(allBlogs);
 
-		return { props: { tags } };
-	};
+	return { props: { tags } };
+};
 
 export default function Tags({
 	tags,
