@@ -1,7 +1,7 @@
+import { globby } from "globby";
+import { writeFileSync } from "node:fs";
 import { allBlogs } from "../.contentlayer/generated/index.mjs";
 import siteMetadata from "../data/siteMetadata.js";
-import { writeFileSync } from "node:fs";
-import globby from "globby";
 
 async function generate() {
 	const contentPages = allBlogs

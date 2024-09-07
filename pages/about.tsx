@@ -16,6 +16,10 @@ export default function About({
 		<MDXLayoutRenderer
 			layout={author.layout || DEFAULT_LAYOUT}
 			content={author}
+			toc={"About the author of this blog."}
+			authorDetails={[author]}
+			prev={undefined}
+			next={undefined}
 		/>
 	);
 }

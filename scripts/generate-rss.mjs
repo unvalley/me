@@ -1,18 +1,19 @@
+import GithubSlugger from "github-slugger";
+import { mkdirSync, writeFileSync } from "node:fs";
+import path from "node:path";
 import { allBlogs } from "../.contentlayer/generated/index.mjs";
 import siteMetadata from "../data/siteMetadata.js";
 import { escape } from "./htmlEscaper.mjs";
-import { mkdirSync, writeFileSync } from "node:fs";
-import GithubSlugger from "github-slugger";
-import path from "node:path";
 
 // TODO: refactor into contentlayer once compute over all docs is enabled
 export async function getAllTags() {
 	const tagCount = {};
 	// Iterate through each post, putting all found tags into `tags`
+	const githubSlugger = new GithubSlugger();
 	allBlogs.forEach((file) => {
 		if (file.tags && file.draft !== true) {
 			file.tags.forEach((tag) => {
-				const formattedTag = GithubSlugger.slug(tag);
+				const formattedTag = githubSlugger.slug(tag);
 				if (formattedTag in tagCount) {
 					tagCount[formattedTag] += 1;
 				} else {
@@ -46,7 +47,13 @@ const generateRss = (posts, page = "feed.xml") => `
       <language>${siteMetadata.language}</language>
       <managingEditor>${siteMetadata.email} (${siteMetadata.author})</managingEditor>
       <webMaster>${siteMetadata.email} (${siteMetadata.author})</webMaster>
-      <lastBuildDate>${new Date(posts[0].date).toUTCString()}</lastBuildDate>
+      <lastBuildDate>
+      ${
+				posts.length > 0 && posts[0].date
+					? new Date(posts[0].date).toUTCString()
+					: new Date().toUTCString()
+			}
+      </lastBuildDate>s
       <atom:link href="${siteMetadata.siteUrl}/${page}" rel="self" type="application/rss+xml"/>
       ${posts.map(generateRssItem).join("")}
     </channel>
@@ -60,6 +67,7 @@ async function generate() {
 		writeFileSync("./public/feed.xml", rss);
 	}
 
+	const githubSlugger = new GithubSlugger();
 	// RSS for tags
 	// TODO: use AllTags from contentlayer when computed docs is ready
 	if (allBlogs.length > 0) {
@@ -68,7 +76,7 @@ async function generate() {
 			const filteredPosts = allBlogs.filter(
 				(post) =>
 					post.draft !== true &&
-					post.tags.map((t) => GithubSlugger.slug(t)).includes(tag),
+					post.tags.map((t) => githubSlugger.slug(t)).includes(tag),
 			);
 			const rss = generateRss(filteredPosts, `tags/${tag}/feed.xml`);
 			const rssPath = path.join("public", "tags", tag);

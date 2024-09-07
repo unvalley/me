@@ -7,21 +7,26 @@ import type { Authors, Blog } from "contentlayer/generated";
 import type { ComponentMap } from "mdx-bundler/client";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import React from "react";
+import PostSimple from "./layouts/PostSimple";
+import AuthorLayout from "./layouts/AuthorLayout";
 
 type MDXLayout = {
 	layout: string;
 	content: Blog | Authors;
-	[key: string]: unknown;
+	toc: string;
+	authorDetails: Omit<Authors, "body" | "_raw" | "_id">[];
+	prev: Omit<Blog, "body" | "_raw" | "_id">;
+	next: Omit<Blog, "body" | "_raw" | "_id">;
+	components?: ComponentMap;
+	children?: React.ReactNode;
 };
 
-type Wrapper = {
-	layout: string;
-	[key: string]: unknown;
-};
-
-const Wrapper = ({ layout, content, ...rest }: MDXLayout) => {
-	const Layout = require(`./layouts/${layout}`).default;
-	return <Layout content={content} {...rest} />;
+const Wrapper = ({ layout, content, children, ...rest }: MDXLayout) => {
+	if (content.type === "Blog") {
+		return <PostSimple content={content} children={children} {...rest} />;
+	} else {
+		return <AuthorLayout content={content} children={children} {...rest} />;
+	}
 };
 
 export const MDXComponents: ComponentMap = {
