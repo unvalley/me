@@ -13,20 +13,20 @@ import AuthorLayout from "./layouts/AuthorLayout";
 type MDXLayout = {
 	layout: string;
 	content: Blog | Authors;
-    toc: string;
-    authorDetails: Omit<Authors, "body" | "_raw" | "_id">[]
-    prev: Omit<Blog, "body" | "_raw" | "_id">
-    next: Omit<Blog, "body" | "_raw" | "_id">
-    components?: ComponentMap;
-    children?: React.ReactNode
+	toc: string;
+	authorDetails: Omit<Authors, "body" | "_raw" | "_id">[];
+	prev: Omit<Blog, "body" | "_raw" | "_id">;
+	next: Omit<Blog, "body" | "_raw" | "_id">;
+	components?: ComponentMap;
+	children?: React.ReactNode;
 };
 
 const Wrapper = ({ layout, content, children, ...rest }: MDXLayout) => {
-    if (content.type === "Blog") {
-        return <PostSimple content={content} children={children} {...rest} />;
-    } else {
-        return <AuthorLayout content={content} children={children} {...rest} />;
-    }
+	if (content.type === "Blog") {
+		return <PostSimple content={content} children={children} {...rest} />;
+	} else {
+		return <AuthorLayout content={content} children={children} {...rest} />;
+	}
 };
 
 export const MDXComponents: ComponentMap = {

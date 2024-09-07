@@ -9,7 +9,7 @@ import { escape } from "./htmlEscaper.mjs";
 export async function getAllTags() {
 	const tagCount = {};
 	// Iterate through each post, putting all found tags into `tags`
-    const githubSlugger = new GithubSlugger();
+	const githubSlugger = new GithubSlugger();
 	allBlogs.forEach((file) => {
 		if (file.tags && file.draft !== true) {
 			file.tags.forEach((tag) => {
@@ -48,9 +48,11 @@ const generateRss = (posts, page = "feed.xml") => `
       <managingEditor>${siteMetadata.email} (${siteMetadata.author})</managingEditor>
       <webMaster>${siteMetadata.email} (${siteMetadata.author})</webMaster>
       <lastBuildDate>
-      ${posts.length > 0 && posts[0].date 
-        ? new Date(posts[0].date).toUTCString() 
-        : new Date().toUTCString()}
+      ${
+				posts.length > 0 && posts[0].date
+					? new Date(posts[0].date).toUTCString()
+					: new Date().toUTCString()
+			}
       </lastBuildDate>s
       <atom:link href="${siteMetadata.siteUrl}/${page}" rel="self" type="application/rss+xml"/>
       ${posts.map(generateRssItem).join("")}
@@ -65,7 +67,7 @@ async function generate() {
 		writeFileSync("./public/feed.xml", rss);
 	}
 
-    const githubSlugger = new GithubSlugger();
+	const githubSlugger = new GithubSlugger();
 	// RSS for tags
 	// TODO: use AllTags from contentlayer when computed docs is ready
 	if (allBlogs.length > 0) {
