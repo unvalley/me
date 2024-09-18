@@ -49,6 +49,7 @@ export const Pre = ({ children }: Props) => {
 						fill="none"
 						className={copied ? "text-green-400" : "text-gray-300"}
 					>
+						<title>Pre</title>
 						{copied ? (
 							<>
 								<path
