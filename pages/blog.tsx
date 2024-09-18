@@ -5,7 +5,7 @@ import { allCoreContent, sortedBlogPost } from "@/lib/utils/contentlayer";
 import { allBlogs } from "contentlayer/generated";
 import type { InferGetStaticPropsType } from "next";
 
-export const POSTS_PER_PAGE = 8;
+export const POSTS_PER_PAGE = 5;
 
 export const getStaticProps = async () => {
 	const posts = sortedBlogPost(allBlogs);
