@@ -54,7 +54,7 @@
 		"cross-env": "^7.0.3",
 		"dedent": "^1.5.3",
 		"globby": "14.0.2",
-		"inquirer": "^10.2.1",
+		"inquirer": "^8.1.1",
 		"typescript": "^5.5.4"
 	},
 	"packageManager": "pnpm@9.9.0"
