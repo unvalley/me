@@ -7,12 +7,8 @@ import formatDate from "@/lib/utils/formatDate";
 import { allBlogs } from "contentlayer/generated";
 import { PageTitle } from "@/components/PageTitle";
 import type { InferGetStaticPropsType } from "next";
-import type { FC } from "react";
-const MAX_DISPLAY = 5;
 
-const App: FC = () => {
-	return <div />;
-};
+const MAX_DISPLAY = 8;
 
 export const getStaticProps = async () => {
 	// TODO: move computation to get only the essential frontmatter to contentlayer.config
