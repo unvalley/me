@@ -7,8 +7,6 @@ import type { InferGetStaticPropsType } from "next";
 
 export const POSTS_PER_PAGE = 8;
 
-export type X = any;
-
 export const getStaticProps = async () => {
 	const posts = sortedBlogPost(allBlogs);
 	const initialDisplayPosts = posts.slice(0, POSTS_PER_PAGE);
