@@ -3,15 +3,17 @@ import { PageTitle } from "@/components/PageTitle";
 import { PageSEO } from "@/components/SEO";
 import { CustomLink } from "@/components/Link";
 import type { Authors } from "contentlayer/generated";
-import type { ReactNode } from "react";
+import type { FC, PropsWithChildren, ReactNode } from "react";
 import { projectsData, talks } from "@/data/index";
 
-interface Props {
-	children: ReactNode;
+type Props = {
 	content: Omit<Authors, "_id" | "_raw" | "body">;
-}
+};
 
-export default function AuthorLayout({ children, content }: Props) {
+export const AuthorLayout: FC<PropsWithChildren<Props>> = ({
+	children,
+	content,
+}) => {
 	const { name, avatar } = content;
 
 	return (
@@ -84,4 +86,4 @@ export default function AuthorLayout({ children, content }: Props) {
 			</div>
 		</>
 	);
-}
+};

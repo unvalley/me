@@ -8,16 +8,20 @@ import siteMetadata from "@/data/siteMetadata";
 import type { CoreContent } from "@/lib/utils/contentlayer";
 import formatDate from "@/lib/utils/formatDate";
 import type { Blog } from "contentlayer/generated";
-import type { ReactNode } from "react";
+import type { FC, PropsWithChildren } from "react";
 
 interface Props {
 	content: CoreContent<Blog>;
-	children: ReactNode;
 	next?: { slug: string; title: string };
 	prev?: { slug: string; title: string };
 }
 
-export default function PostSimple({ content, next, prev, children }: Props) {
+export const PostSimple: FC<PropsWithChildren<Props>> = ({
+	content,
+	next,
+	prev,
+	children,
+}) => {
 	const { slug, date, title, tags } = content;
 
 	return (
@@ -88,4 +92,4 @@ export default function PostSimple({ content, next, prev, children }: Props) {
 			</article>
 		</SectionContainer>
 	);
-}
+};

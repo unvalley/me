@@ -6,9 +6,9 @@ import { coreContent } from "@/lib/utils/contentlayer";
 import type { Authors, Blog } from "contentlayer/generated";
 import type { ComponentMap } from "mdx-bundler/client";
 import { useMDXComponent } from "next-contentlayer/hooks";
-import React from "react";
-import PostSimple from "./layouts/PostSimple";
-import AuthorLayout from "./layouts/AuthorLayout";
+import type React from "react";
+import { PostSimple } from "./layouts/PostSimple";
+import { AuthorLayout } from "./layouts/AuthorLayout";
 
 type MDXLayout = {
 	layout: string;
@@ -23,10 +23,17 @@ type MDXLayout = {
 
 const Wrapper = ({ layout, content, children, ...rest }: MDXLayout) => {
 	if (content.type === "Blog") {
-		return <PostSimple content={content} children={children} {...rest} />;
-	} else {
-		return <AuthorLayout content={content} children={children} {...rest} />;
+		return (
+			<PostSimple content={content} {...rest}>
+				{children}
+			</PostSimple>
+		);
 	}
+	return (
+		<AuthorLayout content={content} {...rest}>
+			{children}
+		</AuthorLayout>
+	);
 };
 
 export const MDXComponents: ComponentMap = {
