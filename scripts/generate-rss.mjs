@@ -3,25 +3,26 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { allBlogs } from "../.contentlayer/generated/index.mjs";
 import siteMetadata from "../data/siteMetadata.js";
-import { escape } from "./htmlEscaper.mjs";
+import { escaper } from "./htmlEscaper.mjs";
 
 // TODO: refactor into contentlayer once compute over all docs is enabled
 export async function getAllTags() {
 	const tagCount = {};
 	// Iterate through each post, putting all found tags into `tags`
 	const githubSlugger = new GithubSlugger();
-	allBlogs.forEach((file) => {
+
+    for (const file of allBlogs) {
 		if (file.tags && file.draft !== true) {
-			file.tags.forEach((tag) => {
-				const formattedTag = githubSlugger.slug(tag);
-				if (formattedTag in tagCount) {
-					tagCount[formattedTag] += 1;
-				} else {
-					tagCount[formattedTag] = 1;
-				}
-			});
+            for (const tag of file.tags) {
+                const formattedTag = githubSlugger.slug(tag);
+                if (formattedTag in tagCount) {
+                    tagCount[formattedTag] += 1;
+                } else {
+                    tagCount[formattedTag] = 1;
+                }
+            }
 		}
-	});
+	}
 
 	return tagCount;
 }
@@ -29,9 +30,9 @@ export async function getAllTags() {
 const generateRssItem = (post) => `
   <item>
     <guid>${siteMetadata.siteUrl}/blog/${post.slug}</guid>
-    <title>${escape(post.title)}</title>
+    <title>${escaper(post.title)}</title>
     <link>${siteMetadata.siteUrl}/blog/${post.slug}</link>
-    ${post.summary && `<description>${escape(post.summary)}</description>`}
+    ${post.summary && `<description>${escaper(post.summary)}</description>`}
     <pubDate>${new Date(post.date).toUTCString()}</pubDate>
     <author>${siteMetadata.email} (${siteMetadata.author})</author>
     ${post.tags?.map((t) => `<category>${t}</category>`).join("")}
@@ -41,9 +42,9 @@ const generateRssItem = (post) => `
 const generateRss = (posts, page = "feed.xml") => `
   <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-      <title>${escape(siteMetadata.title)}</title>
+      <title>${escaper(siteMetadata.title)}</title>
       <link>${siteMetadata.siteUrl}/blog</link>
-      <description>${escape(siteMetadata.description)}</description>
+      <description>${escaper(siteMetadata.description)}</description>
       <language>${siteMetadata.language}</language>
       <managingEditor>${siteMetadata.email} (${siteMetadata.author})</managingEditor>
       <webMaster>${siteMetadata.email} (${siteMetadata.author})</webMaster>

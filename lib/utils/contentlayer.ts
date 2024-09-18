@@ -39,9 +39,9 @@ export const omit = <Obj, Keys extends keyof Obj>(
 	keys: Keys[],
 ): Omit<Obj, Keys> => {
 	const result = Object.assign({}, obj);
-	keys.forEach((key) => {
+	for (const key of keys) {
 		delete result[key];
-	});
+	}
 	return result;
 };
 
@@ -59,18 +59,19 @@ export function allCoreContent<T extends DocumentTypes>(contents: T[]) {
 export async function getAllTags(allBlogs: Blog[]) {
 	const tagCount: Record<string, number> = {};
 	// Iterate through each post, putting all found tags into `tags`
-	allBlogs.forEach((file) => {
+	// allBlogs.forEach((file) => {
+	for (const file of allBlogs) {
 		if (file.tags && file.draft !== true) {
-			file.tags.forEach((tag) => {
+			for (const tag of file.tags) {
 				const formattedTag = kebabCase(tag);
 				if (formattedTag in tagCount) {
 					tagCount[formattedTag] += 1;
 				} else {
 					tagCount[formattedTag] = 1;
 				}
-			});
+			}
 		}
-	});
+	}
 
 	return tagCount;
 }

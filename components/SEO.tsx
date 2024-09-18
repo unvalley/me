@@ -142,20 +142,17 @@ export const BlogSEO = ({
 		};
 	});
 
-	let authorList;
-	if (authorDetails) {
-		authorList = authorDetails.map((author) => {
-			return {
+	const authorList = authorDetails
+		? authorDetails.map((author) => {
+				return {
+					"@type": "Person",
+					name: author.name,
+				};
+			})
+		: {
 				"@type": "Person",
-				name: author.name,
+				name: siteMetadata.author,
 			};
-		});
-	} else {
-		authorList = {
-			"@type": "Person",
-			name: siteMetadata.author,
-		};
-	}
 
 	const structuredData = {
 		"@context": "https://schema.org",
