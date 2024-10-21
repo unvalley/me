@@ -6,13 +6,21 @@ export const headerNavLinks = [
 
 export const talks = [
 	{
-		title: "Exploring Type-Informed Lint Rules in Rust based TypeScript Linters | Rust製TypeScript Linterにおける型情報Lintルールの模索",
+		title: "Next generation front-end crosstalk",
+		event: "Vue Fes 2024",
+		topic: "JavaScript Toolchain, Rust",
+		href: "https://vuefes.jp/2024/en#event",
+	},
+	{
+		title:
+			"Exploring Type-Informed Lint Rules in Rust based TypeScript Linters | Rust製TypeScript Linterにおける型情報Lintルールの模索",
 		event: "TSKaigi 2024",
 		topic: "Biome, Oxc, deno_lint, Rust, TypeScript, Linter",
 		href: "https://speakerdeck.com/unvalley/exploring-type-informed-lint-rules-in-rust-based-linters",
 	},
 	{
-		title: "Behind VS Code Extensions for JavaScript / TypeScript Linting and Formatting",
+		title:
+			"Behind VS Code Extensions for JavaScript / TypeScript Linting and Formatting",
 		event: "VSCode Conference Japan 2024",
 		topic: "VSCode Extension, JavaScript, TypeScript, Linter",
 		href: "https://speakerdeck.com/unvalley/behind-biome",
