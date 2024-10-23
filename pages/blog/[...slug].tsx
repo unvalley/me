@@ -39,7 +39,7 @@ export const getStaticProps = async ({ params }) => {
 	};
 };
 
-export const [ = function Blog({
+export default function Blog({
 	post,
 	authorDetails,
 	prev,
@@ -68,4 +68,4 @@ export const [ = function Blog({
 			)}
 		</>
 	);
-};
+}

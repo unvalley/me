@@ -1,6 +1,6 @@
 import { PageSEO } from "@/components/SEO";
 import siteMetadata from "@/data/siteMetadata";
-import ListLayout from "@/components/layouts/ListLayout";
+import { ListLayout } from "@/components/layouts/ListLayout";
 import { allCoreContent, sortedBlogPost } from "@/lib/utils/contentlayer";
 import { allBlogs } from "contentlayer/generated";
 import type { InferGetStaticPropsType } from "next";
@@ -24,7 +24,7 @@ export const getStaticProps = async () => {
 	};
 };
 
-export const blog = function Blog({
+export default function Blog({
 	posts,
 	initialDisplayPosts,
 	pagination,
@@ -43,4 +43,4 @@ export const blog = function Blog({
 			/>
 		</>
 	);
-};
+}

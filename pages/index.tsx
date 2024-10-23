@@ -3,7 +3,7 @@ import { PageSEO } from "@/components/SEO";
 import { Tag } from "@/components/Tag";
 import siteMetadata from "@/data/siteMetadata";
 import { allCoreContent, sortedBlogPost } from "@/lib/utils/contentlayer";
-import formatDate from "@/lib/utils/formatDate";
+import { formatDate } from "@/lib/utils/formatDate";
 import { allBlogs } from "contentlayer/generated";
 import { PageTitle } from "@/components/PageTitle";
 import type { InferGetStaticPropsType } from "next";
@@ -17,7 +17,7 @@ export const getStaticProps = async () => {
 	return { props: { posts } };
 };
 
-export const index = function Home({
+export default function Home({
 	posts,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
 	return (
@@ -85,4 +85,4 @@ export const index = function Home({
 			)}
 		</>
 	);
-};
+}

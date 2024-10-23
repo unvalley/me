@@ -30,4 +30,4 @@ const getAllFilesRecursively = (folder: string): string[] =>
 		flattenArray,
 	)(folder);
 
-export default getAllFilesRecursively;
+export const files = getAllFilesRecursively;

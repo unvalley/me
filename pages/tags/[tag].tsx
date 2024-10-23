@@ -1,6 +1,6 @@
 import { TagSEO } from "@/components/SEO";
 import siteMetadata from "@/data/siteMetadata";
-import ListLayout from "@/components/layouts/ListLayout";
+import { ListLayout } from "@/components/layouts/ListLayout";
 import { allCoreContent, getAllTags } from "@/lib/utils/contentlayer";
 import { kebabCase } from "@/lib/utils/kebabCase";
 import { allBlogs } from "contentlayer/generated";
@@ -31,7 +31,7 @@ export const getStaticProps = async (context) => {
 	return { props: { posts: filteredPosts, tag } };
 };
 
-export const [tag] = function Tag({
+export default function Tag({
 	posts,
 	tag,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -46,4 +46,4 @@ export const [tag] = function Tag({
 			<ListLayout posts={posts} title={title} />
 		</>
 	);
-};
+}

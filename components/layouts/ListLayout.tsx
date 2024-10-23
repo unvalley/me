@@ -3,7 +3,7 @@ import { PageTitle } from "@/components/PageTitle";
 import { Pagination } from "@/components/Pagination";
 import { Tag } from "@/components/Tag";
 import type { CoreContent } from "@/lib/utils/contentlayer";
-import formatDate from "@/lib/utils/formatDate";
+import { formatDate } from "@/lib/utils/formatDate";
 import type { Blog } from "contentlayer/generated";
 import { type ComponentProps, useState } from "react";
 
@@ -14,12 +14,12 @@ interface Props {
 	pagination?: ComponentProps<typeof Pagination>;
 }
 
-export const ListLayout = function ListLayout({
+export const ListLayout = ({
 	posts,
 	title,
 	initialDisplayPosts = [],
 	pagination,
-}: Props) {
+}: Props) => {
 	const [searchValue, setSearchValue] = useState("");
 	const filteredBlogPosts = posts.filter((post) => {
 		const searchContent = post.title + post.summary + post.tags.join(" ");
