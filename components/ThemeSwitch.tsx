@@ -1,7 +1,7 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
-const ThemeSwitch = () => {
+export const ThemeSwitch = () => {
 	const [mounted, setMounted] = useState(false);
 	const { theme, setTheme, resolvedTheme } = useTheme();
 
@@ -39,5 +39,3 @@ const ThemeSwitch = () => {
 		</button>
 	);
 };
-
-export const ThemeSwitch = ThemeSwitch;

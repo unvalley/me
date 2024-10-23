@@ -1,5 +1,5 @@
 import { CustomLink } from "./Link";
-import SocialIcon from "@/components/social-icons";
+import { SocialIcon } from "@/components/social-icons";
 import siteMetadata from "@/data/siteMetadata";
 
 export function Footer() {
