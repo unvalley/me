@@ -40,4 +40,4 @@ const ThemeSwitch = () => {
 	);
 };
 
-export default ThemeSwitch;
+export const ThemeSwitch = ThemeSwitch;

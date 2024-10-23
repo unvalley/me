@@ -14,7 +14,7 @@ interface Props {
 	pagination?: ComponentProps<typeof Pagination>;
 }
 
-export default function ListLayout({
+export const ListLayout = function ListLayout({
 	posts,
 	title,
 	initialDisplayPosts = [],
@@ -104,4 +104,4 @@ export default function ListLayout({
 			)}
 		</>
 	);
-}
+};

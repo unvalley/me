@@ -41,4 +41,4 @@ const SocialIcon = ({ kind, href, size = 8 }) => {
 	);
 };
 
-export default SocialIcon;
+export const index = SocialIcon;

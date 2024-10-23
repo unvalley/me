@@ -2,7 +2,7 @@ import { CustomLink } from "./Link";
 import SocialIcon from "@/components/social-icons";
 import siteMetadata from "@/data/siteMetadata";
 
-export default function Footer() {
+export function Footer() {
 	return (
 		<footer>
 			<div className="mt-16 flex flex-col items-center">

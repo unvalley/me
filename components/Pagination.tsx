@@ -5,7 +5,7 @@ interface Props {
 	currentPage: number;
 }
 
-export default function Pagination({ totalPages, currentPage }: Props) {
+export const Pagination = function Pagination({ totalPages, currentPage }: Props) {
 	const prevPage = currentPage - 1 > 0;
 	const nextPage = currentPage + 1 <= totalPages;
 
@@ -50,4 +50,4 @@ export default function Pagination({ totalPages, currentPage }: Props) {
 			</nav>
 		</div>
 	);
-}
+};
