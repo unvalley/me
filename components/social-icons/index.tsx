@@ -16,7 +16,7 @@ const components = {
 	twitter: Twitter,
 };
 
-const SocialIcon = ({ kind, href, size = 8 }) => {
+export const SocialIcon = ({ kind, href, size = 8 }) => {
 	if (
 		!href ||
 		(kind === "mail" &&
@@ -40,5 +40,3 @@ const SocialIcon = ({ kind, href, size = 8 }) => {
 		</a>
 	);
 };
-
-export default SocialIcon;

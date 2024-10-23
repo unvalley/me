@@ -3,7 +3,8 @@
 	"scripts": {
 		"start": "next dev",
 		"dev": "next dev",
-		"build": "next build",
+		"build": "pnpm run build:content && next build",
+		"build:content": "contentlayer2 build",
 		"postbuild": "pnpm run sitemap && pnpm run rss",
 		"sitemap": "cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/generate-sitemap.mjs",
 		"rss": "cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/generate-rss.mjs",

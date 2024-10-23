@@ -1,8 +1,8 @@
-import Footer from "./Footer";
+import { Footer } from "./Footer"
 import { CustomLink } from "./Link";
 import { MobileNav } from "./MobileNav";
-import SectionContainer from "./SectionContainer";
-import ThemeSwitch from "./ThemeSwitch";
+import { SectionContainer } from "./SectionContainer"
+import { ThemeSwitch } from "./ThemeSwitch"
 import { headerNavLinks } from "@/data/index";
 import siteMetadata from "@/data/siteMetadata";
 import type { ReactNode } from "react";

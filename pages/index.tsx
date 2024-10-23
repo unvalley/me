@@ -3,7 +3,7 @@ import { PageSEO } from "@/components/SEO";
 import { Tag } from "@/components/Tag";
 import siteMetadata from "@/data/siteMetadata";
 import { allCoreContent, sortedBlogPost } from "@/lib/utils/contentlayer";
-import formatDate from "@/lib/utils/formatDate";
+import { formatDate } from "@/lib/utils/formatDate";
 import { allBlogs } from "contentlayer/generated";
 import { PageTitle } from "@/components/PageTitle";
 import type { InferGetStaticPropsType } from "next";

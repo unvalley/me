@@ -1,4 +1,3 @@
-import { InferGetStaticPropsType } from "next";
 import { PageSEO } from "../components/SEO";
 import { PageTitle } from "../components/PageTitle";
 import { toolsData } from "../data/index";
