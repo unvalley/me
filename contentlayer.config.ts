@@ -2,11 +2,10 @@ import {
 	defineDocumentType,
 	type ComputedFields,
 	makeSource,
-} from "contentlayer/source-files";
+} from "contentlayer2/source-files";
 import readingTime from "reading-time";
 import path from "node:path";
 import remarkGfm from "remark-gfm";
-import remarkFootnotes from "remark-footnotes";
 import remarkMath from "remark-math";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
@@ -72,11 +71,7 @@ export default makeSource({
 			options.target = "esnext";
 			return options;
 		},
-		remarkPlugins: [
-			remarkGfm,
-			[remarkFootnotes, { inlineNotes: true }],
-			remarkMath,
-		],
+		remarkPlugins: [remarkGfm, remarkMath],
 		rehypePlugins: [
 			rehypeSlug,
 			rehypeAutolinkHeadings,
