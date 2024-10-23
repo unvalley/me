@@ -17,7 +17,7 @@ export const getStaticProps = async () => {
 	return { props: { posts } };
 };
 
-export default function Home({
+export const index = function Home({
 	posts,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
 	return (
@@ -85,4 +85,4 @@ export default function Home({
 			)}
 		</>
 	);
-}
+};

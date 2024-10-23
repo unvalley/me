@@ -11,7 +11,7 @@ import Head from "next/head";
 import { LayoutWrapper } from "@/components/LayoutWrapper";
 import { Analytics } from "@/components/analytics";
 
-export default function App({ Component, pageProps }: AppProps) {
+export const _app = function App({ Component, pageProps }: AppProps) {
 	return (
 		<>
 			<ThemeProvider attribute="class" defaultTheme={"light"}>
@@ -25,4 +25,4 @@ export default function App({ Component, pageProps }: AppProps) {
 			</ThemeProvider>
 		</>
 	);
-}
+};

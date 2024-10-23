@@ -36,4 +36,4 @@ class MyDocument extends Document {
 	}
 }
 
-export default MyDocument;
+export const _document = MyDocument;

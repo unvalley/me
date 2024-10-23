@@ -2,7 +2,7 @@ import { CustomLink } from "@/components/Link";
 import { PageTitle } from "@/components/PageTitle";
 import { BlogSEO } from "@/components/SEO";
 import { ScrollTop } from "@/components/ScrollTop";
-import SectionContainer from "@/components/SectionContainer";
+import { SectionContainer } from "@/components/SectionContainer";
 import { Tag } from "@/components/Tag";
 import siteMetadata from "@/data/siteMetadata";
 import type { CoreContent } from "@/lib/utils/contentlayer";

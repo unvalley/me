@@ -24,7 +24,7 @@ export const getStaticProps = async () => {
 	};
 };
 
-export default function Blog({
+export const blog = function Blog({
 	posts,
 	initialDisplayPosts,
 	pagination,
@@ -43,4 +43,4 @@ export default function Blog({
 			/>
 		</>
 	);
-}
+};

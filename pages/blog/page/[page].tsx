@@ -43,7 +43,7 @@ export const getStaticProps = async (context) => {
 	};
 };
 
-export default function PostPage({
+export const [page] = function PostPage({
 	posts,
 	initialDisplayPosts,
 	pagination,
@@ -62,4 +62,4 @@ export default function PostPage({
 			/>
 		</>
 	);
-}
+};

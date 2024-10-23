@@ -4,7 +4,7 @@ import { PageTitle } from "../components/PageTitle";
 import { toolsData } from "../data/index";
 import { CustomLink } from "../components/Link";
 
-export default function Tools() {
+export function Tools() {
 	const name = "unvalley";
 	const services = toolsData.filter((x) => x.category === "services");
 	const daily = toolsData.filter((x) => x.category === "daily");

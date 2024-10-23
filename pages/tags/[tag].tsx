@@ -31,7 +31,7 @@ export const getStaticProps = async (context) => {
 	return { props: { posts: filteredPosts, tag } };
 };
 
-export default function Tag({
+export const [tag] = function Tag({
 	posts,
 	tag,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -46,4 +46,4 @@ export default function Tag({
 			<ListLayout posts={posts} title={title} />
 		</>
 	);
-}
+};

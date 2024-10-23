@@ -9,7 +9,7 @@ export const getStaticProps = async () => {
 	return { props: { author } };
 };
 
-export default function About({
+export const about = function About({
 	author,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
 	return (
@@ -22,4 +22,4 @@ export default function About({
 			next={undefined}
 		/>
 	);
-}
+};
