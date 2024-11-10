@@ -78,10 +78,10 @@ export const toolsData: {
 	category: "services" | "daily";
 }[] = [
 	{
-		name: "Arc",
-		description: "Arc is the Chrome replacement I’ve been waiting for.",
+		name: "Firefox Nightly",
+		description: "The browser that protects what's important",
 		imgSrc: "",
-		href: "https://arc.net/",
+		href: "https://www.mozilla.org/en-US/firefox/new/",
 		affiliate: false,
 		category: "services",
 	},
@@ -140,23 +140,6 @@ export const toolsData: {
 			"A coffee subscription for specialty coffee based on preferences (Japan Only). You can use my coupon code: coffee-u8wgk7",
 		imgSrc: "",
 		href: "https://postcoffee.co/subscription/",
-		affiliate: false,
-		category: "services",
-	},
-	{
-		name: "neat.run",
-		description:
-			"A heads-up display of the most important updates to your codebase.",
-		imgSrc: "",
-		href: "https://neat.run",
-		affiliate: false,
-		category: "services",
-	},
-	{
-		name: "Timing",
-		description: "Timing saves you time by automatically tracking your time.",
-		imgSrc: "",
-		href: "https://timingapp.com/?lang=en",
 		affiliate: false,
 		category: "services",
 	},

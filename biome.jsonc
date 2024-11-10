@@ -1,7 +1,10 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+    "organizeImports": {
+        "enabled": false
+    },
 	"linter": {
-		"enabled": true,
+		"enabled": false,
 		"rules": {
 			"recommended": true,
             "complexity": {
@@ -21,8 +24,12 @@
             }
 		}
 	},
+    "formatter" :{
+        "enabled": false,
+        "indentStyle": "space"
+    },
     "vcs": {
-        "enabled": true,
+        "enabled": false,
         "clientKind": "git",
         "useIgnoreFile": true
     }
