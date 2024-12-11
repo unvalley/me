@@ -5,6 +5,12 @@ export const headerNavLinks = [
 ];
 
 export const talks = [
+    {
+		title: "Thoughts and experiences on Rust and TypeScript",
+		event: "nagoya.ts #3",
+		topic: "Rust,TypeScript",
+		href: "https://speakerdeck.com/unvalley/thoughts-and-experiences-on-rust-and-typescript",
+    },
 	{
 		title: "Next generation front-end crosstalk",
 		event: "Vue Fes 2024",
@@ -94,7 +100,7 @@ export const toolsData: {
 		category: "services",
 	},
 	{
-		name: "Scrapbox",
+		name: "Cosense",
 		description:
 			"An app that turns your notes into knowledge. I have accumulated almost all of my experience and knowledge.",
 		imgSrc: "",
