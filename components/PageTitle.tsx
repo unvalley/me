@@ -8,12 +8,12 @@ type Props = {
 export const PageTitle = ({ children, className }: Props) => {
 	return (
 		<h1
-			className={`text-3xl
+			className={`text-xl
         leading-9
         tracking-tight
         text-gray-900
         dark:text-gray-100
-        sm:text-lg
+        lg:text-2xl
         sm:leading-10
         md:leading-14
         font-helvetica
