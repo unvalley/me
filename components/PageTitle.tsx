@@ -13,7 +13,7 @@ export const PageTitle = ({ children, className }: Props) => {
         tracking-tight
         text-gray-900
         dark:text-gray-100
-        sm:text-2xl
+        sm:text-lg
         sm:leading-10
         md:leading-14
         font-helvetica
