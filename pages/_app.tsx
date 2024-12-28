@@ -9,7 +9,8 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 
 import { LayoutWrapper } from "@/components/LayoutWrapper";
-import { Analytics } from "@/components/analytics";
+import siteMetadata from "@/data/siteMetadata";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export default function App({ Component, pageProps }: AppProps) {
 	return (
@@ -18,7 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
 				<Head>
 					<meta content="width=device-width, initial-scale=1" name="viewport" />
 				</Head>
-				<Analytics />
+                <GoogleAnalytics gaId={siteMetadata.analytics.googleAnalyticsId } />
 				<LayoutWrapper>
 					<Component {...pageProps} />
 				</LayoutWrapper>
