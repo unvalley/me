@@ -57,7 +57,7 @@
 		"dedent": "^1.5.3",
 		"globby": "14.0.2",
 		"inquirer": "^8.1.1",
-		"typescript": "^5.5.4"
+		"typescript": "^5.7.2"
 	},
-	"packageManager": "pnpm@9.12.1"
+	"packageManager": "pnpm@9.15.1"
 }
