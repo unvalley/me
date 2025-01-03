@@ -1,0 +1,50 @@
+---
+title: "Rust: スタックとヒープのメモリアドレス"
+date: '2025-01-03'
+tags: ['rust']
+draft: false
+summary: Rustでスタックとヒープ上のデータのメモリアドレスを見るコードのメモ
+images: []
+layout: PostSimple
+---
+
+Rustでスタックとヒープ上の変数のメモリアドレスを用いて、所有権のムーブ後にヒープ上の変数のアドレスが変わらないことを確認する簡単なコードです。
+
+```rust
+fn main() {
+    // Stack
+    let s1 = 42;
+    let s2 = s1;
+    println!("--- Stack Variables ---");
+    println!("s1: value = {}, address = {:p}", s1, &s1);
+    println!("s2: value = {}, address = {:p}", s2, &s2);
+
+    // Heap
+    let h1 = String::from("hello");
+    let h1_heap_ptr = h1.as_ptr(); // Pointer to heap data
+    println!("\n--- Heap Variables ---");
+    println!("--- Before Move ---");
+    println!("h1: heap pointer = {:p}", h1_heap_ptr);
+    println!("h1: stack address = {:p}", &h1);
+
+    // Move ownership from h1 to h2
+    let h2 = h1;
+    // After this point, h1 is no longer valid
+
+    let h2_heap_ptr = h2.as_ptr(); // Pointer to heap data
+    println!("\n--- After Move ---");
+    println!("h2: heap pointer = {:p}", h2_heap_ptr);
+    println!("h2: stack address = {:p}", &h2);
+    
+    // Verify that the heap pointers before and after the move are the same
+    println!("\n--- Verification ---");
+    println!(
+        "Heap pointer unchanged after move: {}",
+        (h1_heap_ptr == h2_heap_ptr)
+    );
+}
+```
+
+- ヒープデータのムーブ後、元の変数は無効となり、新しい所有者が同じヒープデータを指すポインタを持つ
+- ヒープデータを所有する変数（h11）の所有権を別の変数にムーブしても、ヒープ自体のメモリアドレスは変わらない
+
