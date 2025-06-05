@@ -81,16 +81,16 @@ export const toolsData: {
 	imgSrc: string;
 	href: string;
 	affiliate: boolean;
-	category: "services" | "daily";
+	category: "services" | "daily" | "ai";
 }[] = [
-	{
-		name: "Firefox Nightly",
-		description: "The browser that protects what's important",
-		imgSrc: "",
-		href: "https://www.mozilla.org/en-US/firefox/new/",
-		affiliate: false,
-		category: "services",
-	},
+    {
+        name: "Arc Browser",
+        description: "Arc is the Chrome replacement I've been waiting for.",
+        imgSrc: "",
+        href: "https://arc.net",
+        affiliate: false,
+        category: "services",
+    },
 	{
 		name: "Spotify",
 		description: "Mainly for music. Introducing serendipity by recommendation.",
@@ -140,15 +140,15 @@ export const toolsData: {
 		affiliate: false,
 		category: "services",
 	},
-	{
-		name: "PostCoffee",
-		description:
-			"A coffee subscription for specialty coffee based on preferences (Japan Only). You can use my coupon code: coffee-u8wgk7",
-		imgSrc: "",
-		href: "https://postcoffee.co/subscription/",
-		affiliate: false,
-		category: "services",
-	},
+	// {
+	// 	name: "PostCoffee",
+	// 	description:
+	// 		"A coffee subscription for specialty coffee based on preferences (Japan Only). You can use my coupon code: coffee-u8wgk7",
+	// 	imgSrc: "",
+	// 	href: "https://postcoffee.co/subscription/",
+	// 	affiliate: false,
+	// 	category: "services",
+	// },
 	{
 		name: "Shokz OPNCOMM2",
 		description: "A headset provided by the company. Comfortable.",
@@ -165,4 +165,60 @@ export const toolsData: {
 		affiliate: true,
 		category: "daily",
 	},
+    {
+        name: "Cursor",
+        description: "AI Code Editor.",
+        imgSrc: "",
+        href: "https://cursor.so",
+        affiliate: false,
+        category: "ai",
+    },
+    {
+        name: "Perplexity",
+        description: "An AI-powered search engine.",
+        imgSrc: "",
+        href: "https://www.perplexity.ai",
+        affiliate: false,
+        category: "ai",
+    },
+    {
+        name: "ChatGPT",
+        description: "An AI chatbot by OpenAI.",
+        imgSrc: "",
+        href: "https://chat.openai.com",
+        affiliate: false,
+        category: "ai",
+    },
+    {
+        name: "GitHub Copilot",
+        description: "An AI pair programmer by GitHub.",
+        imgSrc: "",
+        href: "https://github.com/features/copilot",
+        affiliate: false,
+        category: "ai",
+    },
+    {
+        name: "Claude (Max Plan)",
+        description: "AI",
+        imgSrc: "AI assistant built by Anthropic",
+        href: "https://claude.ai",
+        affiliate: false,
+        category: "ai",
+    },
+    {
+        name: "Google Gemini",
+        description: "An AI chatbot by Google.",
+        imgSrc: "",
+        href: "https://bard.google.com",
+        affiliate: false,
+        category: "ai",
+    }, 
+    {
+        name: "Ephe",
+        description: "An Ephemeral Markdown Paper build by me",
+        imgSrc: "",
+        href: "https://ephe.app/landing",
+        affiliate: false,
+        category: "services",
+    }
 ];
