@@ -82,7 +82,7 @@ export default async function Blog({
 
   return (
     <>
-      {"draft" in post && post.draft !== true ? (
+      {post.draft ?? false === false ? (
         <MDXLayoutRenderer
           layout={post.layout || DEFAULT_LAYOUT}
           toc={post.toc}
