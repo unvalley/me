@@ -12,9 +12,9 @@
 		"analyze": "cross-env ANALYZE=true next build",
 		"lint": "biome lint",
 		"lint:staged": "biome lint --staged",
-		"lint:fix": "biome lint --write ./pages ./components ./scripts ./lib",
-		"lint:fix:unsafe": "biome lint --write --unsafe ./pages ./components ./scripts ./lib",
-		"format": "biome format --write ./pages ./components ./scripts ./lib",
+		"lint:fix": "biome lint --write ./app ./components ./scripts ./lib",
+		"lint:fix:unsafe": "biome lint --write --unsafe ./app ./components ./scripts ./lib",
+		"format": "biome format --write ./app ./components ./scripts ./lib",
 		"post:new": "node ./scripts/compose.js"
 	},
 	"dependencies": {

@@ -1,3 +1,5 @@
+"use client";
+
 import { CustomLink } from "@/components/Link";
 import { PageTitle } from "@/components/PageTitle";
 import { Pagination } from "@/components/Pagination";
