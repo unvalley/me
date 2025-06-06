@@ -1,5 +1,3 @@
-"use client";
-
 import { CustomLink } from "./Link";
 import { headerNavLinks } from "@/data/index";
 import { useState } from "react";
