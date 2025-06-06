@@ -1,10 +1,11 @@
-"use client";
-
-import siteMetadata from "@/data/siteMetadata";
+import siteMetadata, { description, title } from "@/data/siteMetadata";
 import type { CoreContent } from "@/lib/utils/contentlayer";
 import type { Authors, Blog } from "contentlayer/generated";
 import Head from "next/head";
-import { usePathname } from "next/navigation";
+import link from "next/link";
+import router, { useRouter } from "next/router";
+import script from "next/script";
+import { type } from "rehype-citation/node/src/citation-js/core/plugins/input";
 
 interface CommonSEOProps {
 	title: string;
@@ -28,7 +29,7 @@ const CommonSEO = ({
 	twImage,
 	canonicalUrl,
 }: CommonSEOProps) => {
-	const pathname = usePathname();
+	const router = useRouter();
 	return (
 		<Head>
 			<title>{title}</title>
@@ -36,7 +37,7 @@ const CommonSEO = ({
 			<meta name="description" content={description} />
 			<meta
 				property="og:url"
-				content={`${siteMetadata.siteUrl}${pathname}`}
+				content={`${siteMetadata.siteUrl}${router.asPath}`}
 			/>
 			<meta property="og:type" content={ogType} />
 			<meta property="og:site_name" content={siteMetadata.title} />
@@ -59,7 +60,7 @@ const CommonSEO = ({
 				href={
 					canonicalUrl
 						? canonicalUrl
-						: `${siteMetadata.siteUrl}${pathname}`
+						: `${siteMetadata.siteUrl}${router.asPath}`
 				}
 			/>
 		</Head>
@@ -88,7 +89,7 @@ export const PageSEO = ({ title, description }: PageSEOProps) => {
 export const TagSEO = ({ title, description }: PageSEOProps) => {
 	const ogImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner;
 	const twImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner;
-	const pathname = usePathname();
+	const router = useRouter();
 	return (
 		<>
 			<CommonSEO
@@ -103,7 +104,7 @@ export const TagSEO = ({ title, description }: PageSEOProps) => {
 					rel="alternate"
 					type="application/rss+xml"
 					title={`${description} - RSS feed`}
-					href={`${siteMetadata.siteUrl}${pathname}/feed.xml`}
+					href={`${siteMetadata.siteUrl}${router.asPath}/feed.xml`}
 				/>
 			</Head>
 		</>
