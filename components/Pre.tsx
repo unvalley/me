@@ -1,3 +1,5 @@
+"use client";
+
 import { type ReactNode, useRef, useState } from "react";
 
 type Props = {

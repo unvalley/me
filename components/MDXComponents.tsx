@@ -1,3 +1,5 @@
+"use client";
+
 import { Image } from "./Image";
 import { CustomLink } from "./Link";
 import { Pre } from "./Pre";
