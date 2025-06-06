@@ -1,3 +1,5 @@
+"use client";
+
 import { Footer } from "./Footer"
 import { CustomLink } from "./Link";
 import { MobileNav } from "./MobileNav";

@@ -1,6 +1,7 @@
+"use client";
+
 import { Image } from "@/components/Image";
 import { PageTitle } from "@/components/PageTitle";
-import { PageSEO } from "@/components/SEO";
 import { CustomLink } from "@/components/Link";
 import type { Authors } from "contentlayer/generated";
 import type { FC, PropsWithChildren, ReactNode } from "react";
@@ -18,7 +19,6 @@ export const AuthorLayout: FC<PropsWithChildren<Props>> = ({
 
 	return (
 		<>
-			<PageSEO title={`About - ${name}`} description={`About me - ${name}`} />
 			<div className="divide-y">
 				<div className="pt-6 pb-8 space-y-2 md:space-y-5">
 					<PageTitle>ABOUT</PageTitle>
