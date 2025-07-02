@@ -19,7 +19,7 @@
 	},
 	"dependencies": {
 		"@fontsource/inter": "5.0.20",
-		"@next/third-parties": "^15.3.3",
+		"@next/third-parties": "^15.3.4",
 		"@tailwindcss/forms": "^0.5.9",
 		"@tailwindcss/typography": "^0.5.15",
 		"autoprefixer": "^10.4.20",
@@ -29,7 +29,7 @@
 		"image-size": "1.0.0",
 		"js-yaml": "^4.1.0",
 		"mdx-bundler": "^8.0.0",
-		"next": "^15.3.3",
+		"next": "^15.3.4",
 		"next-contentlayer2": "^0.5.1",
 		"next-themes": "^0.2.1",
 		"postcss": "^8.4.45",
@@ -50,7 +50,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
-		"@next/bundle-analyzer": "15.3.3",
+		"@next/bundle-analyzer": "15.3.4",
 		"@svgr/webpack": "^6.1.2",
 		"@types/react": "^18.0.27",
 		"cross-env": "^7.0.3",
