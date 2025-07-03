@@ -21,17 +21,6 @@ export default async function Home() {
   return (
     <>
       <div className="divide-y">
-        <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-          <PageTitle className="uppercase">
-            <CustomLink
-              href="https://x.com/unvalley_"
-              className="text-primary-500"
-            >
-              unvalley
-            </CustomLink>{" "}
-            is a software engineer driven by coffee and music.
-          </PageTitle>
-        </div>
         <ul>
           {!posts.length && "No posts found."}
           {posts.slice(0, MAX_DISPLAY).map((post) => {
