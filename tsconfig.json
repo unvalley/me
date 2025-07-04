@@ -31,9 +31,6 @@
       ],
       "@/css/*": [
         "public/css/*"
-      ],
-      "contentlayer/generated": [
-        "./.contentlayer/generated"
       ]
     },
     "plugins": [
@@ -45,11 +42,13 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    ".contentlayer/generated",
+    "**/*.mdx",
+    "mdx.d.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "shud.in"
   ]
 }

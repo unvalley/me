@@ -1,18 +1,56 @@
 import { globby } from "globby";
-import { writeFileSync } from "node:fs";
-import { allBlogs } from "../.contentlayer/generated/index.mjs";
+import { writeFileSync, readdirSync, readFileSync } from "node:fs";
+import path from "node:path";
 import siteMetadata from "../data/siteMetadata.js";
 
+const articlesDirectory = path.join(process.cwd(), 'app', 'blog', '_articles');
+
+// Load all blog posts
+async function getAllBlogs() {
+  const articles = readdirSync(articlesDirectory);
+  const posts = [];
+
+  for (const article of articles) {
+    if (!article.endsWith('.mdx')) continue;
+    
+    const filePath = path.join(articlesDirectory, article);
+    const fileContent = readFileSync(filePath, 'utf8');
+    
+    // Extract metadata from export const metadata = {...}
+    const metadataMatch = fileContent.match(/export\s+const\s+metadata\s*=\s*({[\s\S]*?})\s*$/m);
+    
+    if (!metadataMatch) continue;
+    
+    let metadata;
+    try {
+      // Use Function constructor to safely evaluate the object literal
+      metadata = new Function('return ' + metadataMatch[1])();
+    } catch (e) {
+      console.error(`Failed to parse metadata for ${article}:`, e);
+      continue;
+    }
+    
+    posts.push({
+      slug: article.replace(/\.mdx$/, ''),
+      draft: metadata.draft || false,
+    });
+  }
+
+  return posts.filter(post => !post.draft);
+}
+
 async function generate() {
-	const contentPages = allBlogs
-		.map((x) => `/${x._raw.flattenedPath}`)
-		.filter((x) => !x.draft && !x.canonicalUrl);
+	const allBlogs = await getAllBlogs();
+	const contentPages = allBlogs.map((x) => `/blog/${x.slug}`);
+	
 	const pages = await globby([
-		"pages/*.{js|tsx}",
+		"app/**/*.{js|tsx}",
 		"public/tags/**/*.xml",
-		"!pages/_*.{js|tsx}",
-		"!pages/api",
-		"!pages/404.{js|tsx}",
+		"!app/_*.{js|tsx}",
+		"!app/api",
+		"!app/**/layout.{js|tsx}",
+		"!app/**/error.{js|tsx}",
+		"!app/**/not-found.{js|tsx}",
 	]);
 
 	const sitemap = `
@@ -22,19 +60,29 @@ async function generate() {
 							.concat(contentPages)
 							.map((page) => {
 								const path = page
-									.replace("pages/", "/")
+									.replace("app/", "/")
 									.replace("public/", "/")
+									.replace("/page.tsx", "")
+									.replace("/page.js", "")
 									.replace(".js", "")
+									.replace(".tsx", "")
 									.replace(".mdx", "")
 									.replace(".md", "")
 									.replace("/feed.xml", "");
 								const route = path === "/index" ? "" : path;
+								
+								// Skip dynamic routes
+								if (route.includes('[') || route.includes(']')) {
+									return '';
+								}
+								
 								return `
                         <url>
                             <loc>${siteMetadata.siteUrl}${route}</loc>
                         </url>
                     `;
 							})
+							.filter(Boolean)
 							.join("")}
         </urlset>
     `;
