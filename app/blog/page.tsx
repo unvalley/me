@@ -1,29 +1,48 @@
+import { promises as fs } from "fs";
+import path from "path";
 import siteMetadata from "@/data/siteMetadata";
-import { ListLayout } from "@/components/layouts/ListLayout";
-import { allCoreContent, sortedBlogPost } from "@/lib/utils/contentlayer";
-import { allBlogs } from "contentlayer/generated";
 import { Metadata } from "next";
-import { POSTS_PER_PAGE } from "@/lib/constants";
+import { BlogList } from "@/components/BlogList";
+import { PageTitle } from "@/components/PageTitle";
 
 export const metadata: Metadata = {
   title: `Blog - ${siteMetadata.author}`,
   description: siteMetadata.description,
 };
 
-export default async function Blog() {
-  const posts = sortedBlogPost(allBlogs);
-  const initialDisplayPosts = posts.slice(0, POSTS_PER_PAGE);
-  const pagination = {
-    currentPage: 1,
-    totalPages: Math.ceil(posts.length / POSTS_PER_PAGE),
-  };
+const articlesDirectory = path.join(process.cwd(), "app", "blog", "_articles");
+
+export default async function BlogPage() {
+  const articles = await fs.readdir(articlesDirectory);
+
+  const items = [];
+  for (const article of articles) {
+    if (!article.endsWith(".mdx")) continue;
+    const module = await import("./_articles/" + article);
+
+    if (!module.metadata) throw new Error("Missing `metadata` in " + article);
+
+    items.push({
+      slug: article.replace(/\.mdx$/, ""),
+      title: module.metadata.title,
+      date: module.metadata.date,
+      description: module.metadata.description,
+      tags: module.metadata.tags || [],
+      draft: module.metadata.draft || false,
+    });
+  }
+
+  // Filter out drafts and sort by date
+  const publishedItems = items
+    .filter((item) => !item.draft)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
-    <ListLayout
-      posts={allCoreContent(posts)}
-      initialDisplayPosts={allCoreContent(initialDisplayPosts)}
-      pagination={pagination}
-      title="ALL BLOG POSTS"
-    />
+    <div className="">
+      <div className="space-y-2 pb-8 pt-6 md:space-y-5">
+        <PageTitle>BLOG</PageTitle>
+      </div>
+      <BlogList items={publishedItems} />
+    </div>
   );
 }
