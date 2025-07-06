@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { AnchorHTMLAttributes, DetailedHTMLProps } from "react";
-import type { LinkProps } from "next/link";
 
 type CustomLinkProps = DetailedHTMLProps<
   AnchorHTMLAttributes<HTMLAnchorElement>,

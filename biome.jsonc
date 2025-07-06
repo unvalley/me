@@ -1,36 +1,33 @@
 {
-	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-    "organizeImports": {
-        "enabled": false
-    },
-	"linter": {
-		"enabled": false,
-		"rules": {
-			"recommended": true,
-            "complexity": {
-                "noForEach": "warn"
-            },
-            "a11y": {
-                "useButtonType": "warn"
-            },
-            "performance": {
-                "noAccumulatingSpread": "warn"
-            },
-            "suspicious": {
-                "noExplicitAny": "warn"
-            },
-            "security": {
-                "noDangerouslySetInnerHtml": "warn"
-            }
-		}
-	},
-    "formatter" :{
-        "enabled": false,
-        "indentStyle": "space"
-    },
-    "vcs": {
-        "enabled": false,
-        "clientKind": "git",
-        "useIgnoreFile": true
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "linter": {
+    "enabled": false,
+    "rules": {
+      "recommended": true,
+      "complexity": {
+        "noForEach": "warn"
+      },
+      "a11y": {
+        "useButtonType": "warn"
+      },
+      "performance": {
+        "noAccumulatingSpread": "warn"
+      },
+      "suspicious": {
+        "noExplicitAny": "warn"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "warn"
+      }
     }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space"
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  }
 }

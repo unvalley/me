@@ -36,7 +36,7 @@ export default async function BlogPost(props: {
 
 export async function generateStaticParams() {
   const articles = await fs.readdir(
-    path.join(process.cwd(), "app", "blog", "_articles")
+    path.join(process.cwd(), "app", "blog", "_articles"),
   );
 
   return articles

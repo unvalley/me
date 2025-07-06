@@ -4,7 +4,7 @@ import path from "node:path";
 import siteMetadata from "../data/siteMetadata.js";
 import { escaper } from "./htmlEscaper.mjs";
 
-const articlesDirectory = path.join(process.cwd(), 'app', 'blog', '_articles');
+const articlesDirectory = path.join(process.cwd(), "app", "blog", "_articles");
 
 // Load all blog posts
 async function getAllBlogs() {
@@ -12,27 +12,29 @@ async function getAllBlogs() {
   const posts = [];
 
   for (const article of articles) {
-    if (!article.endsWith('.mdx')) continue;
-    
+    if (!article.endsWith(".mdx")) continue;
+
     const filePath = path.join(articlesDirectory, article);
-    const fileContent = readFileSync(filePath, 'utf8');
-    
+    const fileContent = readFileSync(filePath, "utf8");
+
     // Extract metadata from export const metadata = {...}
-    const metadataMatch = fileContent.match(/export\s+const\s+metadata\s*=\s*({[\s\S]*?})\s*$/m);
-    
+    const metadataMatch = fileContent.match(
+      /export\s+const\s+metadata\s*=\s*({[\s\S]*?})\s*$/m,
+    );
+
     if (!metadataMatch) continue;
-    
+
     let metadata;
     try {
       // Use Function constructor to safely evaluate the object literal
-      metadata = new Function('return ' + metadataMatch[1])();
+      metadata = new Function("return " + metadataMatch[1])();
     } catch (e) {
       console.error(`Failed to parse metadata for ${article}:`, e);
       continue;
     }
-    
+
     posts.push({
-      slug: article.replace(/\.mdx$/, ''),
+      slug: article.replace(/\.mdx$/, ""),
       title: metadata.title,
       date: metadata.date,
       summary: metadata.description,
@@ -41,29 +43,29 @@ async function getAllBlogs() {
     });
   }
 
-  return posts.filter(post => !post.draft);
+  return posts.filter((post) => !post.draft);
 }
 
 // TODO: refactor into contentlayer once compute over all docs is enabled
 export async function getAllTags(allBlogs) {
-	const tagCount = {};
-	// Iterate through each post, putting all found tags into `tags`
-	const githubSlugger = new GithubSlugger();
+  const tagCount = {};
+  // Iterate through each post, putting all found tags into `tags`
+  const githubSlugger = new GithubSlugger();
 
-    for (const file of allBlogs) {
-		if (file.tags && file.draft !== true) {
-            for (const tag of file.tags) {
-                const formattedTag = githubSlugger.slug(tag);
-                if (formattedTag in tagCount) {
-                    tagCount[formattedTag] += 1;
-                } else {
-                    tagCount[formattedTag] = 1;
-                }
-            }
-		}
-	}
+  for (const file of allBlogs) {
+    if (file.tags && file.draft !== true) {
+      for (const tag of file.tags) {
+        const formattedTag = githubSlugger.slug(tag);
+        if (formattedTag in tagCount) {
+          tagCount[formattedTag] += 1;
+        } else {
+          tagCount[formattedTag] = 1;
+        }
+      }
+    }
+  }
 
-	return tagCount;
+  return tagCount;
 }
 
 const generateRssItem = (post) => `
@@ -95,27 +97,29 @@ const generateRss = (posts, page = "feed.xml") => `
 `;
 
 async function generateRSS() {
-	const allBlogs = await getAllBlogs();
-	const sortedPosts = allBlogs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const allBlogs = await getAllBlogs();
+  const sortedPosts = allBlogs.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
 
-	// RSS for blog posts
-	if (sortedPosts.length > 0) {
-		const rss = generateRss(sortedPosts);
-		writeFileSync("./public/feed.xml", rss);
-	}
+  // RSS for blog posts
+  if (sortedPosts.length > 0) {
+    const rss = generateRss(sortedPosts);
+    writeFileSync("./public/feed.xml", rss);
+  }
 
-	if (siteMetadata.generateRssByTags) {
-		const tags = await getAllTags(allBlogs);
-		for (const tag of Object.keys(tags)) {
-			const filteredPosts = sortedPosts.filter((post) =>
-				post.tags.map((t) => new GithubSlugger().slug(t)).includes(tag),
-			);
-			const rss = generateRss(filteredPosts, `tags/${tag}/feed.xml`);
-			const rssPath = path.join("public", "tags", tag);
-			mkdirSync(rssPath, { recursive: true });
-			writeFileSync(path.join(rssPath, "feed.xml"), rss);
-		}
-	}
+  if (siteMetadata.generateRssByTags) {
+    const tags = await getAllTags(allBlogs);
+    for (const tag of Object.keys(tags)) {
+      const filteredPosts = sortedPosts.filter((post) =>
+        post.tags.map((t) => new GithubSlugger().slug(t)).includes(tag),
+      );
+      const rss = generateRss(filteredPosts, `tags/${tag}/feed.xml`);
+      const rssPath = path.join("public", "tags", tag);
+      mkdirSync(rssPath, { recursive: true });
+      writeFileSync(path.join(rssPath, "feed.xml"), rss);
+    }
+  }
 }
 
 generateRSS();

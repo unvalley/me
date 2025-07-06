@@ -1,10 +1,10 @@
-const withMDX = require('@next/mdx')({
+const withMDX = require("@next/mdx")({
   extension: /\.mdx?$/,
-})
+});
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
 
 /**
  * @type {import('next').NextConfig}
@@ -12,19 +12,19 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 module.exports = withBundleAnalyzer(
   withMDX({
     reactStrictMode: true,
-    pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+    pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
     experimental: {
       mdxRs: false,
     },
-    transpilePackages: ['shiki'],
+    transpilePackages: ["shiki"],
     webpack: (config, { dev, isServer }) => {
       // Handle SVG files
       config.module.rules.push({
         test: /\.svg$/,
-        use: ['@svgr/webpack'],
-      })
+        use: ["@svgr/webpack"],
+      });
 
-      return config
+      return config;
     },
-  })
-)
+  }),
+);
