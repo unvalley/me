@@ -1,14 +1,8 @@
 'use client'
 
-import { codeToHtml, createCssVariablesTheme } from 'shiki'
+import { codeToHtml } from 'shiki'
 import { useEffect, useState } from 'react'
-
-const cssVariablesTheme = createCssVariablesTheme({
-  name: 'css-variables',
-  variablePrefix: '--shiki-',
-  variableDefaults: {},
-  fontStyle: true
-})
+import { useTheme } from 'next-themes'
 
 interface CodeBlockProps {
   language: string
@@ -17,13 +11,15 @@ interface CodeBlockProps {
 
 export function CodeBlock({ language, code }: CodeBlockProps) {
   const [html, setHtml] = useState<string>('')
+  const { theme, systemTheme } = useTheme()
+  const currentTheme = theme === 'system' ? systemTheme : theme
 
   useEffect(() => {
     async function highlightCode() {
       try {
         const highlighted = await codeToHtml(code, {
           lang: language,
-          theme: cssVariablesTheme,
+          theme: currentTheme === 'dark' ? 'github-dark' : 'github-light',
         })
         setHtml(highlighted)
       } catch (error) {
@@ -33,7 +29,7 @@ export function CodeBlock({ language, code }: CodeBlockProps) {
     }
 
     highlightCode()
-  }, [code, language])
+  }, [code, language, currentTheme])
 
   if (!html) {
     return (
@@ -45,6 +41,7 @@ export function CodeBlock({ language, code }: CodeBlockProps) {
 
   return (
     <div 
+      className="mt-7 overflow-x-auto rounded-lg"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   )
