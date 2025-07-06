@@ -5,7 +5,7 @@ import "katex/dist/katex.css";
 
 import "@fontsource/inter";
 
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 import { LayoutWrapper } from "@/components/LayoutWrapper";
 import siteMetadata from "@/data/siteMetadata";

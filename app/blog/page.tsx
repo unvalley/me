@@ -1,7 +1,7 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { promises as fs } from "node:fs";
+import path from "node:path";
 import siteMetadata from "@/data/siteMetadata";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { BlogList } from "@/components/BlogList";
 import { PageTitle } from "@/components/PageTitle";
 
@@ -18,9 +18,9 @@ export default async function BlogPage() {
   const items = [];
   for (const article of articles) {
     if (!article.endsWith(".mdx")) continue;
-    const module = await import("./_articles/" + article);
+    const module = await import(`./_articles/${article}`);
 
-    if (!module.metadata) throw new Error("Missing `metadata` in " + article);
+    if (!module.metadata) throw new Error(`Missing \`metadata\` in ${article}`);
 
     items.push({
       slug: article.replace(/\.mdx$/, ""),

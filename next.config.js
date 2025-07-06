@@ -17,7 +17,7 @@ module.exports = withBundleAnalyzer(
       mdxRs: false,
     },
     transpilePackages: ["shiki"],
-    webpack: (config, { dev, isServer }) => {
+    webpack: (config) => {
       // Handle SVG files
       config.module.rules.push({
         test: /\.svg$/,

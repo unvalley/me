@@ -36,6 +36,7 @@ export function SearchBar({
         viewBox="0 0 24 24"
         stroke="currentColor"
       >
+        <title>Search Bar</title>
         <path
           strokeLinecap="round"
           strokeLinejoin="round"

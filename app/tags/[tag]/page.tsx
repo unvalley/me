@@ -1,9 +1,9 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { promises as fs } from "node:fs";
+import path from "node:path";
 import Link from "next/link";
 import siteMetadata from "@/data/siteMetadata";
 import { kebabCase } from "@/lib/utils/kebabCase";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 const articlesDirectory = path.join(process.cwd(), "app", "blog", "_articles");
 
@@ -13,7 +13,7 @@ export async function generateStaticParams() {
 
   for (const article of articles) {
     if (!article.endsWith(".mdx")) continue;
-    const module = await import("../../blog/_articles/" + article);
+    const module = await import(`../../blog/_articles/${article}`);
     if (!module.metadata) continue;
 
     const tags = module.metadata.tags || [];
@@ -48,7 +48,7 @@ export default async function Tag({
   const items = [];
   for (const article of articles) {
     if (!article.endsWith(".mdx")) continue;
-    const module = await import("../../blog/_articles/" + article);
+    const module = await import(`../../blog/_articles/${article}`);
 
     if (!module.metadata) continue;
 

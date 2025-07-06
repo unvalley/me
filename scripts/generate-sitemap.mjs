@@ -26,7 +26,7 @@ async function getAllBlogs() {
     let metadata;
     try {
       // Use Function constructor to safely evaluate the object literal
-      metadata = new Function("return " + metadataMatch[1])();
+      metadata = new Function(`return ${metadataMatch[1]}`)();
     } catch (e) {
       console.error(`Failed to parse metadata for ${article}:`, e);
       continue;

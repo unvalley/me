@@ -71,7 +71,7 @@ export const components: Record<string, FC<any>> = {
     return <code {...props} />;
   },
   Image,
-  img: async ({ src, alt, title }) => {
+  img: async ({ src, alt }) => {
     if (!src) return null;
 
     return (

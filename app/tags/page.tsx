@@ -1,10 +1,10 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { promises as fs } from "node:fs";
+import path from "node:path";
 import { CustomLink } from "@/components/Link";
 import { Tag } from "@/components/Tag";
 import siteMetadata from "@/data/siteMetadata";
 import { kebabCase } from "@/lib/utils/kebabCase";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import GithubSlugger from "github-slugger";
 
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ async function getAllTags() {
 
   for (const article of articles) {
     if (!article.endsWith(".mdx")) continue;
-    const module = await import("../blog/_articles/" + article);
+    const module = await import(`../blog/_articles/${article}`);
 
     if (!module.metadata || module.metadata.draft) continue;
 

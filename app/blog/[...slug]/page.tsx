@@ -1,7 +1,7 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { promises as fs } from "node:fs";
+import path from "node:path";
 import { notFound } from "next/navigation";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export default async function BlogPost(props: {
   params: Promise<{
@@ -13,7 +13,7 @@ export default async function BlogPost(props: {
 
   try {
     const { default: MDXContent, metadata } = await import(
-      "../_articles/" + `${slug}.mdx`
+      `../_articles/${slug}.mdx`
     );
 
     return (
@@ -29,7 +29,7 @@ export default async function BlogPost(props: {
         </div>
       </article>
     );
-  } catch (error) {
+  } catch (_error) {
     notFound();
   }
 }
@@ -55,7 +55,7 @@ export async function generateMetadata(props: {
   const slug = params.slug.join("/");
 
   try {
-    const metadata = (await import("../_articles/" + `${slug}.mdx`)).metadata;
+    const metadata = (await import(`../_articles/${slug}.mdx`)).metadata;
     return {
       title: metadata.title,
       description: metadata.summary || metadata.description,

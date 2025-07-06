@@ -1,10 +1,10 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { promises as fs } from "node:fs";
+import path from "node:path";
 import { CustomLink } from "@/components/Link";
 import { Tag } from "@/components/Tag";
 import siteMetadata from "@/data/siteMetadata";
 import { formatDate } from "@/lib/utils/formatDate";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 const MAX_DISPLAY = 8;
 
@@ -21,9 +21,9 @@ export default async function Home() {
   const items = [];
   for (const article of articles) {
     if (!article.endsWith(".mdx")) continue;
-    const module = await import("./blog/_articles/" + article);
+    const module = await import(`./blog/_articles/${article}`);
 
-    if (!module.metadata) throw new Error("Missing `metadata` in " + article);
+    if (!module.metadata) throw new Error(`Missing \`metadata\` in ${article}`);
 
     items.push({
       slug: article.replace(/\.mdx$/, ""),

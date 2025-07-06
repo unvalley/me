@@ -1,7 +1,7 @@
 import { PageTitle } from "@/components/PageTitle";
 import { toolsData } from "@/data/index";
 import { CustomLink } from "@/components/Link";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Tools - unvalley",
