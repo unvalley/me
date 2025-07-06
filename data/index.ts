@@ -224,8 +224,8 @@ export const toolsData: {
   },
   {
     name: "Claude (Max Plan)",
-    description: "AI",
-    imgSrc: "AI assistant built by Anthropic",
+    description: "AI assistant built by Anthropic",
+    imgSrc: "",
     href: "https://claude.ai",
     affiliate: false,
     category: "ai",

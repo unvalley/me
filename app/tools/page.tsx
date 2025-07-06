@@ -14,7 +14,7 @@ export default function Tools() {
   const daily = toolsData.filter((x) => x.category === "daily");
 
   return (
-    <div className="divide-y">
+    <div className="">
       <div className="space-y-2 pt-6 pb-8 md:space-y-5">
         <PageTitle>TOOLS</PageTitle>
         <p>What I use.</p>

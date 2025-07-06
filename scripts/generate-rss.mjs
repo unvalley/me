@@ -1,12 +1,51 @@
 import GithubSlugger from "github-slugger";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { allBlogs } from "../.contentlayer/generated/index.mjs";
 import siteMetadata from "../data/siteMetadata.js";
 import { escaper } from "./htmlEscaper.mjs";
 
+const articlesDirectory = path.join(process.cwd(), 'app', 'blog', '_articles');
+
+// Load all blog posts
+async function getAllBlogs() {
+  const articles = readdirSync(articlesDirectory);
+  const posts = [];
+
+  for (const article of articles) {
+    if (!article.endsWith('.mdx')) continue;
+    
+    const filePath = path.join(articlesDirectory, article);
+    const fileContent = readFileSync(filePath, 'utf8');
+    
+    // Extract metadata from export const metadata = {...}
+    const metadataMatch = fileContent.match(/export\s+const\s+metadata\s*=\s*({[\s\S]*?})\s*$/m);
+    
+    if (!metadataMatch) continue;
+    
+    let metadata;
+    try {
+      // Use Function constructor to safely evaluate the object literal
+      metadata = new Function('return ' + metadataMatch[1])();
+    } catch (e) {
+      console.error(`Failed to parse metadata for ${article}:`, e);
+      continue;
+    }
+    
+    posts.push({
+      slug: article.replace(/\.mdx$/, ''),
+      title: metadata.title,
+      date: metadata.date,
+      summary: metadata.description,
+      tags: metadata.tags || [],
+      draft: metadata.draft || false,
+    });
+  }
+
+  return posts.filter(post => !post.draft);
+}
+
 // TODO: refactor into contentlayer once compute over all docs is enabled
-export async function getAllTags() {
+export async function getAllTags(allBlogs) {
 	const tagCount = {};
 	// Iterate through each post, putting all found tags into `tags`
 	const githubSlugger = new GithubSlugger();
@@ -48,36 +87,28 @@ const generateRss = (posts, page = "feed.xml") => `
       <language>${siteMetadata.language}</language>
       <managingEditor>${siteMetadata.email} (${siteMetadata.author})</managingEditor>
       <webMaster>${siteMetadata.email} (${siteMetadata.author})</webMaster>
-      <lastBuildDate>
-      ${
-				posts.length > 0 && posts[0].date
-					? new Date(posts[0].date).toUTCString()
-					: new Date().toUTCString()
-			}
-      </lastBuildDate>s
+      <lastBuildDate>${new Date(posts[0].date).toUTCString()}</lastBuildDate>
       <atom:link href="${siteMetadata.siteUrl}/${page}" rel="self" type="application/rss+xml"/>
       ${posts.map(generateRssItem).join("")}
     </channel>
   </rss>
 `;
 
-async function generate() {
-	// RSS for blog post
-	if (allBlogs.length > 0) {
-		const rss = generateRss(allBlogs);
+async function generateRSS() {
+	const allBlogs = await getAllBlogs();
+	const sortedPosts = allBlogs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+	// RSS for blog posts
+	if (sortedPosts.length > 0) {
+		const rss = generateRss(sortedPosts);
 		writeFileSync("./public/feed.xml", rss);
 	}
 
-	const githubSlugger = new GithubSlugger();
-	// RSS for tags
-	// TODO: use AllTags from contentlayer when computed docs is ready
-	if (allBlogs.length > 0) {
-		const tags = await getAllTags();
+	if (siteMetadata.generateRssByTags) {
+		const tags = await getAllTags(allBlogs);
 		for (const tag of Object.keys(tags)) {
-			const filteredPosts = allBlogs.filter(
-				(post) =>
-					post.draft !== true &&
-					post.tags.map((t) => githubSlugger.slug(t)).includes(tag),
+			const filteredPosts = sortedPosts.filter((post) =>
+				post.tags.map((t) => new GithubSlugger().slug(t)).includes(tag),
 			);
 			const rss = generateRss(filteredPosts, `tags/${tag}/feed.xml`);
 			const rssPath = path.join("public", "tags", tag);
@@ -87,4 +118,4 @@ async function generate() {
 	}
 }
 
-generate();
+generateRSS();
