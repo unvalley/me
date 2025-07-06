@@ -1,4 +1,5 @@
 import "@/css/prism.css";
+import "@/css/shiki.css";
 import "@/css/tailwind.css";
 import "katex/dist/katex.css";
 

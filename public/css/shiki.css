@@ -1,0 +1,66 @@
+/* Shiki CSS Variables for Syntax Highlighting */
+:root {
+  /* Light theme colors */
+  --shiki-color-text: #24292e;
+  --shiki-color-background: #f6f8fa;
+  --shiki-token-constant: #005cc5;
+  --shiki-token-string: #032f62;
+  --shiki-token-comment: #6a737d;
+  --shiki-token-keyword: #d73a49;
+  --shiki-token-parameter: #e36209;
+  --shiki-token-function: #6f42c1;
+  --shiki-token-string-expression: #032f62;
+  --shiki-token-punctuation: #24292e;
+  --shiki-token-link: #032f62;
+}
+
+.dark {
+  /* Dark theme colors */
+  --shiki-color-text: #e1e4e8;
+  --shiki-color-background: #161b22;
+  --shiki-token-constant: #79c0ff;
+  --shiki-token-string: #a5d6ff;
+  --shiki-token-comment: #8b949e;
+  --shiki-token-keyword: #ff7b72;
+  --shiki-token-parameter: #ffa657;
+  --shiki-token-function: #d2a8ff;
+  --shiki-token-string-expression: #a5d6ff;
+  --shiki-token-punctuation: #e1e4e8;
+  --shiki-token-link: #a5d6ff;
+}
+
+/* Code block styling */
+.shiki {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin-top: 1.75rem;
+  margin-bottom: 1.75rem;
+  background-color: var(--shiki-color-background);
+}
+
+.shiki code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+/* Line highlighting support */
+.shiki .highlighted {
+  background-color: rgba(255, 255, 255, 0.1);
+  display: block;
+  margin: 0 -1rem;
+  padding: 0 1rem;
+}
+
+/* Line numbers if needed */
+.shiki .line-number {
+  display: inline-block;
+  width: 3rem;
+  text-align: right;
+  margin-right: 1rem;
+  color: var(--shiki-token-comment);
+  user-select: none;
+}

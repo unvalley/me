@@ -3,7 +3,12 @@
 import { codeToHtml, createCssVariablesTheme } from 'shiki'
 import { useEffect, useState } from 'react'
 
-const cssVariablesTheme = createCssVariablesTheme({})
+const cssVariablesTheme = createCssVariablesTheme({
+  name: 'css-variables',
+  variablePrefix: '--shiki-',
+  variableDefaults: {},
+  fontStyle: true
+})
 
 interface CodeBlockProps {
   language: string
@@ -40,7 +45,6 @@ export function CodeBlock({ language, code }: CodeBlockProps) {
 
   return (
     <div 
-      className="mt-7 overflow-x-auto rounded-lg shiki css-variables"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   )
