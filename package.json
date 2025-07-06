@@ -23,10 +23,8 @@
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.16",
     "autoprefixer": "^10.4.21",
-    "clsx": "^2.1.0",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
-    "image-size": "2.0.2",
     "katex": "^0.16.11",
     "next": "^15.3.5",
     "next-themes": "^0.4.6",
@@ -39,7 +37,6 @@
   "devDependencies": {
     "@biomejs/biome": "^2.0.6",
     "@next/bundle-analyzer": "15.3.5",
-    "@svgr/webpack": "^8.1.0",
     "@types/mdx": "^2.0.13",
     "@types/react": "^19.1.8",
     "cross-env": "^7.0.3",
