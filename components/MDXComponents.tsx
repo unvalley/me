@@ -6,7 +6,7 @@ import { Pre } from "./Pre";
 import { TableOfContentsInline } from "./TableOfContentsInline";
 import { coreContent } from "@/lib/utils/contentlayer";
 import type { Authors, Blog } from "contentlayer/generated";
-import type { ComponentMap } from "mdx-bundler/client";
+import type { MDXComponents as ComponentMap } from "mdx/types";
 import { useMDXComponent } from "next-contentlayer2/hooks";
 import type React from "react";
 import { PostSimple } from "./layouts/PostSimple";
