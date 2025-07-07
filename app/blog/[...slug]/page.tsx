@@ -19,7 +19,7 @@ export default async function BlogPost(props: {
     return (
       <article className="mx-auto max-w-2xl py-16">
         <div className="mb-6 text-center">
-          <h1 className="mb-2 text-3xl ">{metadata.title}</h1>
+          <h1 className="mb-2 text-2xl">{metadata.title}</h1>
           <time className="text-gray-600 dark:text-gray-400">
             {new Date(metadata.date).toDateString()}
           </time>
@@ -36,7 +36,7 @@ export default async function BlogPost(props: {
 
 export async function generateStaticParams() {
   const articles = await fs.readdir(
-    path.join(process.cwd(), "app", "blog", "_articles"),
+    path.join(process.cwd(), "app", "blog", "_articles")
   );
 
   return articles
