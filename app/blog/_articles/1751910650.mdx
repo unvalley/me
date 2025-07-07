@@ -1,0 +1,55 @@
+export const metadata = {
+  title: "EpheというMarkdownベースのTODOアプリを開発した",
+  date: "2025-07-08",
+  description: "Markdown, Task, Paper, Write, Ideas, Ephemeral",
+  tags: ["OSS", "Ephe"],
+  draft: false,
+}
+
+[Ephe](https://ephe.app/landing)という、Markdownで1日のアイデアやタスクを書き出せるアプリを開発して公開しています。OSSです。ブラウザ上で簡単に書けることを意識していて、アカウント登録などは一切なく、データはlocal storageに保存されます。
+
+- GitHub: [https://github.com/unvalley/ephe](https://github.com/unvalley/ephe)
+- Web App: [https://ephe.app](https://ephe.app)
+
+数ヶ月前から誰でも使える状態にしていましたが、大して宣伝なども行っていなかったので、改めて記事にします。
+
+## すでに類似サービスはたくさんあるけど、なぜ？
+
+毎日のアイデアやタスクを管理するアプリは既にたくさんありますが、「もっと軽量で、Markdownベースで簡単に書けるもの」が欲しいと思っていました。タスク管理ツールは、「重いもの」と「軽量に見えて重くなるもの」が多いです。例えばカレンダーを持っていたり、タスクを作るのが面倒なアプリすらあります。ガントチャートなども個人には必要ないです。
+
+Epheを作る前は、個人のタスクなどを[Todoist](https://todoist.com)でまとめていました。GTDなどのアイデアに従い、なんでもInboxに詰め込んでいた自業自得ではあるのですが、常にInboxが溢れた状態になってしまいました。結局それで使うのにストレスが溜まるようになり、やめてしまいました。で、だんだんとそもそもプライベートのタスクを長期的に管理する必要はないのではと思い始めました。そして、前々からブラウザ上でMarkdownを書く体験が良い場所はブラウザ上で少ないと感じていました（例えばformatterを搭載しているアプリなどは、mizchiさんの[mdbuf](https://github.com/mizchi/mdbuf)くらいしか知らない）。
+
+こういう背景から、Epheを開発しました。ブラウザでpinして、1日のやることなどを列挙して、使うことを意図しています。一時的な紙のように使うMarkdownツールということを意識して、An Ephemeral Markdown Paperというフレーズを利用しています。また、データをブラウザのLocal Storageに保存していることもEphemeralであると捉えています（Session Storageは不便なので）。
+
+Epheを開発する上で、意識しているアプリがあるといえば、GitHub Issueで一時期存在したtasklistです。Markdown上でタスク管理ができるツールというのを意識しています。アカウント機能とかもないです。
+
+## Epheの機能
+
+Epheには以下のような機能があります
+
+- `-[ ` and `- [ `：自動で `- [ ]`（タスク）に補完されます
+- Cmd + S：Markdown をフォーマットします（dprintを利用）
+- Cmd + Shift + S：スナップショットを撮ります
+- Cmd + K：メニューを開きます
+- Cmd + ↑ / ↓ ：タスクやリストを上下に移動できます
+- スナップショットやタスクの履歴は記録され、あとから確認できます
+- 左下のSytemから、見た目（ダークモード、紙スタイル、幅、フォントなど）をカスタマイズできます
+- Task Flash （Instantに設定すると、タスクを閉じたとき`- [ ]`の行が即座に削除されます）
+- Markdown Export, 文字数・単語数の表示など
+
+個人的には、 `- [`によるタスクの補完が一番気に入っています。快適なので、いろんなアプリでできるようにしてほしいです。Markdownのフォーマットもいろんなアプリで入れてもらいたいです。
+
+## 開発
+
+個人のプロジェクトなので、`package.json`のバージョン指定を雑にしてalpha版とか試したり、生成AIツールを使ったりというのを積極的に試してます。React Compilerとかも使ってみています。3月くらいから開発を始めたので、Cursorを使って開発してました。割とうまくいった部分もあればそうでない部分もありました。[AIと作るEphemeral Markdown Paper](https://speakerdeck.com/unvalley/building-an-ephemeral-markdown-paper-with-ai) というタイトルで、Findyの個人開発のLTに出た時に少し所感をまとめました。今はCursorは解約してます。
+
+当時Claude Sonnet 3.7でしたが、Next.js → Vite, Monaco Editor → CodeMirror v6 などの移行を短期間で実現できたのは大きかったです。実際こういうEpheのような簡単に見えるアプリでも、いざ作るとなると大変でしたし、結構時間も使ってます。
+
+## ぜひ使ってみてください
+
+[https://ephe.app/landing](https://ephe.app/landing)
+
+[ガイド](https://github.com/unvalley/ephe/blob/main/.github/guide.md)も一応書いてます。OSS(MITライセンス)で公開しているので、コントリビューションも当然歓迎です。バグもあれば教えてください。
+
+今度は暇があれば、Product Huntで失敗してHackerNewsで成功?した話を書こうと思います。
+今後はCross Browserのsync実装やTSKaigi中にAnthonoyから得たアイデアの実装を行う予定です。
