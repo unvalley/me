@@ -58,7 +58,7 @@ export async function generateMetadata(props: {
     const metadata = (await import(`../_articles/${slug}.mdx`)).metadata;
     return {
       title: metadata.title,
-      description: metadata.summary || metadata.description,
+      description: metadata.description,
     };
   } catch {
     return {
