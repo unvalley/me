@@ -15,10 +15,10 @@ import { Providers } from "./providers";
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
   title: {
-    default: siteMetadata.title,
+    default: "UNV",
     template: `%s | ${siteMetadata.title}`,
   },
-  description: siteMetadata.description,
+  description: "unvalley blog",
   openGraph: {
     title: siteMetadata.title,
     description: siteMetadata.description,
@@ -43,10 +43,6 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
-  },
-  twitter: {
-    title: siteMetadata.title,
-    card: "summary_large_image",
   },
 };
 
