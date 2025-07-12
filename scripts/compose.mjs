@@ -107,9 +107,9 @@ inquirer
   .then((answers) => {
     const fileName = Math.floor(Date.now() / 1000);
     const frontMatter = genFrontMatter(answers);
-    if (!fs.existsSync("data/blog"))
-      fs.mkdirSync("data/blog", { recursive: true });
-    const filePath = `data/blog/${fileName ? fileName : "untitled"}.${
+    if (!fs.existsSync("app/blog/_articles"))
+      fs.mkdirSync("app/blog/_articles", { recursive: true });
+    const filePath = `app/blog/_articles/${fileName ? fileName : "untitled"}.${
       answers.extension ? answers.extension : "md"
     }`;
     fs.writeFile(filePath, frontMatter, { flag: "wx" }, (err) => {
