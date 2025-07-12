@@ -1,7 +1,7 @@
-const fs = require("node:fs");
-const path = require("node:path");
-const inquirer = require("inquirer");
-const dedent = require("dedent");
+import fs from "node:fs";
+import path from "node:path";
+import inquirer from "inquirer";
+import dedent from "dedent";
 
 const root = process.cwd();
 
@@ -30,7 +30,9 @@ const genFrontMatter = (answers) => {
     `0${d.getDate()}`.slice(-2),
   ].join("-");
   const tagArray = answers.tags.split(",");
-  tagArray.forEach((tag, index) => tagArray[index] === tag.trim());
+  tagArray.forEach((tag, index) => {
+    tagArray[index] = tag.trim();
+  });
   const tags = `'${tagArray.join("','")}'`;
   const authorArray =
     answers.authors.length > 0 ? `'${answers.authors.join("','")}'` : "";
@@ -56,6 +58,17 @@ const genFrontMatter = (answers) => {
 
 inquirer
   .prompt([
+    {
+      name: "title",
+      message: "Enter post title:",
+      type: "input",
+      validate: (input) => {
+        if (input.trim().length === 0) {
+          return "Please enter a title for the post";
+        }
+        return true;
+      },
+    },
     {
       name: "extension",
       message: "Choose post extension:",
@@ -94,9 +107,9 @@ inquirer
   .then((answers) => {
     const fileName = Math.floor(Date.now() / 1000);
     const frontMatter = genFrontMatter(answers);
-    if (!fs.existsSync("data/blog"))
-      fs.mkdirSync("data/blog", { recursive: true });
-    const filePath = `data/blog/${fileName ? fileName : "untitled"}.${
+    if (!fs.existsSync("app/blog/_articles"))
+      fs.mkdirSync("app/blog/_articles", { recursive: true });
+    const filePath = `app/blog/_articles/${fileName ? fileName : "untitled"}.${
       answers.extension ? answers.extension : "md"
     }`;
     fs.writeFile(filePath, frontMatter, { flag: "wx" }, (err) => {
@@ -111,5 +124,6 @@ inquirer
       console.log("Prompt couldn't be rendered in the current environment");
     } else {
       console.log("Something went wrong, sorry!");
+      console.error(error);
     }
   });
