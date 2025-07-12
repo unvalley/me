@@ -12,7 +12,7 @@
     "lint": "biome lint",
     "lint:fix": "biome lint --write --unsafe",
     "format": "biome format --write",
-    "post:new": "node ./scripts/compose.js"
+    "post:new": "node ./scripts/compose.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "5.2.6",
