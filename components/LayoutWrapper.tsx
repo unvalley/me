@@ -3,7 +3,6 @@
 import { Footer } from "./Footer";
 import { CustomLink } from "./Link";
 import { MobileNav } from "./MobileNav";
-import { SectionContainer } from "./SectionContainer";
 import { headerNavLinks } from "@/data/index";
 import siteMetadata from "@/data/siteMetadata";
 import type { ReactNode } from "react";
@@ -14,7 +13,7 @@ interface Props {
 
 export const LayoutWrapper = ({ children }: Props) => {
   return (
-    <SectionContainer>
+    <div className="mx-auto my-auto max-w-2xl px-4 sm:px-6 xl:max-w-2xl xl:px-0">
       <div className="flex h-screen flex-col justify-between">
         <header className="flex items-center justify-between py-10">
           <div>
@@ -49,6 +48,6 @@ export const LayoutWrapper = ({ children }: Props) => {
         <main className="mb-auto">{children}</main>
         <Footer />
       </div>
-    </SectionContainer>
+    </div>
   );
 };
