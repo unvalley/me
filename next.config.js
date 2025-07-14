@@ -17,6 +17,9 @@ module.exports = withBundleAnalyzer(
       mdxRs: false,
     },
     transpilePackages: ["shiki"],
+    images: {
+      domains: ["images.unsplash.com"],
+    },
     webpack: (config) => {
       // Handle SVG files
       config.module.rules.push({
