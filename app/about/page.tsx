@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 };
 
 export default async function About() {
-  const { default: MDXContent, metadata: authorData } = await import(
+  const { default: MDXContent, metadata: authorData } = (await import(
     "./_content/about.mdx"
-  ) as {
+  )) as {
     default: React.ComponentType;
     metadata: {
       name: string;

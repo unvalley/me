@@ -17,7 +17,9 @@ export async function generateStaticParams() {
     if (!module.metadata) continue;
 
     const tags = module.metadata.tags || [];
-    tags.forEach((tag: string) => allTags.add(kebabCase(tag)));
+    for (const tag of tags) {
+      allTags.add(kebabCase(tag));
+    }
   }
 
   return Array.from(allTags).map((tag) => ({
