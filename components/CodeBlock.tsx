@@ -4,12 +4,12 @@ import { codeToHtml } from "shiki";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
-interface CodeBlockProps {
+type CodeBlockProps = {
   language: string;
   code: string;
-}
+};
 
-export function CodeBlock({ language, code }: CodeBlockProps) {
+export const CodeBlock = ({ language, code }: CodeBlockProps) => {
   const [html, setHtml] = useState<string>("");
   const { theme, systemTheme } = useTheme();
   const currentTheme = theme === "system" ? systemTheme : theme;
@@ -45,4 +45,4 @@ export function CodeBlock({ language, code }: CodeBlockProps) {
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
-}
+};
