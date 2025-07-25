@@ -3,12 +3,22 @@ import { writeFileSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import siteMetadata from "../data/siteMetadata.js";
 
+interface BlogPost {
+  slug: string;
+  draft: boolean;
+}
+
+interface PostMetadata {
+  draft?: boolean;
+  [key: string]: any;
+}
+
 const articlesDirectory = path.join(process.cwd(), "app", "blog", "_articles");
 
 // Load all blog posts
-async function getAllBlogs() {
+async function getAllBlogs(): Promise<BlogPost[]> {
   const articles = readdirSync(articlesDirectory);
-  const posts = [];
+  const posts: BlogPost[] = [];
 
   for (const article of articles) {
     if (!article.endsWith(".mdx")) continue;
@@ -23,10 +33,10 @@ async function getAllBlogs() {
 
     if (!metadataMatch) continue;
 
-    let metadata;
+    let metadata: PostMetadata;
     try {
       // Use Function constructor to safely evaluate the object literal
-      metadata = new Function(`return ${metadataMatch[1]}`)();
+      metadata = new Function(`return ${metadataMatch[1]}`)() as PostMetadata;
     } catch (e) {
       console.error(`Failed to parse metadata for ${article}:`, e);
       continue;
@@ -41,7 +51,7 @@ async function getAllBlogs() {
   return posts.filter((post) => !post.draft);
 }
 
-async function generate() {
+async function generate(): Promise<void> {
   const allBlogs = await getAllBlogs();
   const contentPages = allBlogs.map((x) => `/blog/${x.slug}`);
 
