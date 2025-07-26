@@ -1,9 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { CustomLink } from "@/components/Link";
-import { Tag } from "@/components/Tag";
 import siteMetadata from "@/data/siteMetadata";
-import { formatDate } from "@/lib/utils/formatDate";
 import type { Metadata } from "next";
 
 const MAX_DISPLAY = 8;
@@ -40,9 +38,17 @@ export default async function Home() {
     .filter((item) => !item.draft)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   return (
     <div className="">
-      <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+      <ul className="space-y-1">
         {!posts.length && (
           <li className="py-12">
             <p className="text-center text-gray-500 dark:text-gray-400">
@@ -51,41 +57,28 @@ export default async function Home() {
           </li>
         )}
         {posts.slice(0, MAX_DISPLAY).map((post) => {
-          const { slug, date, title, description, tags } = post;
+          const { slug, date, title } = post;
           return (
-            <li key={slug} className="py-12">
-              <article>
-                <div className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
-                  <dl>
-                    <dt className="sr-only">Published on</dt>
-                    <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                      <time dateTime={date}>{formatDate(date)}</time>
-                    </dd>
-                  </dl>
-                  <div className="space-y-3 xl:col-span-3">
-                    <div className="space-y-1">
-                      <div>
-                        <h2 className="text-2xl leading-8 tracking-tight">
-                          <CustomLink
-                            href={`/blog/${slug}`}
-                            className="text-gray-900 dark:text-gray-100 hover:text-primary-600 dark:hover:text-primary-400"
-                          >
-                            {title}
-                          </CustomLink>
-                        </h2>
-                        <div className="flex flex-wrap py-2">
-                          {tags.map((tag) => (
-                            <Tag key={tag} text={tag} />
-                          ))}
-                        </div>
-                      </div>
-                      <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                        {description}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
+            <li key={slug} className="group">
+              <CustomLink
+                href={`/blog/${slug}`}
+                className="flex items-baseline justify-between gap-2 py-2"
+              >
+                <span className="text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors">
+                  {title}
+                </span>
+                <span className="flex items-baseline gap-2">
+                  <span className="hidden sm:inline text-gray-300 dark:text-gray-600">
+                    {'·'.repeat(3)}
+                  </span>
+                  <time 
+                    dateTime={date}
+                    className="text-sm text-gray-500 dark:text-gray-400 tabular-nums group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors"
+                  >
+                    {formatDate(date)}
+                  </time>
+                </span>
+              </CustomLink>
             </li>
           );
         })}
