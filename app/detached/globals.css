@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg-primary: 255 255 255;
+    --color-bg-secondary: 250 250 250;
+    --color-bg-tertiary: 245 245 245;
+    
+    --color-text-primary: 0 0 0;
+    --color-text-secondary: 74 74 74;
+    --color-text-tertiary: 122 122 122;
+    --color-text-muted: 154 154 154;
+    
+    --color-border-light: 229 229 229;
+    --color-border-medium: 212 212 212;
+    --color-border-dark: 184 184 184;
+    
+    --color-accent-primary: 0 0 0;
+    --color-accent-hover: 26 26 26;
+  }
+
+  * {
+    @apply border-gray-200;
+  }
+
+  body {
+    @apply bg-white text-black;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "cv01" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    @apply bg-black text-white;
+  }
+}
+
+@layer components {
+  .container-narrow {
+    @apply mx-auto w-full max-w-3xl px-6 md:px-8;
+  }
+
+  .container-wide {
+    @apply mx-auto w-full max-w-7xl px-6 md:px-8;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hover-lift {
+    @apply transition-transform duration-300 ease-out;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-1;
+  }
+
+  .link-underline {
+    @apply relative inline-block;
+  }
+
+  .link-underline::after {
+    @apply absolute bottom-0 left-0 h-px w-0 bg-black transition-all duration-300;
+    content: '';
+  }
+
+  .link-underline:hover::after {
+    @apply w-full;
+  }
+
+  .button-minimal {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium;
+    @apply border border-black bg-white text-black;
+    @apply transition-all duration-200;
+    @apply hover:bg-black hover:text-white;
+    @apply focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2;
+  }
+
+  .button-solid {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium;
+    @apply bg-black text-white;
+    @apply transition-all duration-200;
+    @apply hover:bg-gray-800;
+    @apply focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2;
+  }
+
+  .heading-hero {
+    @apply text-4xl md:text-5xl lg:text-6xl font-light leading-tight tracking-tight;
+  }
+
+  .heading-title {
+    @apply text-3xl md:text-4xl font-light leading-tight tracking-tight;
+  }
+
+  .heading-section {
+    @apply text-2xl md:text-3xl font-light leading-tight;
+  }
+
+  .text-body {
+    @apply text-base md:text-lg leading-relaxed text-gray-600;
+  }
+
+  .text-small {
+    @apply text-sm leading-relaxed text-gray-500;
+  }
+
+  .text-muted {
+    @apply text-sm text-gray-400;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .animate-fade-up {
+    animation: fadeUp 0.5s ease-in-out;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .grid-cols-auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}

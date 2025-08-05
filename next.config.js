@@ -17,6 +17,31 @@ module.exports = withBundleAnalyzer(
       mdxRs: false,
     },
     transpilePackages: ["shiki"],
+    async rewrites() {
+      return [
+        // Subdomain routing for detached.unvalley.me
+        {
+          source: '/',
+          destination: '/detached',
+          has: [
+            {
+              type: 'host',
+              value: 'detached.unvalley.me',
+            },
+          ],
+        },
+        {
+          source: '/:path*',
+          destination: '/detached/:path*',
+          has: [
+            {
+              type: 'host',
+              value: 'detached.unvalley.me',
+            },
+          ],
+        },
+      ]
+    },
     webpack: (config) => {
       // Handle SVG files
       config.module.rules.push({
