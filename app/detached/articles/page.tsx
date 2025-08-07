@@ -1,96 +1,71 @@
-import { Header, Hero, ArticleCard, Footer } from '../components'
+import { Header, Footer } from '../components'
+import Link from 'next/link'
+import fs from 'fs'
+import path from 'path'
+import matter from 'gray-matter'
 
-const articles = [
-  {
-    title: "The Hidden Cost of Constant Connectivity",
-    excerpt: "How our always-on digital lifestyle is affecting our ability to think deeply, form meaningful connections, and find genuine satisfaction in our daily lives.",
-    date: "Jan 15, 2025",
-    readTime: "8 min read",
-    href: "/detached/articles/hidden-cost-connectivity",
-    category: "Digital Wellness",
-  },
-  {
-    title: "Designing Technology That Serves You",
-    excerpt: "Practical strategies for configuring your devices and apps to support your goals rather than distract from them.",
-    date: "Jan 12, 2025",
-    readTime: "6 min read",
-    href: "/detached/articles/technology-that-serves",
-    category: "Productivity",
-  },
-  {
-    title: "The Science of Digital Dopamine",
-    excerpt: "Understanding how apps are designed to capture attention and what you can do to regain control.",
-    date: "Jan 10, 2025",
-    readTime: "10 min read",
-    href: "/detached/articles/digital-dopamine",
-    category: "Research",
-  },
-  {
-    title: "Building Intentional Morning Routines",
-    excerpt: "Start your day with purpose by creating tech-free spaces for reflection and planning.",
-    date: "Jan 8, 2025",
-    readTime: "5 min read",
-    href: "/detached/articles/intentional-mornings",
-    category: "Lifestyle",
-  },
-  {
-    title: "The Power of Digital Boundaries",
-    excerpt: "How to set and maintain healthy limits with technology to protect your time and attention.",
-    date: "Jan 5, 2025",
-    readTime: "7 min read",
-    href: "/detached/articles/digital-boundaries",
-    category: "Productivity",
-  },
-  {
-    title: "Mindful Social Media: A Practical Guide",
-    excerpt: "Transform your relationship with social platforms through intentional usage patterns.",
-    date: "Jan 3, 2025",
-    readTime: "6 min read",
-    href: "/detached/articles/mindful-social-media",
-    category: "Digital Wellness",
-  }
-]
+interface Article {
+  title: string
+  date: string
+  category?: string
+  slug: string
+}
+
+function getArticles(): Article[] {
+  const articlesDirectory = path.join(process.cwd(), 'app/detached/content/articles')
+  const filenames = fs.readdirSync(articlesDirectory)
+  
+  const articles = filenames
+    .filter(filename => filename.endsWith('.mdx'))
+    .map(filename => {
+      const filePath = path.join(articlesDirectory, filename)
+      const fileContents = fs.readFileSync(filePath, 'utf8')
+      const { data } = matter(fileContents)
+      
+      return {
+        title: data.title,
+        date: data.date,
+        category: data.category,
+        slug: filename.replace('.mdx', ''),
+      }
+    })
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  
+  return articles
+}
 
 export default function ArticlesPage() {
+  const articles = getArticles()
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <Header />
       
-      <main className="pt-16 md:pt-20">
-        <Hero
-          title="Articles on Digital Minimalism"
-          description="Explore insights, research, and practical strategies for living more intentionally in our connected world."
-          minimal
-        />
-
-        <section className="py-16 md:py-24">
-          <div className="container-narrow">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-              {articles.map((article) => (
-                <ArticleCard
-                  key={article.href}
-                  {...article}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 md:py-24 bg-gray-50">
-          <div className="container-narrow">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="heading-section mb-6">
-                Stay Updated
-              </h2>
-              <p className="text-body mb-8">
-                Get weekly insights on digital minimalism delivered to your inbox.
-              </p>
-              <a href="/detached/newsletter" className="button-solid">
-                Subscribe to Newsletter
-              </a>
-            </div>
-          </div>
-        </section>
+      <main className="pt-20 pb-16">
+        <div className="max-w-4xl mx-auto px-4">
+          <h1 className="text-3xl font-bold mb-8">Blog archive</h1>
+          
+          <ol className="list-decimal list-inside space-y-3 text-gray-800">
+            {articles.map((article, index) => (
+              <li key={article.slug} className="pl-2">
+                <Link 
+                  href={`/detached/articles/${article.slug}`}
+                  className="text-blue-600 hover:underline"
+                >
+                  {article.title}
+                </Link>
+                <span className="text-gray-600 ml-2">
+                  {article.date}
+                </span>
+                {article.category && (
+                  <span className="text-gray-500 ml-2">
+                    [{article.category}]
+                  </span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </div>
       </main>
 
       <Footer />

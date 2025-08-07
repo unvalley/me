@@ -1,34 +1,25 @@
-import Link from 'next/link'
+import Link from "next/link";
 
 const footerLinks = {
   product: {
-    title: 'Product',
+    title: "Product",
     links: [
-      { name: 'Features', href: '/detached/features' },
-      { name: 'Download', href: '/detached/download' },
-      { name: 'Pricing', href: '/detached/pricing' },
-      { name: 'Roadmap', href: '/detached/roadmap' },
-    ],
-  },
-  resources: {
-    title: 'Resources',
-    links: [
-      { name: 'Articles', href: '/detached' },
-      { name: 'Guides', href: '/detached/guides' },
-      { name: 'Research', href: '/detached/research' },
-      { name: 'Community', href: '/detached/community' },
+      { name: "Features", href: "/detached/features" },
+      { name: "Download", href: "/detached/download" },
+      { name: "Pricing", href: "/detached/pricing" },
+      { name: "Roadmap", href: "/detached/roadmap" },
     ],
   },
   company: {
-    title: 'Company',
+    title: "Company",
     links: [
-      { name: 'About', href: '/detached/about' },
-      { name: 'Contact', href: '/detached/contact' },
-      { name: 'Privacy', href: '/detached/privacy' },
-      { name: 'Terms', href: '/detached/terms' },
+      { name: "About", href: "/detached/about" },
+      { name: "Contact", href: "/detached/contact" },
+      { name: "Privacy", href: "/detached/privacy" },
+      { name: "Terms", href: "/detached/terms" },
     ],
   },
-}
+};
 
 export default function Footer() {
   return (
@@ -46,7 +37,7 @@ export default function Footer() {
               Reclaim your focus. Transform your relationship with technology.
             </p>
           </div>
-          
+
           {Object.entries(footerLinks).map(([key, section]) => (
             <div key={key}>
               <h3 className="text-sm font-medium text-text-primary mb-4">
@@ -67,7 +58,7 @@ export default function Footer() {
             </div>
           ))}
         </div>
-        
+
         <div className="mt-12 pt-8 border-t border-border-light">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-xs text-text-muted">
@@ -101,5 +92,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

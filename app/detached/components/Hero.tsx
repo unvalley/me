@@ -1,18 +1,18 @@
-import Link from 'next/link'
+import Link from "next/link";
 
 interface HeroProps {
-  title: string
-  subtitle?: string
-  description?: string
+  title: string;
+  subtitle?: string;
+  description?: string;
   primaryAction?: {
-    label: string
-    href: string
-  }
+    label: string;
+    href: string;
+  };
   secondaryAction?: {
-    label: string
-    href: string
-  }
-  minimal?: boolean
+    label: string;
+    href: string;
+  };
+  minimal?: boolean;
 }
 
 export default function Hero({
@@ -24,7 +24,9 @@ export default function Hero({
   minimal = false,
 }: HeroProps) {
   return (
-    <section className={`relative ${minimal ? 'py-20 md:py-24' : 'py-24 md:py-32 lg:py-40'}`}>
+    <section
+      className={`relative ${minimal ? "py-10 md:py-12" : "py-10 md:py-20 lg:py-40"}`}
+    >
       <div className="container-narrow">
         <div className="max-w-4xl mx-auto text-center">
           {subtitle && (
@@ -32,17 +34,17 @@ export default function Hero({
               {subtitle}
             </p>
           )}
-          
+
           <h1 className="heading-hero mb-6 animate-fade-up animation-delay-100">
             {title}
           </h1>
-          
+
           {description && (
             <p className="text-body max-w-2xl mx-auto mb-10 animate-fade-up animation-delay-200">
               {description}
             </p>
           )}
-          
+
           {(primaryAction || secondaryAction) && (
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up animation-delay-300">
               {primaryAction && (
@@ -66,5 +68,5 @@ export default function Hero({
         </div>
       </div>
     </section>
-  )
+  );
 }
