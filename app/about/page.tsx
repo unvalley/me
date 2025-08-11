@@ -43,72 +43,68 @@ export default async function About() {
           </div>
         </section>
 
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100 md:leading-14">
+        <section className="pt-6 pb-8 space-y-2 md:space-y-5">
+          <h2 className="text-2xl tracking-tight text-gray-900 dark:text-gray-100 md:leading-14">
             PROJECTS
           </h2>
-          <div className="space-y-4">
-            {projectsData.map((project) => (
-              <div
-                key={project.title}
-                className="border-b border-gray-200 dark:border-gray-700 pb-4"
-              >
-                {project.href ? (
-                  <CustomLink href={project.href} className="group block">
-                    <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400">
+          {projectsData.map((project) => (
+            <div key={project.title} className="mb-4 space-y-2 -m-4">
+              {project.href ? (
+                <CustomLink
+                  href={project.href}
+                  className="flex items-center gap-x-4 p-4 rounded-lg border border-transparent hover:bg-primary-100 dark:hover:bg-primary-900 group"
+                >
+                  <div className="flex-auto flex flex-col pb-4 border-b border-primary-100 dark:border-primary-900 text-primary-700 dark:text-primary-300">
+                    <span className="text-lg">{project.title}</span>
+                    <span className="text-primary-500 dark:text-primary-500">
                       {project.description}
-                    </p>
-                  </CustomLink>
-                ) : (
-                  <div>
-                    <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400">
-                      {project.description}
-                    </p>
+                    </span>
                   </div>
-                )}
-              </div>
-            ))}
-          </div>
+                </CustomLink>
+              ) : (
+                <div className="flex items-center gap-x-4 p-4 rounded-lg border border-transparent">
+                  <div className="flex-auto flex flex-col pb-4 border-b border-primary-100 dark:border-primary-900 text-primary-700 dark:text-primary-300">
+                    <span className="text-lg">{project.title}</span>
+                    <span className="text-primary-500 dark:text-primary-500">
+                      {project.description}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
         </section>
 
-        <section className="space-y-4">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100 md:leading-14">
+        <section className="pt-6 pb-8 space-y-2 md:space-y-5">
+          <h2 className="text-2xl tracking-tight text-gray-900 dark:text-gray-100 md:leading-14">
             TALKS
           </h2>
-          <div className="space-y-4">
-            {talks.map((talk) => (
-              <div
-                key={talk.title}
-                className="border-b border-gray-200 dark:border-gray-700 pb-4"
-              >
-                {talk.href ? (
-                  <CustomLink href={talk.href} className="group block">
-                    <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400">
-                      {talk.title}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400">
+          {talks.map((talk) => (
+            <div key={talk.title} className="mb-4 space-y-2 -m-4">
+              {talk.href ? (
+                <CustomLink
+                  href={talk.href}
+                  className="flex items-center gap-x-4 p-4 rounded-lg border border-transparent hover:bg-primary-100 dark:hover:bg-primary-900 group"
+                >
+                  <div className="flex-auto flex flex-col pb-4 border-b border-primary-100 dark:border-primary-900 text-primary-700 dark:text-primary-300">
+                    <span className="text-lg">{talk.title}</span>
+                    <span className="text-primary-500 dark:text-primary-500">
                       Slides about {talk.topic} for {talk.event}
-                    </p>
-                  </CustomLink>
-                ) : (
-                  <div>
-                    <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                      {talk.title}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400">
-                      Slides about {talk.topic} for {talk.event}
-                    </p>
+                    </span>
                   </div>
-                )}
-              </div>
-            ))}
-          </div>
+                </CustomLink>
+              ) : (
+                <div className="flex items-center gap-x-4 p-4 rounded-lg border border-transparent">
+                  <div className="flex-auto flex flex-col pb-4 border-b border-primary-100 dark:border-primary-900 text-primary-700 dark:text-primary-300">
+                    <span className="text-lg">{talk.title}</span>
+                    <span className="text-primary-500 dark:text-primary-500">
+                      Slides about {talk.topic} for {talk.event}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
         </section>
       </div>
     </div>
