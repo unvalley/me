@@ -2,6 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { CustomLink } from "@/components/Link";
 import { Tag } from "@/components/Tag";
+import { PageTitle } from "@/components/PageTitle";
 import siteMetadata from "@/data/siteMetadata";
 import { kebabCase } from "@/lib/utils/kebabCase";
 import type { Metadata } from "next";
@@ -44,23 +45,25 @@ export default async function Tags() {
   const sortedTags = Object.keys(tags).sort((a, b) => tags[b] - tags[a]);
 
   return (
-    <div className="flex flex-col items-start justify-start md:mt-24 md:flex-row md:items-center md:justify-center md:space-x-6 md:divide-y-0">
-      <div className="space-x-2 pt-6 pb-8 md:space-y-5">
-        <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:border-r-2 md:px-6 md:text-6xl md:leading-14">
-          Tags
-        </h1>
+    <div>
+      <div className="space-y-2 pb-8 pt-6 md:space-y-5">
+        <PageTitle>TAGS</PageTitle>
+        <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">Things I blog about</p>
       </div>
-      <div className="flex max-w-lg flex-wrap">
-        {Object.keys(tags).length === 0 && "No tags found."}
+      
+      <div className="flex flex-wrap gap-4">
+        {Object.keys(tags).length === 0 && (
+          <p className="text-gray-500 dark:text-gray-400">No tags found.</p>
+        )}
         {sortedTags.map((t) => {
           return (
-            <div key={t} className="mt-2 mb-2 mr-5">
+            <div key={t} className="flex items-center gap-1">
               <Tag text={t} />
               <CustomLink
                 href={`/tags/${kebabCase(t)}`}
-                className="-ml-2 text-sm font-semibold text-gray-600 dark:text-gray-300"
+                className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
               >
-                {` (${tags[t]})`}
+                ({tags[t]})
               </CustomLink>
             </div>
           );

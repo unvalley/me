@@ -38,7 +38,7 @@ export default async function BlogPage() {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
-    <div className="">
+    <div>
       <div className="space-y-2 pb-8 pt-6 md:space-y-5">
         <PageTitle>BLOG</PageTitle>
       </div>

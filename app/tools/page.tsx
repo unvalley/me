@@ -14,12 +14,15 @@ export default function Tools() {
   const daily = toolsData.filter((x) => x.category === "daily");
 
   return (
-    <div className="">
-      <div className="space-y-2 pt-6 pb-8 md:space-y-5">
+    <div>
+      <div className="space-y-2 pb-8 pt-6 md:space-y-5">
         <PageTitle>TOOLS</PageTitle>
-        <p>What I use.</p>
+        <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+          What I use.
+        </p>
       </div>
-      <div className="container prose max-w-none pt-10 pb-8 dark:prose-dark">
+
+      <div className="prose max-w-none dark:prose-dark">
         <h2>Services</h2>
         <ul>
           {services.map((x) => (
