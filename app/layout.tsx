@@ -4,6 +4,7 @@ import "@/css/tailwind.css";
 import "katex/dist/katex.css";
 
 import "@fontsource/inter";
+import "@fontsource/ibm-plex-mono";
 
 import type { Metadata } from "next";
 
@@ -87,7 +88,7 @@ export default function RootLayout({
                 <CustomLink href="/" aria-label={siteMetadata.headerTitle}>
                   <div className="flex items-center justify-between">
                     {typeof siteMetadata.headerTitle === "string" ? (
-                      <div className="h-6 text-2xl font-semibold sm:block">
+                      <div className="text-xl font-mono">
                         {siteMetadata.headerTitle}
                       </div>
                     ) : (
@@ -96,12 +97,12 @@ export default function RootLayout({
                   </div>
                 </CustomLink>
                 <div className="flex items-center text-base leading-5">
-                  <div className="hidden sm:block">
+                  <div className="hidden sm:block space-x-4">
                     {headerNavLinks.map((link) => (
                       <CustomLink
                         key={link.title}
                         href={link.href}
-                        className="p-1 font-medium text-gray-900 dark:text-gray-100 sm:p-4"
+                        className="font-mono text-gray-900 dark:text-gray-100"
                       >
                         {link.title}
                       </CustomLink>

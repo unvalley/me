@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDate } from "@/lib/utils/formatDate";
 import Link from "next/link";
 
 interface BlogItem {
@@ -14,14 +15,6 @@ interface BlogItem {
 interface BlogListProps {
   items: BlogItem[];
 }
-
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
 
 export const BlogList = ({ items }: BlogListProps) => {
   return (

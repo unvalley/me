@@ -4,6 +4,7 @@ import Link from "next/link";
 import siteMetadata from "@/data/siteMetadata";
 import { kebabCase } from "@/lib/utils/kebabCase";
 import type { Metadata } from "next";
+import { formatDate } from "@/lib/utils/formatDate";
 
 const articlesDirectory = path.join(process.cwd(), "app", "blog", "_articles");
 
@@ -69,18 +70,10 @@ export default async function Tag({
   }
 
   const sortedItems = items.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
-  const title = tag.split(" ").join("-");
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
+  //   const title = tag.split(" ").join("-");
 
   return (
     <div>

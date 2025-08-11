@@ -65,7 +65,7 @@ export const MobileNav = () => {
             <div key={link.title} className="px-12 py-4">
               <CustomLink
                 href={link.href}
-                className="text-2xl text-primary-700 dark:text-gray-100 font-helvetica"
+                className="text-2xl text-primary-700 dark:text-gray-100 font-mono"
                 onClick={onToggleNav}
               >
                 {link.title}

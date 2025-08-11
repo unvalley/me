@@ -28,6 +28,7 @@ module.exports = {
         //@ts-ignore
         sans: ["InterVariable", ...defaultTheme.fontFamily.sans],
         helvetica: ["Helvetica Neue", "Helvetica"],
+        mono: ["IBM Plex Mono", ...defaultTheme.fontFamily.mono],
       },
       colors: {
         primary: colors.slate,
