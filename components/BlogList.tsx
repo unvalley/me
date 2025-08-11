@@ -30,13 +30,13 @@ export const BlogList = ({ items }: BlogListProps) => {
               <span className="text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors">
                 {title}
               </span>
-              <span className="flex items-baseline gap-2">
+              <span className="flex items-baseline gap-2 flex-shrink-0">
                 <span className="hidden sm:inline text-gray-300 dark:text-gray-600">
                   {"·".repeat(3)}
                 </span>
                 <time
                   dateTime={date}
-                  className="text-sm text-gray-500 dark:text-gray-400 tabular-nums group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors"
+                  className="text-sm text-gray-500 dark:text-gray-400 tabular-nums group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors whitespace-nowrap"
                 >
                   {formatDate(date)}
                 </time>

@@ -93,8 +93,7 @@ export const projectsData = [
   },
   {
     title: "UNV (This blog)",
-    description:
-      "A personal blog built with Next.js and MDX. This is based on timlrx/tailwind-nextjs-starter-blog but I updated a lot.",
+    description: "A personal blog built with Next.js and MDX.",
     imgSrc: "",
     href: "https://github.com/unvalley/me",
   },
@@ -187,6 +186,14 @@ export const toolsData: {
     description: "Cheap but enough and tough.",
     imgSrc: "",
     href: "https://amzn.to/3LRamjy",
+    affiliate: true,
+    category: "daily",
+  },
+  {
+    name: "Arc'teryx Items",
+    description: "Functionality and Design.",
+    imgSrc: "",
+    href: "https://unvalley.me/blog/1754673967",
     affiliate: true,
     category: "daily",
   },

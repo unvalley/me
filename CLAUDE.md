@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal blog website built with Next.js 15, TypeScript, and MDX content. It's based on the [timlrx/tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog) template.
+This is a personal blog website built with Next.js 15, TypeScript, and MDX content.
 
 ## Essential Commands
 

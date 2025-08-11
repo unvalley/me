@@ -38,18 +38,18 @@ export default async function About() {
           </div>
         </section>
 
-        <section className="pt-6 pb-8 space-y-2 md:space-y-5">
-          <h2 className="text-2xl tracking-tight text-gray-900 dark:text-gray-100 md:leading-14">
+        <section className="space-y-1">
+          <h2 className="text-xl tracking-tight md:leading-14 font-mono">
             PROJECTS
           </h2>
           {projectsData.map((project) => (
-            <div key={project.title} className="mb-4 space-y-2 -m-4">
+            <div key={project.title} className="space-y-1 -m-4">
               {project.href ? (
                 <CustomLink
                   href={project.href}
-                  className="flex items-center gap-x-4 p-4 rounded-lg border border-transparent hover:bg-primary-100 dark:hover:bg-primary-900 group"
+                  className="flex items-center gap-x-2 p-4 rounded-lg border border-transparent hover:bg-primary-100 dark:hover:bg-primary-900 group"
                 >
-                  <div className="flex-auto flex flex-col pb-4 border-b border-primary-100 dark:border-primary-900 text-primary-700 dark:text-primary-300">
+                  <div className="flex-auto flex flex-col pb-2 border-b border-primary-100 dark:border-primary-900 text-primary-700 dark:text-primary-300">
                     <span className="text-lg">{project.title}</span>
                     <span className="text-primary-500 dark:text-primary-500">
                       {project.description}
@@ -57,8 +57,8 @@ export default async function About() {
                   </div>
                 </CustomLink>
               ) : (
-                <div className="flex items-center gap-x-4 p-4 rounded-lg border border-transparent">
-                  <div className="flex-auto flex flex-col pb-4 border-b border-primary-100 dark:border-primary-900 text-primary-700 dark:text-primary-300">
+                <div className="flex items-center gap-x-2 p-4 rounded-lg border border-transparent">
+                  <div className="flex-auto flex flex-col pb-2 border-b border-primary-100 dark:border-primary-900 text-primary-700 dark:text-primary-300">
                     <span className="text-lg">{project.title}</span>
                     <span className="text-primary-500 dark:text-primary-500">
                       {project.description}
@@ -70,8 +70,8 @@ export default async function About() {
           ))}
         </section>
 
-        <section className="pt-6 pb-8 space-y-2 md:space-y-5">
-          <h2 className="text-2xl tracking-tight text-gray-900 dark:text-gray-100 md:leading-14">
+        <section className="space-y-1">
+          <h2 className="text-xl tracking-tight md:leading-14 font-mono">
             TALKS
           </h2>
           {talks.map((talk) => (

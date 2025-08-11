@@ -21,7 +21,9 @@ export default function Tools() {
       </div>
 
       <div className="prose dark:prose-dark">
-        <h2>Services</h2>
+        <h2 className="text-xl tracking-tight md:leading-14 font-mono">
+          SERVICES
+        </h2>
         <ul>
           {services.map((x) => (
             <li key={x.name}>
@@ -31,7 +33,7 @@ export default function Tools() {
           ))}
         </ul>
 
-        <h2>AI</h2>
+        <h2 className="text-xl tracking-tight md:leading-14 font-mono">AI</h2>
         <ul>
           {aiServices.map((x) => (
             <li key={x.name}>
@@ -41,7 +43,9 @@ export default function Tools() {
           ))}
         </ul>
 
-        <h2>Daily</h2>
+        <h2 className="text-xl tracking-tight md:leading-14 font-mono">
+          Daily
+        </h2>
         <ul>
           {daily.map((x) => (
             <li key={x.name}>
