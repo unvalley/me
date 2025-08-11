@@ -194,7 +194,7 @@ export const toolsData: {
     description: "Functionality and Design.",
     imgSrc: "",
     href: "https://unvalley.me/blog/1754673967",
-    affiliate: true,
+    affiliate: false,
     category: "daily",
   },
   {
