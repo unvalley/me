@@ -8,12 +8,10 @@ export default function NotFound() {
           404
         </h1>
       </div>
-      <div className="max-w-md">
-        <p className="mb-4 text-xl  leading-normal md:text-2xl">
-          Sorry we couldn't find this page.
-        </p>
-        <p className="mb-8">
-          But don't worry, you can find plenty of other things on our homepage.
+      <div>
+        <p className="mb-4 text-xl leading-normal">
+          Sorry we couldn't find this page. But don't worry, you can find plenty
+          of other things on our homepage.
         </p>
         <CustomLink href="/">
           <button

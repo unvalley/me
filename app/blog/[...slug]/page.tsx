@@ -17,14 +17,14 @@ export default async function BlogPost(props: {
     );
 
     return (
-      <article className="mx-auto max-w-2xl py-16">
+      <article className="mx-auto py-16">
         <div className="mb-6 text-center">
           <h1 className="mb-2 text-2xl">{metadata.title}</h1>
           <time className="text-gray-600 dark:text-gray-400">
             {new Date(metadata.date).toDateString()}
           </time>
         </div>
-        <div className="prose prose-lg dark:prose-invert max-w-none">
+        <div className="prose prose-lg dark:prose-invert">
           <MDXContent />
         </div>
       </article>

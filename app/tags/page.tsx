@@ -45,32 +45,23 @@ export default async function Tags() {
   const sortedTags = Object.keys(tags).sort((a, b) => tags[b] - tags[a]);
 
   return (
-    <div>
-      <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-        <PageTitle>TAGS</PageTitle>
-        <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-          Things I blog about
-        </p>
-      </div>
-
-      <div className="flex flex-wrap gap-4">
-        {Object.keys(tags).length === 0 && (
-          <p className="text-gray-500 dark:text-gray-400">No tags found.</p>
-        )}
-        {sortedTags.map((t) => {
-          return (
-            <div key={t} className="flex items-center gap-1">
-              <Tag text={t} />
-              <CustomLink
-                href={`/tags/${kebabCase(t)}`}
-                className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
-              >
-                ({tags[t]})
-              </CustomLink>
-            </div>
-          );
-        })}
-      </div>
+    <div className="flex flex-wrap gap-4">
+      {Object.keys(tags).length === 0 && (
+        <p className="text-gray-500 dark:text-gray-400">No tags found.</p>
+      )}
+      {sortedTags.map((t) => {
+        return (
+          <div key={t} className="flex items-center gap-1">
+            <Tag text={t} />
+            <CustomLink
+              href={`/tags/${kebabCase(t)}`}
+              className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
+            >
+              ({tags[t]})
+            </CustomLink>
+          </div>
+        );
+      })}
     </div>
   );
 }

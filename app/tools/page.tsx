@@ -1,4 +1,3 @@
-import { PageTitle } from "@/components/PageTitle";
 import { toolsData } from "@/data/index";
 import { CustomLink } from "@/components/Link";
 import type { Metadata } from "next";
@@ -16,13 +15,12 @@ export default function Tools() {
   return (
     <div>
       <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-        <PageTitle>TOOLS</PageTitle>
         <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
           What I use.
         </p>
       </div>
 
-      <div className="prose max-w-none dark:prose-dark">
+      <div className="prose dark:prose-dark">
         <h2>Services</h2>
         <ul>
           {services.map((x) => (

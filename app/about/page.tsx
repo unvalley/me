@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { CustomLink } from "@/components/Link";
-import { PageTitle } from "@/components/PageTitle";
 import { projectsData, talks } from "@/data/index";
 
 export const metadata: Metadata = {
@@ -23,10 +22,6 @@ export default async function About() {
 
   return (
     <div>
-      <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-        <PageTitle>ABOUT</PageTitle>
-      </div>
-
       <div className="space-y-8">
         <section className="items-start space-y-4 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
           <div className="flex flex-col items-center self-center">
@@ -38,7 +33,7 @@ export default async function About() {
               className="rounded-full"
             />
           </div>
-          <div className="prose dark:prose-dark max-w-none xl:col-span-2">
+          <div className="prose dark:prose-dark xl:col-span-2">
             <MDXContent />
           </div>
         </section>

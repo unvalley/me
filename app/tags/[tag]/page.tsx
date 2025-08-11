@@ -1,7 +1,6 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import Link from "next/link";
-import { PageTitle } from "@/components/PageTitle";
 import siteMetadata from "@/data/siteMetadata";
 import { kebabCase } from "@/lib/utils/kebabCase";
 import type { Metadata } from "next";
@@ -85,14 +84,6 @@ export default async function Tag({
 
   return (
     <div>
-      <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-        <PageTitle>TAG: {title.toUpperCase()}</PageTitle>
-        <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-          {sortedItems.length} post{sortedItems.length !== 1 ? "s" : ""} tagged
-          with "{title}"
-        </p>
-      </div>
-
       <ul className="space-y-1">
         {sortedItems.length === 0 && (
           <li className="py-12">

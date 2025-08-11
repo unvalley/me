@@ -3,7 +3,6 @@ import path from "node:path";
 import siteMetadata from "@/data/siteMetadata";
 import type { Metadata } from "next";
 import { BlogList } from "@/components/BlogList";
-import { PageTitle } from "@/components/PageTitle";
 
 export const metadata: Metadata = {
   title: `Blog - ${siteMetadata.author}`,
@@ -40,7 +39,9 @@ export default async function BlogPage() {
   return (
     <div>
       <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-        <PageTitle>BLOG</PageTitle>
+        <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+          Random Thoughts.
+        </p>
       </div>
       <BlogList items={publishedItems} />
     </div>
