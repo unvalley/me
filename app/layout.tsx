@@ -7,10 +7,13 @@ import "@fontsource/inter";
 
 import type { Metadata } from "next";
 
-import { LayoutWrapper } from "@/components/LayoutWrapper";
 import siteMetadata from "@/data/siteMetadata";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Providers } from "./providers";
+import { Footer } from "@/components/Footer";
+import { CustomLink } from "@/components/Link";
+import { MobileNav } from "@/components/MobileNav";
+import { headerNavLinks } from "../data";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
@@ -76,9 +79,41 @@ export default function RootLayout({
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className="bg-slate-50 text-black antialiased dark:bg-gray-900 dark:text-white">
+      <body className="bg-gray-50 antialiased dark:bg-gray-900">
         <Providers>
-          <LayoutWrapper>{children}</LayoutWrapper>
+          <div className="mx-auto my-auto max-w-2xl px-4 sm:px-6 xl:max-w-2xl xl:px-0">
+            <div className="flex h-screen flex-col justify-between">
+              <header className="flex items-center justify-between py-10">
+                <CustomLink href="/" aria-label={siteMetadata.headerTitle}>
+                  <div className="flex items-center justify-between">
+                    {typeof siteMetadata.headerTitle === "string" ? (
+                      <div className="h-6 text-2xl font-semibold sm:block">
+                        {siteMetadata.headerTitle}
+                      </div>
+                    ) : (
+                      siteMetadata.headerTitle
+                    )}
+                  </div>
+                </CustomLink>
+                <div className="flex items-center text-base leading-5">
+                  <div className="hidden sm:block">
+                    {headerNavLinks.map((link) => (
+                      <CustomLink
+                        key={link.title}
+                        href={link.href}
+                        className="p-1 font-medium text-gray-900 dark:text-gray-100 sm:p-4"
+                      >
+                        {link.title}
+                      </CustomLink>
+                    ))}
+                  </div>
+                  <MobileNav />
+                </div>
+              </header>
+              <main className="mb-auto">{children}</main>
+              <Footer />
+            </div>
+          </div>
         </Providers>
         <GoogleAnalytics gaId={siteMetadata.analytics.googleAnalyticsId} />
       </body>

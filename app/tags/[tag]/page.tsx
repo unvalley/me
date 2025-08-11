@@ -1,6 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import Link from "next/link";
+import { PageTitle } from "@/components/PageTitle";
 import siteMetadata from "@/data/siteMetadata";
 import { kebabCase } from "@/lib/utils/kebabCase";
 import type { Metadata } from "next";
@@ -74,47 +75,55 @@ export default async function Tag({
 
   const title = tag.split(" ").join("-");
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   return (
-    <div className="">
+    <div>
       <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-        <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-          Tag: {title}
-        </h1>
+        <PageTitle>TAG: {title.toUpperCase()}</PageTitle>
+        <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+          {sortedItems.length} post{sortedItems.length !== 1 ? "s" : ""} tagged
+          with "{title}"
+        </p>
       </div>
-      <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+
+      <ul className="space-y-1">
+        {sortedItems.length === 0 && (
+          <li className="py-12">
+            <p className="text-center text-gray-500 dark:text-gray-400">
+              No posts found for this tag.
+            </p>
+          </li>
+        )}
         {sortedItems.map((item) => {
-          const { slug, date, title, description } = item;
+          const { slug, date, title } = item;
           return (
-            <li key={slug} className="py-12">
-              <article>
-                <div className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
-                  <dl>
-                    <dt className="sr-only">Published on</dt>
-                    <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                      <time dateTime={date}>
-                        {new Date(date).toDateString()}
-                      </time>
-                    </dd>
-                  </dl>
-                  <div className="space-y-5 xl:col-span-3">
-                    <div className="space-y-6">
-                      <div>
-                        <h2 className="text-2xl leading-8 tracking-tight">
-                          <Link
-                            href={`/blog/${slug}`}
-                            className="text-gray-900 dark:text-gray-100"
-                          >
-                            {title}
-                          </Link>
-                        </h2>
-                      </div>
-                      <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                        {description}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
+            <li key={slug} className="group">
+              <Link
+                href={`/blog/${slug}`}
+                className="flex items-baseline justify-between gap-2 py-2"
+              >
+                <span className="text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors">
+                  {title}
+                </span>
+                <span className="flex items-baseline gap-2">
+                  <span className="hidden sm:inline text-gray-300 dark:text-gray-600">
+                    {"·".repeat(3)}
+                  </span>
+                  <time
+                    dateTime={date}
+                    className="text-sm text-gray-500 dark:text-gray-400 tabular-nums group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors"
+                  >
+                    {formatDate(date)}
+                  </time>
+                </span>
+              </Link>
             </li>
           );
         })}

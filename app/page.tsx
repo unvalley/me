@@ -3,8 +3,9 @@ import path from "node:path";
 import { CustomLink } from "@/components/Link";
 import siteMetadata from "@/data/siteMetadata";
 import type { Metadata } from "next";
+import { BlogList } from "@/components/BlogList";
 
-const MAX_DISPLAY = 8;
+const MAX_DISPLAY = 15;
 
 export const metadata: Metadata = {
   title: siteMetadata.title,
@@ -38,16 +39,8 @@ export default async function Home() {
     .filter((item) => !item.draft)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
-
   return (
-    <div className="">
+    <div>
       <ul className="space-y-1">
         {!posts.length && (
           <li className="py-12">
@@ -56,32 +49,7 @@ export default async function Home() {
             </p>
           </li>
         )}
-        {posts.slice(0, MAX_DISPLAY).map((post) => {
-          const { slug, date, title } = post;
-          return (
-            <li key={slug} className="group">
-              <CustomLink
-                href={`/blog/${slug}`}
-                className="flex items-baseline justify-between gap-2 py-2"
-              >
-                <span className="text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 transition-colors">
-                  {title}
-                </span>
-                <span className="flex items-baseline gap-2">
-                  <span className="hidden sm:inline text-gray-300 dark:text-gray-600">
-                    {"·".repeat(3)}
-                  </span>
-                  <time
-                    dateTime={date}
-                    className="text-sm text-gray-500 dark:text-gray-400 tabular-nums group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors"
-                  >
-                    {formatDate(date)}
-                  </time>
-                </span>
-              </CustomLink>
-            </li>
-          );
-        })}
+        <BlogList items={posts.slice(0, MAX_DISPLAY)} />
       </ul>
       {posts.length > MAX_DISPLAY && (
         <div className="flex justify-end text-base font-medium leading-6 pt-4 pb-8">
