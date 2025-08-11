@@ -48,9 +48,11 @@ export default async function Tags() {
     <div>
       <div className="space-y-2 pb-8 pt-6 md:space-y-5">
         <PageTitle>TAGS</PageTitle>
-        <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">Things I blog about</p>
+        <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
+          Things I blog about
+        </p>
       </div>
-      
+
       <div className="flex flex-wrap gap-4">
         {Object.keys(tags).length === 0 && (
           <p className="text-gray-500 dark:text-gray-400">No tags found.</p>
