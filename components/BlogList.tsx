@@ -38,8 +38,8 @@ export function BlogList({ items }: BlogListProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
 
@@ -60,9 +60,9 @@ export function BlogList({ items }: BlogListProps) {
                 </span>
                 <span className="flex items-baseline gap-2">
                   <span className="hidden sm:inline text-gray-300 dark:text-gray-600">
-                    {'·'.repeat(3)}
+                    {"·".repeat(3)}
                   </span>
-                  <time 
+                  <time
                     dateTime={date}
                     className="text-sm text-gray-500 dark:text-gray-400 tabular-nums group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors"
                   >

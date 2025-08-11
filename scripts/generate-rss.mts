@@ -40,7 +40,7 @@ async function getAllBlogs(): Promise<BlogPost[]> {
 
     // Extract metadata from export const metadata = {...}
     const metadataMatch = fileContent.match(
-      /export\s+const\s+metadata\s*=\s*({[\s\S]*?})\s*$/m
+      /export\s+const\s+metadata\s*=\s*({[\s\S]*?})\s*$/m,
     );
 
     if (!metadataMatch) continue;
@@ -120,7 +120,7 @@ const generateRss = (posts: BlogPost[], page = "feed.xml"): string => `
 async function generateRSS(): Promise<void> {
   const allBlogs = await getAllBlogs();
   const sortedPosts = allBlogs.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 
   // RSS for blog posts
@@ -133,7 +133,7 @@ async function generateRSS(): Promise<void> {
     const tags = await getAllTags(allBlogs);
     for (const tag of Object.keys(tags)) {
       const filteredPosts = sortedPosts.filter((post) =>
-        post.tags.map((t) => new GithubSlugger().slug(t)).includes(tag)
+        post.tags.map((t) => new GithubSlugger().slug(t)).includes(tag),
       );
       const rss = generateRss(filteredPosts, `tags/${tag}/feed.xml`);
       const rssPath = path.join("public", "tags", tag);
