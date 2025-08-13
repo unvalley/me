@@ -13,7 +13,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { Providers } from "./providers";
 import { Footer } from "@/components/Footer";
 import { CustomLink } from "@/components/Link";
-import { headerNavLinks } from "../data";
+import { Navigation } from "@/components/Navigation";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
@@ -96,17 +96,7 @@ export default function RootLayout({
                   </div>
                 </CustomLink>
                 <div className="flex items-center text-base leading-5">
-                  <div className="space-x-3 sm:space-x-4">
-                    {headerNavLinks.map((link) => (
-                      <CustomLink
-                        key={link.title}
-                        href={link.href}
-                        className="font-mono text-sm sm:text-base text-gray-900 dark:text-gray-100"
-                      >
-                        {link.title}
-                      </CustomLink>
-                    ))}
-                  </div>
+                  <Navigation />
                 </div>
               </header>
               <main className="mb-auto">{children}</main>
