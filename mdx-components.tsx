@@ -16,7 +16,7 @@ export const components: Record<string, FC<any>> = {
   a: ({ href, ...props }) => {
     return (
       <Link
-        className="break-words decoration-from-font underline underline-offset-2 hover:decoration-wavy"
+        className="break-words underline hover:decoration-wavy"
         href={href || ""}
         draggable={false}
         {...(href?.startsWith("https://")
