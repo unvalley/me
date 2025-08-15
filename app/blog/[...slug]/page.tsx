@@ -3,6 +3,7 @@ import path from "node:path";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { formatDate } from "@/lib/utils/formatDate";
+import siteMetadata from "@/data/siteMetadata";
 
 export default async function BlogPost(props: {
   params: Promise<{
@@ -60,11 +61,31 @@ export async function generateMetadata(props: {
     return {
       title: metadata.title,
       description: metadata.description,
+      openGraph: {
+        title: metadata.title,
+        description: metadata.description,
+        type: "article",
+        url: `${siteMetadata.siteUrl}/blog/${slug}`,
+        siteName: siteMetadata.title,
+        locale: "ja_JP",
+      },
+      twitter: {
+        card: "summary",
+        title: metadata.title,
+        description: metadata.description,
+      },
     };
   } catch {
     return {
       title: "Blog Post",
       description: "Blog post content",
+      openGraph: {
+        title: "Blog Post",
+        description: "Blog post content",
+        type: "article",
+        siteName: siteMetadata.title,
+        locale: "ja_JP",
+      },
     };
   }
 }
