@@ -4,6 +4,9 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "correctness": {
+        "useUniqueElementIds": "off"
+      },
       "complexity": {
         "noForEach": "warn"
       },
