@@ -488,7 +488,7 @@ const Field = ({ label, value }: { label: string; value?: string }) => (
 );
 
 const Client = () => {
-  const [mode, setMode] = useState<"paste" | "separated">("paste");
+  const [mode, setMode] = useState<"paste" | "separated">("separated");
 
   // Paste mode state
   const [input, setInput] = useState("");
