@@ -1,6 +1,8 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+/* ===================== Types ===================== */
 
 type ParsedAddress = {
   postal?: string;
@@ -13,6 +15,17 @@ type ParsedAddress = {
   go?: number;
   building?: string;
 };
+
+type ZipRome = {
+  zipcode: string; // "1000001"
+  prefecture: string; // "TOKYO" | "AKITA KEN" ...
+  city: string; // "CHIYODA" | "OGACHI GUN ..." ...
+  town?: string | null; // "CHIYODA" | "IKANIKEISAIGANAIBAAI" | null
+};
+
+type ZipRomeMapFile = Record<string, ZipRome[]>;
+
+/* ===================== Const ===================== */
 
 const PREF_MAP: Record<string, string> = {
   北海道: "Hokkaido",
@@ -66,6 +79,41 @@ const PREF_MAP: Record<string, string> = {
 
 const FW_NUM = "０１２３４５６７８９";
 const HW_NUM = "0123456789";
+const HAS_HAN = /\p{Script=Han}/u;
+
+/* ===================== Zip Index (lazy, map->pick best) ===================== */
+
+const selectBestRome = (
+  arr: ZipRome[] | undefined | null
+): ZipRome | undefined => {
+  if (!arr || arr.length === 0) return undefined;
+  const nonIk = arr.find((e) => e.town && e.town !== "IKANIKEISAIGANAIBAAI");
+  return nonIk ?? arr[0];
+};
+
+let ZIP_INDEX: Record<string, ZipRome> | null = null;
+
+const loadZipIndex = async (): Promise<Record<string, ZipRome>> => {
+  if (ZIP_INDEX) return ZIP_INDEX;
+  const data = (await import("../../../data/postal/ken_all_rome.min.json"))
+    .default as unknown as ZipRomeMapFile;
+
+  const index: Record<string, ZipRome> = Object.create(null);
+  for (const [zip, list] of Object.entries(data)) {
+    const best = selectBestRome(list);
+    if (best) index[zip.replace(/\D/g, "")] = best;
+  }
+  ZIP_INDEX = index;
+  return ZIP_INDEX;
+};
+
+const PREF_EN_TO_KANJI: Record<string, string> = Object.fromEntries(
+  Object.entries(PREF_MAP).map(([kan, en]) => [en.toLowerCase(), kan])
+);
+
+const asZip7 = (v?: string) => (v ? v.replace(/\D/g, "") : "");
+
+/* ===================== Utils ===================== */
 
 const toHalfWidthDigits = (input: string): string =>
   input.replace(/[０-９]/g, (s) => HW_NUM.charAt(FW_NUM.indexOf(s)));
@@ -240,6 +288,7 @@ for (const [k, v] of Object.entries(digraphs)) {
 
 const kanaToRomaji = (input: string): string => {
   if (!input) return "";
+  input = input.normalize("NFKC");
   let out = "";
   for (let i = 0; i < input.length; i++) {
     const a = input[i];
@@ -272,126 +321,16 @@ const kanaToRomaji = (input: string): string => {
   return out;
 };
 
-const extractPostal = (input: string): { postal?: string; rest: string } => {
-  const m = input.match(/〒?\s*(\d{3})-?(\d{4})/);
-  if (!m) return { rest: input };
-  const postal = `${m[1]}-${m[2]}`;
-  const rest = input.replace(m[0], "").trim();
-  return { postal, rest };
-};
-
-const parseAddress = (raw: string): ParsedAddress => {
-  let text = raw.trim();
-  text = toHalfWidthDigits(text);
-  const postalRes = extractPostal(text);
-  text = postalRes.rest;
-
-  let prefectureKanji: string | undefined;
-  let prefectureEn: string | undefined;
-  for (const k of Object.keys(PREF_MAP)) {
-    if (text.startsWith(k)) {
-      prefectureKanji = k;
-      prefectureEn = PREF_MAP[k];
-      text = text.slice(k.length);
-      break;
-    }
-  }
-
-  let municipality: string | undefined;
-  if (text) {
-    const idx = text.search(/[市区郡]/);
-    if (idx !== -1) {
-      const ch = text[idx];
-      if (ch === "郡") {
-        const rest = text.slice(idx + 1);
-        const m2 = rest.match(/^[^町村]*[町村]/);
-        if (m2) {
-          municipality = text.slice(0, idx + 1 + m2[0].length);
-          text = text.slice(municipality?.length ?? 0);
-        } else {
-          municipality = text.slice(0, idx + 1);
-          text = text.slice(idx + 1);
-        }
-      } else {
-        municipality = text.slice(0, idx + 1);
-        text = text.slice(idx + 1);
-      }
-    }
-  }
-
-  let area = text.trim();
-  let chome: number | undefined;
-  let ban: number | undefined;
-  let go: number | undefined;
-  let building: string | undefined;
-
-  const chomeMatch = area.match(/(\d+|[〇零一二三四五六七八九十百千]+)丁目/);
-  if (chomeMatch) {
-    chome = kanjiToNumber(chomeMatch[1]);
-    area = area.replace(chomeMatch[0], "");
-  }
-  const banGoMatch = area.match(
-    /(\d+|[〇零一二三四五六七八九十百千]+)番(\d+|[〇零一二三四五六七八九十百千]+)号?/
-  );
-  if (banGoMatch) {
-    ban = kanjiToNumber(banGoMatch[1]);
-    go = kanjiToNumber(banGoMatch[2]);
-    area = area.replace(banGoMatch[0], "");
-  }
-
-  const hyphenMatch = area.match(
-    /([\d]+)\s*[-−ｰー－]\s*([\d]+)(?:\s*[-−ｰー－]\s*([\d]+))?/
-  );
-  if (hyphenMatch) {
-    const n1 = Number(hyphenMatch[1]);
-    const n2 = Number(hyphenMatch[2]);
-    const n3 = hyphenMatch[3] ? Number(hyphenMatch[3]) : undefined;
-    if (chome === undefined && n3 !== undefined) {
-      chome = n1;
-      ban = n2;
-      go = n3;
-    } else if (ban === undefined) {
-      ban = n1;
-      go = n2;
-    }
-    area = area.replace(hyphenMatch[0], "");
-  }
-
-  building = area.trim();
-  let areaName = "";
-  if (building) {
-    const parts = building.split(/\s+/);
-    if (parts.length > 1) {
-      areaName = parts[0];
-      building = building.slice(areaName.length).trim();
-    } else {
-      areaName = building;
-      building = "";
-    }
-  }
-
-  return {
-    postal: postalRes.postal,
-    prefectureKanji,
-    prefectureEn,
-    municipality,
-    area: areaName,
-    chome,
-    ban,
-    go,
-    building: building || undefined,
-  };
-};
-
 const municipalityToRomaji = (muni?: string): string => {
   if (!muni) return "";
-  const repl = muni
-    .replace(/市$/, "-shi")
-    .replace(/区$/, "-ku")
-    .replace(/郡$/, "-gun")
-    .replace(/町$/, "-cho")
-    .replace(/村$/, "-mura");
-  return kanaToRomaji(repl);
+  let s = muni.normalize("NFKC");
+  s = s
+    .replace(/(市|シ)$/u, "-shi")
+    .replace(/(区|ク)$/u, "-ku")
+    .replace(/(郡|グン)$/u, "-gun")
+    .replace(/(町|チョウ|ﾁｮｳ|マチ|ﾏﾁ)$/u, "-cho")
+    .replace(/(村|ムラ)$/u, "-mura");
+  return kanaToRomaji(s);
 };
 
 const areaToRomaji = (area?: string): string => {
@@ -399,8 +338,63 @@ const areaToRomaji = (area?: string): string => {
   return kanaToRomaji(area);
 };
 
+const properCase = (s: string): string =>
+  s
+    .toLowerCase()
+    .replace(/\b([a-z])/g, (m) => m.toUpperCase())
+    .replace(/\b(No|Of|And|To|In|On|At|By|For|Or)\b/g, (m) => m.toLowerCase());
+
+const normalizePrefEn = (s?: string): string | undefined => {
+  if (!s) return undefined;
+  const up = s.trim();
+  const cleaned = up.replace(/\s+(TO|FU|KEN)$/i, "");
+  return properCase(cleaned);
+};
+
+const normalizeCityEn = (s?: string): string | undefined => {
+  if (!s) return undefined;
+  const parts = s.trim().split(/\s+/);
+  const mapped = parts
+    .map((w) => w.toUpperCase())
+    .map((w) =>
+      w === "SHI"
+        ? "-shi"
+        : w === "KU"
+        ? "-ku"
+        : w === "GUN"
+        ? "-gun"
+        : w === "CHO" || w === "MACHI"
+        ? "-cho"
+        : w === "MURA"
+        ? "-mura"
+        : properCase(w)
+    );
+  const out: string[] = [];
+  for (const w of mapped) {
+    if (w.startsWith("-")) {
+      const prev = out.pop() ?? "";
+      out.push(prev + w);
+    } else {
+      out.push(w);
+    }
+  }
+  return out.join(" ");
+};
+
+const normalizeRomePref = (s: string | undefined) => normalizePrefEn(s);
+const normalizeRomeCity = (s: string | undefined) => normalizeCityEn(s);
+
+/* ===================== Build Address ===================== */
+
 const buildEnglishAddress = (
-  a: ParsedAddress
+  a: ParsedAddress,
+  hints?: {
+    municipalityKana?: string;
+    areaKana?: string;
+    municipalityEn?: string;
+    areaEn?: string;
+    prefectureEnStrict?: string;
+  }
 ): { english: string; romaji: string } => {
   const partsEn: string[] = [];
   const partsRo: string[] = [];
@@ -408,18 +402,22 @@ const buildEnglishAddress = (
   const blockHyphen = [a.chome, a.ban, a.go]
     .filter((x) => typeof x === "number")
     .join("-");
+
   if (a.building) {
-    partsEn.push(a.building);
-    partsRo.push(kanaToRomaji(a.building));
+    const bRo = kanaToRomaji(a.building);
+    if (!HAS_HAN.test(bRo)) {
+      partsEn.push(bRo);
+    }
+    partsRo.push(bRo);
   }
+
   if (blockHyphen) {
     if (a.chome) {
-      partsEn.push(
-        `${a.chome}-chome ${[a.ban, a.go].filter(Boolean).join("-")}`.trim()
-      );
-      partsRo.push(
-        `${a.chome}-chome ${[a.ban, a.go].filter(Boolean).join("-")}`.trim()
-      );
+      const block = `${a.chome}-chome ${[a.ban, a.go]
+        .filter(Boolean)
+        .join("-")}`.trim();
+      partsEn.push(block);
+      partsRo.push(block);
     } else {
       partsEn.push(blockHyphen);
       partsRo.push(blockHyphen);
@@ -427,20 +425,45 @@ const buildEnglishAddress = (
   }
 
   if (a.area) {
-    partsEn.push(a.area);
-    partsRo.push(areaToRomaji(a.area));
+    const areaSource =
+      hints?.areaKana && hints.areaKana.trim().length > 0
+        ? hints.areaKana
+        : a.area;
+    const areaRo =
+      HAS_HAN.test(areaSource) && hints?.areaEn
+        ? properCase(hints.areaEn)
+        : areaToRomaji(areaSource);
+    const areaEn = hints?.areaEn ? properCase(hints.areaEn) : areaRo;
+    if (areaEn) partsEn.push(areaEn);
+    if (areaRo) partsRo.push(areaRo);
   }
+
   if (a.municipality) {
-    partsEn.push(a.municipality);
-    partsRo.push(municipalityToRomaji(a.municipality));
+    const muniSource =
+      hints?.municipalityKana && hints.municipalityKana.trim().length > 0
+        ? hints.municipalityKana
+        : a.municipality;
+    const muniRo =
+      HAS_HAN.test(muniSource) && hints?.municipalityEn
+        ? normalizeRomeCity(hints.municipalityEn) || ""
+        : municipalityToRomaji(muniSource);
+    const muniEn = hints?.municipalityEn
+      ? normalizeRomeCity(hints.municipalityEn) || ""
+      : muniRo;
+    if (muniEn) partsEn.push(muniEn);
+    if (muniRo) partsRo.push(muniRo);
   }
-  if (a.prefectureEn) {
-    partsEn.push(a.prefectureEn);
-    partsRo.push(a.prefectureEn);
-  } else if (a.prefectureKanji) {
-    partsEn.push(a.prefectureKanji);
-    partsRo.push(a.prefectureKanji);
+
+  const prefName = hints?.prefectureEnStrict
+    ? normalizeRomePref(hints.prefectureEnStrict)
+    : a.prefectureEn ||
+      (a.prefectureKanji ? PREF_MAP[a.prefectureKanji] : undefined);
+  if (prefName) {
+    const normalizedPref = normalizePrefEn(prefName) ?? prefName;
+    partsEn.push(normalizedPref);
+    partsRo.push(normalizedPref);
   }
+
   if (a.postal) {
     partsEn.push(a.postal);
     partsRo.push(a.postal);
@@ -453,6 +476,8 @@ const buildEnglishAddress = (
     romaji: partsRo.filter(Boolean).join(", "),
   };
 };
+
+/* ===================== UI Helpers ===================== */
 
 const CopyButton = ({ text }: { text: string }) => {
   const [copied, setCopied] = useState(false);
@@ -476,69 +501,394 @@ const CopyButton = ({ text }: { text: string }) => {
   );
 };
 
-const Field = ({ label, value }: { label: string; value?: string }) => (
+/* ===================== Hooks ===================== */
+
+const usePostalLookup = () => {
+  const [lookupStatus, setLookupStatus] = useState<
+    "idle" | "loading" | "notfound" | "error"
+  >("idle");
+  const [lookupData, setLookupData] = useState<{
+    prefectureKanji?: string;
+    prefectureEn?: string;
+    municipality?: string;
+    area?: string;
+    municipalityEn?: string;
+    areaEn?: string;
+    prefectureEnStrict?: string;
+  }>({});
+
+  const lookupPostal = useCallback(async (postal: string) => {
+    const digits = asZip7(postal);
+    if (digits.length !== 7) {
+      setLookupStatus("idle");
+      setLookupData({});
+      return;
+    }
+
+    setLookupStatus("loading");
+    try {
+      const idx = await loadZipIndex();
+      const hit = idx[digits];
+      if (!hit) {
+        setLookupStatus("notfound");
+        setLookupData({});
+        return;
+      }
+
+      // 英語（厳格）は ROME
+      const prefectureEnStrict = hit.prefecture;
+      const municipalityEn = hit.city;
+      const areaEn =
+        hit.town && hit.town !== "IKANIKEISAIGANAIBAAI" ? hit.town : undefined;
+
+      // 都道府県（日本語）は逆引き可能
+      const prefTitle = normalizeRomePref(hit.prefecture) || "";
+      const prefectureKanji = PREF_EN_TO_KANJI[prefTitle.toLowerCase()];
+      const prefectureEn = prefectureKanji
+        ? PREF_MAP[prefectureKanji]
+        : undefined;
+
+      // 市区町村・町名を日本語でも推定（簡易的な逆変換）
+      const municipality = municipalityEn
+        ? romajiToKanji(municipalityEn)
+        : undefined;
+      const area = areaEn ? romajiToKanji(areaEn) : undefined;
+
+      setLookupData({
+        prefectureKanji,
+        prefectureEn,
+        municipality,
+        area,
+        municipalityEn,
+        areaEn,
+        prefectureEnStrict,
+      });
+      setLookupStatus("idle");
+    } catch {
+      setLookupStatus("error");
+      setLookupData({});
+    }
+  }, []);
+
+  return { lookupStatus, lookupData, lookupPostal };
+};
+
+// 簡易的なローマ字→日本語変換（市区町村名用）
+const romajiToKanji = (romaji: string): string => {
+  if (!romaji) return "";
+
+  // 基本的な置換パターン
+  let result = romaji
+    .replace(/-shi$/i, "市")
+    .replace(/-ku$/i, "区")
+    .replace(/-gun$/i, "郡")
+    .replace(/-cho$/i, "町")
+    .replace(/-machi$/i, "町")
+    .replace(/-mura$/i, "村");
+
+  // 基本的なローマ字→ひらがな変換（簡易版）
+  const romajiToHiragana: Record<string, string> = {
+    ka: "か",
+    ki: "き",
+    ku: "く",
+    ke: "け",
+    ko: "こ",
+    sa: "さ",
+    shi: "し",
+    su: "す",
+    se: "せ",
+    so: "そ",
+    ta: "た",
+    chi: "ち",
+    tsu: "つ",
+    te: "て",
+    to: "と",
+    na: "な",
+    ni: "に",
+    nu: "ぬ",
+    ne: "ね",
+    no: "の",
+    ha: "は",
+    hi: "ひ",
+    fu: "ふ",
+    he: "へ",
+    ho: "ほ",
+    ma: "ま",
+    mi: "み",
+    mu: "む",
+    me: "め",
+    mo: "も",
+    ya: "や",
+    yu: "ゆ",
+    yo: "よ",
+    ra: "ら",
+    ri: "り",
+    ru: "る",
+    re: "れ",
+    ro: "ろ",
+    wa: "わ",
+    wo: "を",
+    n: "ん",
+    ga: "が",
+    gi: "ぎ",
+    gu: "ぐ",
+    ge: "げ",
+    go: "ご",
+    za: "ざ",
+    ji: "じ",
+    zu: "ず",
+    ze: "ぜ",
+    zo: "ぞ",
+    da: "だ",
+    de: "で",
+    do: "ど",
+    ba: "ば",
+    bi: "び",
+    bu: "ぶ",
+    be: "べ",
+    bo: "ぼ",
+    pa: "ぱ",
+    pi: "ぴ",
+    pu: "ぷ",
+    pe: "ぺ",
+    po: "ぽ",
+    a: "あ",
+    i: "い",
+    u: "う",
+    e: "え",
+    o: "お",
+  };
+
+  // 長い音素から順に変換
+  const sortedKeys = Object.keys(romajiToHiragana).sort(
+    (a, b) => b.length - a.length
+  );
+  for (const key of sortedKeys) {
+    const regex = new RegExp(key, "gi");
+    result = result.replace(regex, romajiToHiragana[key]);
+  }
+
+  return result;
+};
+
+/* ===================== Input Components ===================== */
+
+const PostalInput = ({
+  value,
+  onChange,
+  onLookup,
+  lookupStatus,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  onLookup: (postal: string) => void;
+  lookupStatus: "idle" | "loading" | "notfound" | "error";
+}) => {
+  useEffect(() => {
+    onLookup(value);
+  }, [value, onLookup]);
+
+  return (
+    <>
+      <div className="grid grid-cols-3 gap-2 items-center">
+        <label className="text-sm font-medium" htmlFor="postcode-input">
+          郵便番号
+        </label>
+        <input
+          id="postcode-input"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="1500041 または 150-0041"
+          className="col-span-2 w-full rounded-md border px-2 py-1 bg-transparent"
+          inputMode="numeric"
+        />
+      </div>
+      {lookupStatus !== "idle" && (
+        <div className="text-xs text-gray-500 dark:text-gray-400 -mt-2">
+          {lookupStatus === "loading" && "郵便番号から住所を検索中…"}
+          {lookupStatus === "notfound" &&
+            "郵便番号に該当する住所が見つかりませんでした"}
+          {lookupStatus === "error" &&
+            "住所情報の取得に失敗しました。時間をおいて再試行してください"}
+        </div>
+      )}
+    </>
+  );
+};
+
+const PrefectureSelect = ({
+  value,
+  onChange,
+}: {
+  value?: string;
+  onChange: (value?: string) => void;
+}) => (
   <div className="grid grid-cols-3 gap-2 items-center">
-    <div className="text-gray-600 dark:text-gray-400">{label}</div>
-    <input
-      readOnly
+    <label className="text-sm font-medium" htmlFor="prefecture-input">
+      都道府県
+    </label>
+    <select
+      id="prefecture-input"
       value={value ?? ""}
+      onChange={(e) => onChange(e.target.value || undefined)}
       className="col-span-2 w-full rounded-md border px-2 py-1 bg-transparent"
+    >
+      <option value="">選択しない</option>
+      {Object.entries(PREF_MAP).map(([kan, en]) => (
+        <option key={kan} value={kan}>
+          {kan} / {en}
+        </option>
+      ))}
+    </select>
+  </div>
+);
+
+const TextInput = ({
+  id,
+  label,
+  value,
+  onChange,
+  placeholder,
+  inputMode,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder: string;
+  inputMode?: "text" | "numeric";
+}) => (
+  <div className="grid grid-cols-3 gap-2 items-center">
+    <label className="text-sm font-medium" htmlFor={id}>
+      {label}
+    </label>
+    <input
+      id={id}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder={placeholder}
+      className="col-span-2 w-full rounded-md border px-2 py-1 bg-transparent"
+      inputMode={inputMode}
     />
   </div>
 );
 
+const ResultDisplay = ({
+  title,
+  result,
+  description,
+}: {
+  title: string;
+  result: string;
+  description: string;
+}) => (
+  <div>
+    <div className="flex items-center justify-between">
+      <div className="block text-sm font-medium">{title}</div>
+      <CopyButton text={result} />
+    </div>
+    <div className="mt-1 rounded-md border p-3 text-sm break-words min-h-12">
+      {result || (
+        <span className="text-gray-400">ここに結果が表示されます</span>
+      )}
+    </div>
+    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+      {description}
+    </p>
+  </div>
+);
+
+/* ===================== Component ===================== */
+
 const Client = () => {
-  const [mode, setMode] = useState<"paste" | "separated">("separated");
+  const [mode, setMode] = useState<"separated">("separated");
+  const { lookupStatus, lookupData, lookupPostal } = usePostalLookup();
 
-  // Paste mode state
-  const [input, setInput] = useState("");
-  const parsed = useMemo(() => parseAddress(input), [input]);
-  const result = useMemo(() => buildEnglishAddress(parsed), [parsed]);
-
-  // Separated mode state
-  const [sepPostal, setSepPostal] = useState("");
-  const [sepPrefKanji, setSepPrefKanji] = useState<string | undefined>(
+  /* ------- Form State ------- */
+  const [postal, setPostal] = useState("");
+  const [prefKanji, setPrefKanji] = useState<string | undefined>(undefined);
+  const [prefEn, setPrefEn] = useState<string | undefined>(undefined);
+  const [municipality, setMunicipality] = useState("");
+  const [area, setArea] = useState("");
+  const [municipalityKana, setMunicipalityKana] = useState("");
+  const [areaKana, setAreaKana] = useState("");
+  const [municipalityEn, setMunicipalityEn] = useState<string | undefined>(
     undefined
   );
-  const [sepPrefEn, setSepPrefEn] = useState<string | undefined>(undefined);
-  const [sepMunicipality, setSepMunicipality] = useState("");
-  const [sepArea, setSepArea] = useState("");
-  const [sepChome, setSepChome] = useState("");
-  const [sepBan, setSepBan] = useState("");
-  const [sepGo, setSepGo] = useState("");
-  const [sepBuilding, setSepBuilding] = useState("");
+  const [areaEn, setAreaEn] = useState<string | undefined>(undefined);
+  const [prefEnStrict, setPrefEnStrict] = useState<string | undefined>(
+    undefined
+  );
+  const [chome, setChome] = useState("");
+  const [ban, setBan] = useState("");
+  const [go, setGo] = useState("");
+  const [building, setBuilding] = useState("");
 
-  const sepParsed = useMemo<ParsedAddress>(() => {
-    const digits = sepPostal.replace(/[^0-9]/g, "");
-    const postal =
+  // 郵便番号検索結果を自動入力
+  useEffect(() => {
+    if (lookupData.prefectureKanji) {
+      setPrefKanji((prev) =>
+        prev?.trim() ? prev : lookupData.prefectureKanji
+      );
+      setPrefEn((prev) => (prev?.trim() ? prev : lookupData.prefectureEn));
+    }
+    if (lookupData.municipality) {
+      setMunicipality((prev) =>
+        prev.trim() ? prev : lookupData.municipality || ""
+      );
+    }
+    if (lookupData.area) {
+      setArea((prev) => (prev.trim() ? prev : lookupData.area || ""));
+    }
+    if (lookupData.municipalityEn) {
+      setMunicipalityEn((prev) =>
+        prev?.trim() ? prev : lookupData.municipalityEn
+      );
+    }
+    if (lookupData.areaEn) {
+      setAreaEn((prev) => (prev?.trim() ? prev : lookupData.areaEn));
+    }
+    if (lookupData.prefectureEnStrict) {
+      setPrefEnStrict((prev) =>
+        prev?.trim() ? prev : lookupData.prefectureEnStrict
+      );
+    }
+  }, [lookupData]);
+
+  const parsed = useMemo<ParsedAddress>(() => {
+    const digits = postal.replace(/[^0-9]/g, "");
+    const postalFormatted =
       digits.length >= 7
         ? `${digits.slice(0, 3)}-${digits.slice(3, 7)}`
         : digits || undefined;
+
     const toNum = (v: string) =>
       kanjiToNumber(toHalfWidthDigits(v)) ?? undefined;
+
     return {
-      postal,
-      prefectureKanji: sepPrefKanji,
-      prefectureEn: sepPrefEn,
-      municipality: sepMunicipality.trim() || undefined,
-      area: sepArea.trim() || undefined,
-      chome: sepChome ? toNum(sepChome) : undefined,
-      ban: sepBan ? toNum(sepBan) : undefined,
-      go: sepGo ? toNum(sepGo) : undefined,
-      building: sepBuilding.trim() || undefined,
+      postal: postalFormatted,
+      prefectureKanji: prefKanji,
+      prefectureEn: prefEn,
+      municipality: municipality.trim() || undefined,
+      area: area.trim() || undefined,
+      chome: chome ? toNum(chome) : undefined,
+      ban: ban ? toNum(ban) : undefined,
+      go: go ? toNum(go) : undefined,
+      building: building.trim() || undefined,
     };
-  }, [
-    sepPostal,
-    sepPrefKanji,
-    sepPrefEn,
-    sepMunicipality,
-    sepArea,
-    sepChome,
-    sepBan,
-    sepGo,
-    sepBuilding,
-  ]);
-  const sepResult = useMemo(() => buildEnglishAddress(sepParsed), [sepParsed]);
+  }, [postal, prefKanji, prefEn, municipality, area, chome, ban, go, building]);
+
+  const result = useMemo(
+    () =>
+      buildEnglishAddress(parsed, {
+        municipalityKana,
+        areaKana,
+        municipalityEn,
+        areaEn,
+        prefectureEnStrict: prefEnStrict,
+      }),
+    [parsed, municipalityKana, areaKana, municipalityEn, areaEn, prefEnStrict]
+  );
 
   return (
     <div className="space-y-6">
@@ -547,277 +897,102 @@ const Client = () => {
           日本語住所を英語（ローマ字）表記に変換｜海外フォーム対応
         </h1>
         <p className="text-gray-600 dark:text-gray-400 text-sm">
-          住所を自動変換します（オフライン・辞書なし）。市区町村名など漢字のローマ字化は完全ではないため、結果は必要に応じて編集してください。
+          住所を自動変換します（オフライン辞書対応）。市区町村・町名は郵便データ由来の英語表記/読みを用いて変換します。
         </p>
       </div>
 
       <div className="flex gap-2">
         <button
           type="button"
-          onClick={() => setMode("paste")}
-          className={`rounded px-3 py-1 text-sm border ${
-            mode === "paste"
-              ? "bg-gray-100 dark:bg-gray-800"
-              : "hover:bg-gray-50 dark:hover:bg-gray-800"
-          }`}
-        >
-          ペースト入力
-        </button>
-        <button
-          type="button"
           onClick={() => setMode("separated")}
-          className={`rounded px-3 py-1 text-sm border ${
-            mode === "separated"
-              ? "bg-gray-100 dark:bg-gray-800"
-              : "hover:bg-gray-50 dark:hover:bg-gray-800"
-          }`}
+          className="rounded px-3 py-1 text-sm border bg-gray-100 dark:bg-gray-800"
         >
           分割入力
         </button>
       </div>
 
-      {mode === "paste" ? (
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="space-y-2">
-            <label
-              className="block text-sm font-medium"
-              htmlFor="address-input"
-            >
-              日本語の住所を入力
-            </label>
-            {/** biome-ignore lint/correctness/useUniqueElementIds: <explanation> */}
-            <textarea
-              id="address-input"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="例）〒150-0041 東京都渋谷区神南1丁目2-3 パークビル201"
-              className="w-full h-36 rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-transparent"
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="space-y-3">
+          <div className="grid gap-3">
+            <PostalInput
+              value={postal}
+              onChange={setPostal}
+              onLookup={lookupPostal}
+              lookupStatus={lookupStatus}
             />
 
-            <div className="text-xs text-gray-500 dark:text-gray-400">
-              ヒント:
-              「丁目・番・号」「ハイフン区切り」「郵便番号」に対応。都道府県は英語表記に変換します。
-            </div>
+            <PrefectureSelect
+              value={prefKanji}
+              onChange={(value) => {
+                setPrefKanji(value);
+                setPrefEn(value ? PREF_MAP[value] : undefined);
+              }}
+            />
+
+            <TextInput
+              id="municipality-input"
+              label="市区町村"
+              value={municipality}
+              onChange={setMunicipality}
+              placeholder="例）渋谷区"
+            />
+
+            <TextInput
+              id="area-input"
+              label="町名・字"
+              value={area}
+              onChange={setArea}
+              placeholder="例）神南"
+            />
+
+            <TextInput
+              id="chome-input"
+              label="丁目"
+              value={chome}
+              onChange={setChome}
+              placeholder="例）1（漢数字可）"
+              inputMode="numeric"
+            />
+
+            <TextInput
+              id="ban-input"
+              label="番"
+              value={ban}
+              onChange={setBan}
+              placeholder="例）2（漢数字可）"
+              inputMode="numeric"
+            />
+
+            <TextInput
+              id="go-input"
+              label="号"
+              value={go}
+              onChange={setGo}
+              placeholder="例）3（漢数字可）"
+              inputMode="numeric"
+            />
+
+            <TextInput
+              id="building-input"
+              label="建物名・部屋番号"
+              value={building}
+              onChange={setBuilding}
+              placeholder="例）パークビル201"
+            />
           </div>
 
-          <div className="space-y-3">
-            <div>
-              <div className="flex items-center justify-between">
-                <div className="block text-sm font-medium">
-                  英語表記（並び替え）
-                </div>
-                <CopyButton text={result.english} />
-              </div>
-              <div className="mt-1 rounded-md border p-3 text-sm break-words min-h-12">
-                {result.english || (
-                  <span className="text-gray-400">
-                    ここに結果が表示されます
-                  </span>
-                )}
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center justify-between">
-                <div className="block text-sm font-medium">
-                  ローマ字表記（ベストエフォート）
-                </div>
-                <CopyButton text={result.romaji} />
-              </div>
-              <div className="mt-1 rounded-md border p-3 text-sm break-words min-h-12">
-                {result.romaji || (
-                  <span className="text-gray-400">
-                    ここに結果が表示されます
-                  </span>
-                )}
-              </div>
-            </div>
+          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            郵便番号を入力すると市区町村・町名が自動入力されます。数字は全角/半角・漢数字いずれも対応。
           </div>
         </div>
-      ) : (
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="space-y-3">
-            <div className="grid gap-3">
-              <div className="grid grid-cols-3 gap-2 items-center">
-                <label className="text-sm font-medium" htmlFor="postcode-input">
-                  郵便番号
-                </label>
-                <input
-                  id="postcode-input"
-                  value={sepPostal}
-                  onChange={(e) => setSepPostal(e.target.value)}
-                  placeholder="1500041 または 150-0041"
-                  className="col-span-2 w-full rounded-md border px-2 py-1 bg-transparent"
-                  inputMode="numeric"
-                />
-              </div>
-              <div className="grid grid-cols-3 gap-2 items-center">
-                <label
-                  className="text-sm font-medium"
-                  htmlFor="prefecture-input"
-                >
-                  都道府県
-                </label>
-                <select
-                  id="prefecture-input"
-                  value={sepPrefKanji ?? ""}
-                  onChange={(e) => {
-                    const kan = e.target.value || undefined;
-                    setSepPrefKanji(kan);
-                    setSepPrefEn(kan ? PREF_MAP[kan] : undefined);
-                  }}
-                  className="col-span-2 w-full rounded-md border px-2 py-1 bg-transparent"
-                >
-                  <option value="">選択しない</option>
-                  {Object.entries(PREF_MAP).map(([kan, en]) => (
-                    <option key={kan} value={kan}>
-                      {kan} / {en}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="grid grid-cols-3 gap-2 items-center">
-                <label
-                  className="text-sm font-medium"
-                  htmlFor="municipality-input"
-                >
-                  市区町村
-                </label>
-                <input
-                  id="municipality-input"
-                  value={sepMunicipality}
-                  onChange={(e) => setSepMunicipality(e.target.value)}
-                  placeholder="例）渋谷区"
-                  className="col-span-2 w-full rounded-md border px-2 py-1 bg-transparent"
-                />
-              </div>
-              <div className="grid grid-cols-3 gap-2 items-center">
-                <label className="text-sm font-medium" htmlFor="area-input">
-                  町名・字
-                </label>
-                <input
-                  id="area-input"
-                  value={sepArea}
-                  onChange={(e) => setSepArea(e.target.value)}
-                  placeholder="例）神南"
-                  className="col-span-2 w-full rounded-md border px-2 py-1 bg-transparent"
-                />
-              </div>
-              <div className="grid grid-cols-3 gap-2 items-center">
-                <label className="text-sm font-medium" htmlFor="chome-input">
-                  丁目
-                </label>
-                <input
-                  id="chome-input"
-                  value={sepChome}
-                  onChange={(e) => setSepChome(e.target.value)}
-                  placeholder="例）1（漢数字可）"
-                  className="col-span-2 w-full rounded-md border px-2 py-1 bg-transparent"
-                  inputMode="numeric"
-                />
-              </div>
-              <div className="grid grid-cols-3 gap-2 items-center">
-                <label className="text-sm font-medium" htmlFor="ban-input">
-                  番
-                </label>
-                <input
-                  id="ban-input"
-                  value={sepBan}
-                  onChange={(e) => setSepBan(e.target.value)}
-                  placeholder="例）2（漢数字可）"
-                  className="col-span-2 w-full rounded-md border px-2 py-1 bg-transparent"
-                  inputMode="numeric"
-                />
-              </div>
-              <div className="grid grid-cols-3 gap-2 items-center">
-                <label className="text-sm font-medium" htmlFor="go-input">
-                  号
-                </label>
-                <input
-                  id="go-input"
-                  value={sepGo}
-                  onChange={(e) => setSepGo(e.target.value)}
-                  placeholder="例）3（漢数字可）"
-                  className="col-span-2 w-full rounded-md border px-2 py-1 bg-transparent"
-                  inputMode="numeric"
-                />
-              </div>
-              <div className="grid grid-cols-3 gap-2 items-center">
-                <label className="text-sm font-medium" htmlFor="building-input">
-                  建物名・部屋番号
-                </label>
-                <input
-                  id="building-input"
-                  value={sepBuilding}
-                  onChange={(e) => setSepBuilding(e.target.value)}
-                  placeholder="例）パークビル201"
-                  className="col-span-2 w-full rounded-md border px-2 py-1 bg-transparent"
-                />
-              </div>
-            </div>
-            <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-              数字は全角/半角・漢数字いずれも対応。未入力項目は省略されます。
-            </div>
-          </div>
 
-          <div className="space-y-3">
-            <div>
-              <div className="flex items-center justify-between">
-                <div className="block text-sm font-medium">
-                  英語表記（並び替え）
-                </div>
-                <CopyButton text={sepResult.english} />
-              </div>
-              <div className="mt-1 rounded-md border p-3 text-sm break-words min-h-12">
-                {sepResult.english || (
-                  <span className="text-gray-400">
-                    ここに結果が表示されます
-                  </span>
-                )}
-              </div>
-            </div>
-            <div>
-              <div className="flex items-center justify-between">
-                <div className="block text-sm font-medium">
-                  ローマ字表記（ベストエフォート）
-                </div>
-                <CopyButton text={sepResult.romaji} />
-              </div>
-              <div className="mt-1 rounded-md border p-3 text-sm break-words min-h-12">
-                {sepResult.romaji || (
-                  <span className="text-gray-400">
-                    ここに結果が表示されます
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
+        <div className="space-y-3">
+          <ResultDisplay
+            title="英語表記（並び替え）"
+            result={result.english}
+            description="英語表記は順序の並び替え＋英語/ローマ字化（都道府県は英名, 市区町村・町名はローマ字）。郵便番号の読み（かな）を利用してローマ字化します。"
+          />
         </div>
-      )}
-
-      {mode === "paste" && (
-        <details className="rounded-md border p-3">
-          <summary className="cursor-pointer select-none text-sm font-medium">
-            解析結果（編集補助）
-          </summary>
-          <div className="grid gap-3 md:grid-cols-2 mt-3 text-sm">
-            <Field label="郵便番号" value={parsed.postal} />
-            <Field label="都道府県 (EN)" value={parsed.prefectureEn ?? ""} />
-            <Field label="市区町村" value={parsed.municipality ?? ""} />
-            <Field label="町名・字" value={parsed.area ?? ""} />
-            <Field label="丁目" value={parsed.chome?.toString() ?? ""} />
-            <Field label="番" value={parsed.ban?.toString() ?? ""} />
-            <Field label="号" value={parsed.go?.toString() ?? ""} />
-            <Field label="建物名・部屋番号" value={parsed.building ?? ""} />
-          </div>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-            解析がうまくいかない場合は、手動で並び替えてご利用ください。
-          </p>
-        </details>
-      )}
-
-      <div className="text-xs text-gray-500 dark:text-gray-400">
-        注意:
-        本ツールは学習用途の簡易変換です。公式な書類や郵便では、自治体・郵便局の推奨表記を確認してください。
       </div>
     </div>
   );

@@ -5,6 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "postbuild": "pnpm run sitemap && pnpm run rss",
+    "build:rome": "node scripts/build-ken-all-rome.mjs",
     "sitemap": "cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/generate-sitemap.mts",
     "rss": "cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/generate-rss.mts",
     "serve": "next start",
