@@ -42,6 +42,35 @@ type CardProps = {
   tabIndex?: number;
 };
 
+const CoverImage = ({ book, sizes }: { book: Book; sizes: string }) => {
+  const candidates: string[] = [];
+  if (book.coverUrl) candidates.push(book.coverUrl);
+  if (book.isbn) {
+    // Prefer openBD by ISBN; simple fallback to hanmoto
+    candidates.push(`https://cover.openbd.jp/${book.isbn}.jpg`);
+    candidates.push(`https://www.hanmoto.com/bd/img/${book.isbn}.jpg`);
+  }
+  const unique = Array.from(new Set(candidates));
+  const [idx, setIdx] = useState(0);
+  const src = unique[idx] ?? "";
+  if (!src) {
+    return (
+      <div className="h-full w-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800" />
+    );
+  }
+  return (
+    <Image
+      src={src}
+      alt={`${book.title} cover`}
+      fill
+      sizes={sizes}
+      className="object-cover"
+      loading="lazy"
+      onError={() => setIdx((i) => i + 1)}
+    />
+  );
+};
+
 const DraggableCard = ({ book, mode, base, container, onOpen, onMove, tabIndex }: CardProps) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({ id: book.id });
   const dragX = transform?.x ?? 0;
@@ -102,16 +131,8 @@ const DraggableCard = ({ book, mode, base, container, onOpen, onMove, tabIndex }
     >
       <div className="w-[160px]">
         <div className="relative h-[240px] w-[160px] overflow-hidden rounded-xl shadow-sm ring-1 ring-gray-900/10 bg-gray-100 dark:bg-gray-800 dark:ring-white/10">
-          <Image
-            src={book.coverUrl}
-            alt={`${book.title} cover`}
-            fill
-            sizes="160px"
-            className="object-cover"
-            loading="lazy"
-            placeholder="empty"
-          />
-          {/* Skeleton overlay while loading would rely on onLoadingComplete; keep simple */}
+          <CoverImage book={book} sizes="160px" />
+          {/* No text inside cover to avoid duplication with caption */}
         </div>
         <div className="mt-2 space-y-0.5 min-h-[44px]">
           <div
@@ -203,13 +224,7 @@ const DetailsPanel = ({ book, onClose }: { book: Book | null; onClose: () => voi
               <div className="flex-1 overflow-y-auto p-4">
                 <div className="flex gap-4">
                   <div className="relative h-[180px] w-[120px] overflow-hidden rounded-md ring-1 ring-black/5">
-                    <Image
-                      src={book.coverUrl}
-                      alt={`${book.title} cover`}
-                      fill
-                      sizes="120px"
-                      className="object-cover"
-                    />
+                    <CoverImage book={book} sizes="120px" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="text-sm text-gray-500">{book.author}</div>
@@ -340,14 +355,14 @@ export const BooksCanvas = () => {
     <div className="relative">
       {/* Controls (bottom-right): Sort + Align/Scatter */}
       <div className="pointer-events-auto fixed right-4 bottom-4 md:right-6 md:bottom-6 z-[900]">
-        <div className="flex items-center gap-2 rounded-full border border-gray-300/60 bg-white/85 px-2.5 py-1.5 shadow-sm backdrop-blur dark:border-gray-700/60 dark:bg-gray-900/85">
+        <div className="flex items-center gap-2 rounded-full border border-gray-300/60 bg-gray-50/85 px-2.5 py-1.5 shadow-sm backdrop-blur dark:border-gray-700/60 dark:bg-gray-900/85">
           <div className="relative">
             <label htmlFor="sort" className="sr-only">
               Sort
             </label>
             <select
               id="sort"
-              className="min-w-[132px] rounded-full border border-transparent bg-transparent px-2 py-1 text-sm text-gray-800 outline-none hover:bg-white/60 focus:bg-white/60 dark:text-gray-100"
+              className="min-w-[132px] rounded-full border border-transparent bg-transparent px-2 py-1 text-sm text-gray-800 outline-none hover:bg-gray-50/60 focus:bg-gray-50/60 dark:text-gray-100"
               aria-label="Sort books"
               value={sortKey}
               onChange={(e) => handleSortChange(e.target.value as SortKey)}
@@ -362,18 +377,18 @@ export const BooksCanvas = () => {
           <button
             type="button"
             onClick={toggleLayout}
-            className="rounded-full border border-gray-300/60 bg-white/60 px-3 py-1.5 text-sm text-gray-900 shadow-sm hover:bg-white dark:border-gray-700/60 dark:bg-gray-800/60 dark:text-gray-100 dark:hover:bg-gray-800"
-            aria-label={layoutMode === "grid" ? "Scatter" : "Align"}
-          >
-            {layoutMode === "grid" ? "Scatter" : "Align"}
-          </button>
+            className="rounded-full border border-gray-300/60 bg-gray-50/60 px-3 py-1.5 text-sm text-gray-900 shadow-sm hover:bg-gray-50 dark:border-gray-700/60 dark:bg-gray-800/60 dark:text-gray-100 dark:hover:bg-gray-800"
+          aria-label={layoutMode === "grid" ? "Scatter" : "Align"}
+        >
+          {layoutMode === "grid" ? "Scatter" : "Align"}
+        </button>
         </div>
       </div>
 
       {/* Canvas (full-screen under header) */}
       <div
         ref={containerRef}
-        className="fixed left-0 right-0 bottom-0 overflow-hidden bg-white px-6 pb-6 md:px-10 md:pb-10 dark:bg-gray-900"
+        className="fixed left-0 right-0 bottom-0 overflow-hidden bg-gray-50 px-6 pb-6 md:px-10 md:pb-10 dark:bg-gray-900"
         style={{ top: topOffset }}
         aria-label="Canvas"
       >

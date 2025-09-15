@@ -5,6 +5,7 @@ export type Book = {
   year: number;
   rating: number; // 0-5
   coverUrl: string;
+  isbn?: string;
   description: string;
   buyUrl?: string;
 };
@@ -18,4 +19,3 @@ export type ScatterItem = {
   rot: number; // deg
   z: number; // z-index
 };
-

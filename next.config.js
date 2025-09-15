@@ -20,7 +20,10 @@ module.exports = withBundleAnalyzer(
     images: {
       remotePatterns: [
         { protocol: "https", hostname: "picsum.photos" },
-        { protocol: "https", hostname: "placehold.co" }
+        { protocol: "https", hostname: "placehold.co" },
+        { protocol: "https", hostname: "cover.openbd.jp" },
+        { protocol: "https", hostname: "www.hanmoto.com" },
+        { protocol: "https", hostname: "hanmoto.com" },
       ],
     },
     webpack: (config) => {
