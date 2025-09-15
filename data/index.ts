@@ -1,6 +1,7 @@
 export const headerNavLinks = [
   { href: "/blog", title: "BLOG" },
   { href: "/tools", title: "TOOLS" },
+  { href: "/goods", title: "GOODS" },
   { href: "/about", title: "ABOUT" },
 ];
 
@@ -67,7 +68,7 @@ export const talks = [
     topic: "Testing",
     href: "https://speakerdeck.com/unvalley/better-unit-testing",
   },
-];
+] as const;
 
 export const projectsData = [
   // latest
@@ -97,7 +98,7 @@ export const projectsData = [
     imgSrc: "",
     href: "https://github.com/unvalley/me",
   },
-] as const;
+];
 
 export const toolsData: {
   name: string;
@@ -156,15 +157,6 @@ export const toolsData: {
     affiliate: false,
     category: "services",
   },
-  // {
-  // 	name: "PostCoffee",
-  // 	description:
-  // 		"A coffee subscription for specialty coffee based on preferences (Japan Only). You can use my coupon code: coffee-u8wgk7",
-  // 	imgSrc: "",
-  // 	href: "https://postcoffee.co/subscription/",
-  // 	affiliate: false,
-  // 	category: "services",
-  // },
   {
     name: "Shokz OPNCOMM2",
     description: "A headset provided by the company. Comfortable.",
@@ -252,5 +244,105 @@ export const toolsData: {
     href: "https://www.variabrewing.com/products/varia-vs3-grinder?variant=39935807520867",
     affiliate: false,
     category: "daily",
+  },
+];
+
+export const goodsData: {
+  name: string;
+  brand: string;
+  description: string;
+  imgSrc: string;
+  href: string;
+  price: string;
+  category: "lifestyle" | "workspace" | "photography" | "wishlist";
+  isNew?: boolean;
+}[] = [
+  // Lifestyle
+  {
+    name: "Beta Jacket",
+    brand: "Arc'teryx",
+    description: "Lightweight GORE-TEX shell jacket",
+    imgSrc: "",
+    href: "https://arcteryx.com/us/en/shop/mens/beta-jacket",
+    price: "$500",
+    category: "lifestyle",
+    isNew: true,
+  },
+  {
+    name: "Skyline LS Shirt",
+    brand: "Arc'teryx",
+    description: "Performance snap-front long sleeve shirt",
+    imgSrc: "",
+    href: "https://arcteryx.com/us/en/shop/mens/skyline-shirt-ls",
+    price: "$139",
+    category: "lifestyle",
+  },
+  {
+    name: "Skyline SS Shirt",
+    brand: "Arc'teryx",
+    description: "Performance snap-front short sleeve shirt",
+    imgSrc: "",
+    href: "https://arcteryx.com/us/en/shop/mens/skyline-shirt-ss",
+    price: "$109",
+    category: "lifestyle",
+  },
+  {
+    name: "JASON",
+    brand: "A.D.S.R.",
+    description: "Metal frame sunglasses in gold",
+    imgSrc: "",
+    href: "https://www.adsrfoundation.com/en/products/jason/",
+    price: "$170",
+    category: "lifestyle",
+    isNew: true,
+  },
+  {
+    name: "BALVIN",
+    brand: "A.D.S.R.",
+    description: "Acetate frame sunglasses in black",
+    imgSrc: "",
+    href: "https://www.adsrfoundation.com/en/products/balvin/",
+    price: "$145",
+    category: "lifestyle",
+  },
+  
+  // Workspace
+  {
+    name: "MacBook Pro M3 14\"",
+    brand: "Apple",
+    description: "14-inch MacBook Pro with M3 chip",
+    imgSrc: "",
+    href: "https://www.apple.com/macbook-pro/",
+    price: "$1,599",
+    category: "workspace",
+  },
+  {
+    name: "TIME TIMER",
+    brand: "TIME TIMER",
+    description: "60-minute visual timer in gray",
+    imgSrc: "",
+    href: "https://www.timetimer.com/",
+    price: "$35",
+    category: "workspace",
+    isNew: true,
+  },
+  {
+    name: "Nespresso Machine",
+    brand: "Nespresso",
+    description: "CitiZ & Milk Frother coffee system",
+    imgSrc: "",
+    href: "https://www.nespresso.com/",
+    price: "$329",
+    category: "workspace",
+  },
+  {
+    name: "VS3 Grinder",
+    brand: "Varia",
+    description: "Single dose coffee grinder in white",
+    imgSrc: "",
+    href: "https://www.variabrewing.com/products/varia-vs3-grinder",
+    price: "$400",
+    category: "workspace",
+    isNew: true,
   },
 ];
