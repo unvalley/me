@@ -1,0 +1,123 @@
+[
+  {
+    "id": "book-1",
+    "title": "The Odyssey",
+    "author": "Homer",
+    "year": 800,
+    "rating": 4.5,
+    "coverUrl": "https://picsum.photos/seed/odyssey/300/450",
+    "description": "An epic Greek poem following Odysseus' long journey home after the Trojan War.",
+    "buyUrl": "https://example.com/odyssey"
+  },
+  {
+    "id": "book-2",
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "year": 1813,
+    "rating": 4.8,
+    "coverUrl": "https://picsum.photos/seed/pride/300/450",
+    "description": "A classic romantic comedy of manners exploring love, reputation, and class.",
+    "buyUrl": "https://example.com/pride"
+  },
+  {
+    "id": "book-3",
+    "title": "Moby-Dick",
+    "author": "Herman Melville",
+    "year": 1851,
+    "rating": 4.1,
+    "coverUrl": "https://picsum.photos/seed/mobydick/300/450",
+    "description": "Captain Ahab's obsessive quest to hunt the white whale, Moby Dick.",
+    "buyUrl": "https://example.com/mobydick"
+  },
+  {
+    "id": "book-4",
+    "title": "1984",
+    "author": "George Orwell",
+    "year": 1949,
+    "rating": 4.7,
+    "coverUrl": "https://picsum.photos/seed/1984/300/450",
+    "description": "A dystopian novel about surveillance, totalitarianism, and truth.",
+    "buyUrl": "https://example.com/1984"
+  },
+  {
+    "id": "book-5",
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "year": 1960,
+    "rating": 4.9,
+    "coverUrl": "https://picsum.photos/seed/mockingbird/300/450",
+    "description": "A profound story of racial injustice and moral growth in the American South.",
+    "buyUrl": "https://example.com/mockingbird"
+  },
+  {
+    "id": "book-6",
+    "title": "Brave New World",
+    "author": "Aldous Huxley",
+    "year": 1932,
+    "rating": 4.3,
+    "coverUrl": "https://picsum.photos/seed/brave/300/450",
+    "description": "A vision of a technologically advanced but dehumanized future society.",
+    "buyUrl": "https://example.com/brave"
+  },
+  {
+    "id": "book-7",
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "year": 1925,
+    "rating": 4.4,
+    "coverUrl": "https://picsum.photos/seed/gatsby/300/450",
+    "description": "A tragic story of wealth, love, and the American dream in the 1920s.",
+    "buyUrl": "https://example.com/gatsby"
+  },
+  {
+    "id": "book-8",
+    "title": "War and Peace",
+    "author": "Leo Tolstoy",
+    "year": 1869,
+    "rating": 4.6,
+    "coverUrl": "https://picsum.photos/seed/warpeace/300/450",
+    "description": "An expansive novel interweaving personal and historical narratives during the Napoleonic Wars.",
+    "buyUrl": "https://example.com/warpeace"
+  },
+  {
+    "id": "book-9",
+    "title": "The Catcher in the Rye",
+    "author": "J.D. Salinger",
+    "year": 1951,
+    "rating": 4.0,
+    "coverUrl": "https://picsum.photos/seed/catcher/300/450",
+    "description": "Holden Caulfield's candid narrative of teenage angst and alienation.",
+    "buyUrl": "https://example.com/catcher"
+  },
+  {
+    "id": "book-10",
+    "title": "Crime and Punishment",
+    "author": "Fyodor Dostoevsky",
+    "year": 1866,
+    "rating": 4.7,
+    "coverUrl": "https://picsum.photos/seed/crime/300/450",
+    "description": "A psychological exploration of guilt, morality, and redemption.",
+    "buyUrl": "https://example.com/crime"
+  },
+  {
+    "id": "book-11",
+    "title": "The Hobbit",
+    "author": "J.R.R. Tolkien",
+    "year": 1937,
+    "rating": 4.8,
+    "coverUrl": "https://picsum.photos/seed/hobbit/300/450",
+    "description": "Bilbo Baggins' adventurous journey with dwarves to reclaim their homeland.",
+    "buyUrl": "https://example.com/hobbit"
+  },
+  {
+    "id": "book-12",
+    "title": "The Little Prince",
+    "author": "Antoine de Saint-Exupéry",
+    "year": 1943,
+    "rating": 4.9,
+    "coverUrl": "https://picsum.photos/seed/prince/300/450",
+    "description": "A poetic tale about friendship, loneliness, love, and loss.",
+    "buyUrl": "https://example.com/prince"
+  }
+]
+

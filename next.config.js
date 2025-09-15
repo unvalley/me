@@ -17,6 +17,12 @@ module.exports = withBundleAnalyzer(
       mdxRs: false,
     },
     transpilePackages: ["shiki"],
+    images: {
+      remotePatterns: [
+        { protocol: "https", hostname: "picsum.photos" },
+        { protocol: "https", hostname: "placehold.co" }
+      ],
+    },
     webpack: (config) => {
       // Handle SVG files
       config.module.rules.push({
