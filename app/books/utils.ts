@@ -6,6 +6,7 @@ export const CARD_W = 160; // px
 export const CARD_H = 240; // px
 export const CARD_META_H = 44; // caption (title) height used for grid spacing
 export const GAP = 24; // px
+export const GRID_MAX_WIDTH = 720; // px, maximum content width for aligned grid
 
 export const sortBooks = (books: Book[], _key: SortKey): Book[] => {
   const sorted = [...books];

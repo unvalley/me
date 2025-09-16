@@ -5,6 +5,7 @@ import type { Book, LayoutMode, SortKey, ScatterItem } from "./types";
 import {
   CARD_H,
   CARD_W,
+  GRID_MAX_WIDTH,
   clamp,
   computeGridPosition,
   makeInitialScatter,
@@ -345,9 +346,11 @@ export const BooksCanvas = () => {
       string,
       { x: number; y: number; rot: number; z: number }
     > = {};
+    const gridWidth = Math.max(0, Math.min(size.width, GRID_MAX_WIDTH));
+    const leftPad = Math.max(0, Math.floor((size.width - gridWidth) / 2));
     sortedForGrid.forEach((b, i) => {
-      const { x, y } = computeGridPosition(i, size.width);
-      map[b.isbn] = { x, y, rot: 0, z: 10 + i };
+      const { x, y } = computeGridPosition(i, gridWidth);
+      map[b.isbn] = { x: leftPad + x, y, rot: 0, z: 10 + i };
     });
     return map;
   }, [sortedForGrid, size.width]);
@@ -393,7 +396,7 @@ export const BooksCanvas = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative pt-6 pb-8">
       {/* Controls (bottom-right): Sort + Align/Scatter */}
       <div className="pointer-events-auto fixed right-4 bottom-4 md:right-6 md:bottom-6 z-[900]">
         <div className="flex items-center gap-2 rounded-full border border-gray-300/60 bg-gray-50/85 px-2.5 py-1.5 shadow-sm backdrop-blur dark:border-gray-700/60 dark:bg-gray-900/85">
