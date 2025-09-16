@@ -2,7 +2,6 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { CustomLink } from "@/components/Link";
 import { Tag } from "@/components/Tag";
-import { PageTitle } from "@/components/PageTitle";
 import siteMetadata from "@/data/siteMetadata";
 import { kebabCase } from "@/lib/utils/kebabCase";
 import type { Metadata } from "next";
