@@ -42,13 +42,55 @@ type CardProps = {
   tabIndex?: number;
 };
 
+// Minimal but robust candidates for cover images
+const toIsbn13 = (isbn10: string): string | null => {
+  const core = isbn10.replace(/[^0-9Xx]/g, "");
+  if (core.length !== 10) return null;
+  const nine = core.substring(0, 9);
+  if (!/^\d{9}$/.test(nine)) return null;
+  const base = `978${nine}`;
+  let sum = 0;
+  for (let i = 0; i < 12; i++) {
+    const d = Number(base[i]);
+    sum += i % 2 === 0 ? d : d * 3;
+  }
+  const check = (10 - (sum % 10)) % 10;
+  return base + String(check);
+};
+
+const toIsbn10 = (isbn13: string): string | null => {
+  const core = isbn13.replace(/[^0-9]/g, "");
+  if (core.length !== 13 || !core.startsWith("978")) return null;
+  const nine = core.substring(3, 12);
+  let sum = 0;
+  for (let i = 0; i < 9; i++) sum += Number(nine[i]) * (10 - i);
+  const r = 11 - (sum % 11);
+  const check = r === 10 ? "X" : r === 11 ? "0" : String(r);
+  return nine + check;
+};
+
 const CoverImage = ({ book, sizes }: { book: Book; sizes: string }) => {
   const candidates: string[] = [];
   if (book.coverUrl) candidates.push(book.coverUrl);
   if (book.isbn) {
-    // Prefer openBD by ISBN; simple fallback to hanmoto
-    candidates.push(`https://cover.openbd.jp/${book.isbn}.jpg`);
-    candidates.push(`https://www.hanmoto.com/bd/img/${book.isbn}.jpg`);
+    const raw = book.isbn.replace(/[^0-9Xx]/g, "");
+    const alt13 = raw.length === 10 ? toIsbn13(raw) : null;
+    const alt10 = raw.length === 13 ? toIsbn10(raw) : null;
+    // openBD first
+    candidates.push(`https://cover.openbd.jp/${raw}.jpg`);
+    if (alt13) candidates.push(`https://cover.openbd.jp/${alt13}.jpg`);
+    if (alt10) candidates.push(`https://cover.openbd.jp/${alt10}.jpg`);
+    // hanmoto fallback (jpg/png common patterns)
+    candidates.push(`https://www.hanmoto.com/bd/img/${raw}.jpg`);
+    candidates.push(`https://www.hanmoto.com/bd/img/${raw}.png`);
+    if (alt13) {
+      candidates.push(`https://www.hanmoto.com/bd/img/${alt13}.jpg`);
+      candidates.push(`https://www.hanmoto.com/bd/img/${alt13}.png`);
+    }
+    if (alt10) {
+      candidates.push(`https://www.hanmoto.com/bd/img/${alt10}.jpg`);
+      candidates.push(`https://www.hanmoto.com/bd/img/${alt10}.png`);
+    }
   }
   const unique = Array.from(new Set(candidates));
   const [idx, setIdx] = useState(0);
