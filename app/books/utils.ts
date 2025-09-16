@@ -67,7 +67,7 @@ export const storage = {
   save: (key: string, value: unknown) => {
     try {
       localStorage.setItem(key, JSON.stringify(value));
-    } catch (e) {
+    } catch (_e) {
       // ignore
     }
   },

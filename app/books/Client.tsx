@@ -150,7 +150,7 @@ const DraggableCard = ({
       animate={{ x, y, rotate: rot, scale: isDragging ? 1.03 : 1 }}
       transition={{ type: "spring", stiffness: 500, damping: 40, mass: 0.6 }}
       {...draggableProps}
-      onClick={(e) => {
+      onClick={(_e) => {
         // Avoid click on drag
         if (!isDragging) onOpen(book);
       }}

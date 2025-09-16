@@ -25,7 +25,7 @@ module.exports = {
         14: "3.5rem",
       },
       fontFamily: {
-        //@ts-ignore
+        //@ts-expect-error
         sans: ["InterVariable", ...defaultTheme.fontFamily.sans],
         helvetica: ["Helvetica Neue", "Helvetica"],
         mono: ["IBM Plex Mono", ...defaultTheme.fontFamily.mono],
