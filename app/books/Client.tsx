@@ -20,6 +20,7 @@ import {
   useDraggable,
   useSensor,
   useSensors,
+  type DragEndEvent,
 } from "@dnd-kit/core";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -58,17 +59,16 @@ type CardProps = {
 };
 
 const CoverImage = ({ book, sizes }: { book: Book; sizes: string }) => {
-  const candidates: string[] = [];
-  if (book.isbn) {
-    const raw = book.isbn.replace(/[^0-9Xx]/g, "");
-    // openBD (ISBN-10) first, then hanmoto
-    candidates.push(`https://cover.openbd.jp/${raw}.jpg`);
-    candidates.push(`https://www.hanmoto.com/bd/img/${raw}.jpg`);
-    candidates.push(`https://www.hanmoto.com/bd/img/${raw}.png`);
-  }
-  const unique = Array.from(new Set(candidates));
+  const isbn = (book.isbn || "").replace(/[^0-9]/g, "");
+  const candidates = isbn
+    ? [
+        `/covers/${isbn}.jpg`,
+        `/covers/${isbn}.png`,
+        `/api/cover/${isbn}`,
+      ]
+    : [];
   const [idx, setIdx] = useState(0);
-  const src = unique[idx] ?? "";
+  const src = candidates[idx];
   if (!src) {
     return (
       <div className="h-full w-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800" />
@@ -355,11 +355,11 @@ export const BooksCanvas = () => {
     return map;
   }, [sortedForGrid, size.width]);
 
-  const onDragEnd = (ev: any) => {
+  const onDragEnd = (ev: DragEndEvent) => {
     if (layoutMode !== "scatter") return;
-    const id: string | undefined = ev?.active?.id;
+    const id = String(ev?.active?.id ?? "");
     if (!id) return;
-    const trans = ev?.delta ?? ev?.transform ?? { x: 0, y: 0 };
+    const trans = ev?.delta ?? { x: 0, y: 0 };
     setScatter((prev) => {
       const cur = prev[id];
       if (!cur) return prev;
