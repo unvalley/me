@@ -131,7 +131,7 @@ const DraggableCard = ({
 
   const x = (base.x ?? 0) + (mode === "scatter" ? dragX : 0);
   const y = (base.y ?? 0) + (mode === "scatter" ? dragY : 0);
-  const rot = mode === "scatter" ? (base.rot ?? 0) : 0;
+  const rot = mode === "scatter" ? base.rot ?? 0 : 0;
 
   const draggableProps =
     mode === "scatter" ? { ...listeners, ...attributes } : {};
@@ -187,7 +187,7 @@ const DetailsPanel = ({
     const panel = panelRef.current;
     if (!panel) return;
     const focusable = panel.querySelectorAll<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     );
     const first = focusable[0];
     first?.focus();
@@ -281,7 +281,7 @@ const DetailsPanel = ({
 
 export const BooksCanvas = () => {
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(PointerSensor, { activationConstraint: { distance: 6 } })
   );
 
   const [containerRef, size] = useMeasure();
@@ -296,7 +296,7 @@ export const BooksCanvas = () => {
   const books = useMemo(() => booksJson as Book[], []);
   const sortedForGrid = useMemo(
     () => sortBooks(books, sortKey),
-    [books, sortKey],
+    [books, sortKey]
   );
 
   // Load persisted settings on mount (client-only)
@@ -314,8 +314,8 @@ export const BooksCanvas = () => {
         books.map((b) => b.isbn),
         size.width,
         size.height,
-        prev,
-      ),
+        prev
+      )
     );
   }, [size.width, size.height, books]);
 
@@ -431,7 +431,6 @@ export const BooksCanvas = () => {
         ref={containerRef}
         className="fixed left-0 right-0 bottom-0 overflow-hidden bg-gray-50 px-6 pb-6 md:px-10 md:pb-10 dark:bg-gray-900"
         style={{ top: topOffset }}
-        aria-label="Canvas"
       >
         <DndContext onDragEnd={onDragEnd} sensors={sensors}>
           {books.map((b) => {
