@@ -1,17 +1,13 @@
 export type Book = {
-  id: string;
+  // Use ISBN-13 as the unique id
+  isbn: string;
   title: string;
-  author: string;
-  year: number;
-  rating: number; // 0-5
-  coverUrl: string;
-  isbn?: string;
-  description: string;
+  comment?: string;
   buyUrl?: string;
 };
 
 export type LayoutMode = "scatter" | "grid";
-export type SortKey = "title" | "author" | "year" | "rating";
+export type SortKey = "title";
 
 export type ScatterItem = {
   x: number;

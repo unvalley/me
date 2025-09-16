@@ -2,10 +2,24 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Book, LayoutMode, SortKey, ScatterItem } from "./types";
-import { CARD_H, CARD_W, GAP, clamp, computeGridPosition, makeInitialScatter, sortBooks, storage } from "./utils";
+import {
+  CARD_H,
+  CARD_W,
+  clamp,
+  computeGridPosition,
+  makeInitialScatter,
+  sortBooks,
+  storage,
+} from "./utils";
 import booksJson from "./_data/books.json";
 import Image from "next/image";
-import { DndContext, PointerSensor, useDraggable, useSensor, useSensors } from "@dnd-kit/core";
+import {
+  DndContext,
+  PointerSensor,
+  useDraggable,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import { motion, AnimatePresence } from "framer-motion";
 
 type Size = { width: number; height: number };
@@ -42,55 +56,14 @@ type CardProps = {
   tabIndex?: number;
 };
 
-// Minimal but robust candidates for cover images
-const toIsbn13 = (isbn10: string): string | null => {
-  const core = isbn10.replace(/[^0-9Xx]/g, "");
-  if (core.length !== 10) return null;
-  const nine = core.substring(0, 9);
-  if (!/^\d{9}$/.test(nine)) return null;
-  const base = `978${nine}`;
-  let sum = 0;
-  for (let i = 0; i < 12; i++) {
-    const d = Number(base[i]);
-    sum += i % 2 === 0 ? d : d * 3;
-  }
-  const check = (10 - (sum % 10)) % 10;
-  return base + String(check);
-};
-
-const toIsbn10 = (isbn13: string): string | null => {
-  const core = isbn13.replace(/[^0-9]/g, "");
-  if (core.length !== 13 || !core.startsWith("978")) return null;
-  const nine = core.substring(3, 12);
-  let sum = 0;
-  for (let i = 0; i < 9; i++) sum += Number(nine[i]) * (10 - i);
-  const r = 11 - (sum % 11);
-  const check = r === 10 ? "X" : r === 11 ? "0" : String(r);
-  return nine + check;
-};
-
 const CoverImage = ({ book, sizes }: { book: Book; sizes: string }) => {
   const candidates: string[] = [];
-  if (book.coverUrl) candidates.push(book.coverUrl);
   if (book.isbn) {
     const raw = book.isbn.replace(/[^0-9Xx]/g, "");
-    const alt13 = raw.length === 10 ? toIsbn13(raw) : null;
-    const alt10 = raw.length === 13 ? toIsbn10(raw) : null;
-    // openBD first
+    // openBD (ISBN-10) first, then hanmoto
     candidates.push(`https://cover.openbd.jp/${raw}.jpg`);
-    if (alt13) candidates.push(`https://cover.openbd.jp/${alt13}.jpg`);
-    if (alt10) candidates.push(`https://cover.openbd.jp/${alt10}.jpg`);
-    // hanmoto fallback (jpg/png common patterns)
     candidates.push(`https://www.hanmoto.com/bd/img/${raw}.jpg`);
     candidates.push(`https://www.hanmoto.com/bd/img/${raw}.png`);
-    if (alt13) {
-      candidates.push(`https://www.hanmoto.com/bd/img/${alt13}.jpg`);
-      candidates.push(`https://www.hanmoto.com/bd/img/${alt13}.png`);
-    }
-    if (alt10) {
-      candidates.push(`https://www.hanmoto.com/bd/img/${alt10}.jpg`);
-      candidates.push(`https://www.hanmoto.com/bd/img/${alt10}.png`);
-    }
   }
   const unique = Array.from(new Set(candidates));
   const [idx, setIdx] = useState(0);
@@ -113,8 +86,17 @@ const CoverImage = ({ book, sizes }: { book: Book; sizes: string }) => {
   );
 };
 
-const DraggableCard = ({ book, mode, base, container, onOpen, onMove, tabIndex }: CardProps) => {
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({ id: book.id });
+const DraggableCard = ({
+  book,
+  mode,
+  base,
+  container,
+  onOpen,
+  onMove,
+  tabIndex,
+}: CardProps) => {
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useDraggable({ id: book.isbn });
   const dragX = transform?.x ?? 0;
   const dragY = transform?.y ?? 0;
 
@@ -138,7 +120,7 @@ const DraggableCard = ({ book, mode, base, container, onOpen, onMove, tabIndex }
         rot: (base as ScatterItem).rot,
         z: (base as ScatterItem).z,
       };
-      onMove(book.id, next);
+      onMove(book.isbn, next);
     }
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
@@ -150,14 +132,15 @@ const DraggableCard = ({ book, mode, base, container, onOpen, onMove, tabIndex }
   const y = (base.y ?? 0) + (mode === "scatter" ? dragY : 0);
   const rot = mode === "scatter" ? base.rot ?? 0 : 0;
 
-  const draggableProps = mode === "scatter" ? { ...listeners, ...attributes } : {};
+  const draggableProps =
+    mode === "scatter" ? { ...listeners, ...attributes } : {};
 
   return (
     <motion.div
       ref={setNodeRef}
       role="button"
       tabIndex={tabIndex ?? 0}
-      aria-label={`${book.title} by ${book.author}`}
+      aria-label={book.title}
       onKeyDown={onKeyDown}
       onDoubleClick={() => onOpen(book)}
       className="absolute select-none outline-none"
@@ -183,19 +166,19 @@ const DraggableCard = ({ book, mode, base, container, onOpen, onMove, tabIndex }
           >
             {book.title}
           </div>
-          <div
-            className="truncate text-[12px] leading-4 text-gray-500 dark:text-gray-400"
-            title={book.author}
-          >
-            {book.author}
-          </div>
         </div>
       </div>
     </motion.div>
   );
 };
 
-const DetailsPanel = ({ book, onClose }: { book: Book | null; onClose: () => void }) => {
+const DetailsPanel = ({
+  book,
+  onClose,
+}: {
+  book: Book | null;
+  onClose: () => void;
+}) => {
   const panelRef = useRef<HTMLDivElement>(null);
   // focus trap
   useEffect(() => {
@@ -203,7 +186,7 @@ const DetailsPanel = ({ book, onClose }: { book: Book | null; onClose: () => voi
     const panel = panelRef.current;
     if (!panel) return;
     const focusable = panel.querySelectorAll<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     );
     const first = focusable[0];
     first?.focus();
@@ -269,9 +252,6 @@ const DetailsPanel = ({ book, onClose }: { book: Book | null; onClose: () => voi
                     <CoverImage book={book} sizes="120px" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm text-gray-500">{book.author}</div>
-                    <div className="text-sm text-gray-500">{book.year}</div>
-                    <div className="text-sm text-gray-500">Rating: {book.rating.toFixed(1)} / 5</div>
                     {book.buyUrl && (
                       <a
                         href={book.buyUrl}
@@ -284,7 +264,11 @@ const DetailsPanel = ({ book, onClose }: { book: Book | null; onClose: () => voi
                     )}
                   </div>
                 </div>
-                <p className="mt-4 text-sm leading-6 text-gray-700 dark:text-gray-300">{book.description}</p>
+                {book.comment && (
+                  <div className="mt-4 rounded-lg text-sm leading-6">
+                    {book.comment}
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>
@@ -295,7 +279,9 @@ const DetailsPanel = ({ book, onClose }: { book: Book | null; onClose: () => voi
 };
 
 export const BooksCanvas = () => {
-  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }));
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 6 } })
+  );
 
   const [containerRef, size] = useMeasure();
   const [topOffset, setTopOffset] = useState(0);
@@ -307,7 +293,10 @@ export const BooksCanvas = () => {
   const [active, setActive] = useState<Book | null>(null);
 
   const books = useMemo(() => booksJson as Book[], []);
-  const sortedForGrid = useMemo(() => sortBooks(books, sortKey), [books, sortKey]);
+  const sortedForGrid = useMemo(
+    () => sortBooks(books, sortKey),
+    [books, sortKey]
+  );
 
   // Load persisted settings on mount (client-only)
   useEffect(() => {
@@ -319,7 +308,14 @@ export const BooksCanvas = () => {
   // Init scatter positions after we know container size
   useEffect(() => {
     if (!size.width || !size.height) return;
-    setScatter((prev) => makeInitialScatter(books.map((b) => b.id), size.width, size.height, prev));
+    setScatter((prev) =>
+      makeInitialScatter(
+        books.map((b) => b.isbn),
+        size.width,
+        size.height,
+        prev
+      )
+    );
   }, [size.width, size.height, books]);
 
   // Persist
@@ -344,11 +340,14 @@ export const BooksCanvas = () => {
     };
   }, []);
 
-  const gridBaseById = useMemo(() => {
-    const map: Record<string, { x: number; y: number; rot: number; z: number }> = {};
+  const gridBaseByIsbn = useMemo(() => {
+    const map: Record<
+      string,
+      { x: number; y: number; rot: number; z: number }
+    > = {};
     sortedForGrid.forEach((b, i) => {
       const { x, y } = computeGridPosition(i, size.width);
-      map[b.id] = { x, y, rot: 0, z: 10 + i };
+      map[b.isbn] = { x, y, rot: 0, z: 10 + i };
     });
     return map;
   }, [sortedForGrid, size.width]);
@@ -377,12 +376,12 @@ export const BooksCanvas = () => {
     setSortKey(key);
     if (layoutMode === "scatter") {
       // update z to reflect new priority, positions unchanged
-      const ids = sortBooks(books, key).map((b) => b.id);
+      const isbnList = sortBooks(books, key).map((b) => b.isbn);
       setScatter((prev) => {
         const next = { ...prev };
         let zBase = 10;
-        ids.forEach((id) => {
-          if (next[id]) next[id].z = zBase++;
+        isbnList.forEach((i) => {
+          if (next[i]) next[i].z = zBase++;
         });
         return next;
       });
@@ -410,9 +409,6 @@ export const BooksCanvas = () => {
               onChange={(e) => handleSortChange(e.target.value as SortKey)}
             >
               <option value="title">Title</option>
-              <option value="author">Author</option>
-              <option value="year">Year</option>
-              <option value="rating">Rating</option>
             </select>
           </div>
           <div className="h-5 w-px bg-gray-300/70 dark:bg-gray-600/70" />
@@ -420,10 +416,10 @@ export const BooksCanvas = () => {
             type="button"
             onClick={toggleLayout}
             className="rounded-full border border-gray-300/60 bg-gray-50/60 px-3 py-1.5 text-sm text-gray-900 shadow-sm hover:bg-gray-50 dark:border-gray-700/60 dark:bg-gray-800/60 dark:text-gray-100 dark:hover:bg-gray-800"
-          aria-label={layoutMode === "grid" ? "Scatter" : "Align"}
-        >
-          {layoutMode === "grid" ? "Scatter" : "Align"}
-        </button>
+            aria-label={layoutMode === "grid" ? "Scatter" : "Align"}
+          >
+            {layoutMode === "grid" ? "Scatter" : "Align"}
+          </button>
         </div>
       </div>
 
@@ -436,17 +432,22 @@ export const BooksCanvas = () => {
       >
         <DndContext onDragEnd={onDragEnd} sensors={sensors}>
           {books.map((b) => {
-            const base = layoutMode === "scatter" ? scatter[b.id] : gridBaseById[b.id];
+            const base =
+              layoutMode === "scatter"
+                ? scatter[b.isbn]
+                : gridBaseByIsbn[b.isbn];
             if (!base) return null;
             return (
               <DraggableCard
-                key={b.id}
+                key={b.isbn}
                 book={b}
                 mode={layoutMode}
                 base={base}
                 container={size}
                 onOpen={setActive}
-                onMove={(id, next) => setScatter((prev) => ({ ...prev, [id]: next }))}
+                onMove={(id, next) =>
+                  setScatter((prev) => ({ ...prev, [id]: next }))
+                }
               />
             );
           })}

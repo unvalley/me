@@ -4,20 +4,12 @@ import type { Book, SortKey, ScatterItem } from "./types";
 
 export const CARD_W = 160; // px
 export const CARD_H = 240; // px
-export const CARD_META_H = 44; // caption (title/author) height used for grid spacing
+export const CARD_META_H = 44; // caption (title) height used for grid spacing
 export const GAP = 24; // px
 
-export const sortBooks = (books: Book[], key: SortKey): Book[] => {
+export const sortBooks = (books: Book[], _key: SortKey): Book[] => {
   const sorted = [...books];
-  sorted.sort((a, b) => {
-    if (key === "title" || key === "author") {
-      return a[key].localeCompare(b[key]);
-    }
-    if (key === "year" || key === "rating") {
-      return b[key] - a[key];
-    }
-    return 0;
-  });
+  sorted.sort((a, b) => a.title.localeCompare(b.title));
   return sorted;
 };
 
