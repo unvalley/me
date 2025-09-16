@@ -191,7 +191,7 @@ const kanaMap: Record<string, string> = {
 };
 for (const [k, v] of Object.entries(kanaMap)) {
   const kata = k.replace(/[ぁ-ん]/g, (c) =>
-    String.fromCharCode(c.charCodeAt(0) + 0x60)
+    String.fromCharCode(c.charCodeAt(0) + 0x60),
   );
   kanaMap[kata] = v;
 }
@@ -233,7 +233,7 @@ const digraphs: Record<string, string> = {
 };
 for (const [k, v] of Object.entries(digraphs)) {
   const kata = k.replace(/[ぁ-ん]/g, (c) =>
-    String.fromCharCode(c.charCodeAt(0) + 0x60)
+    String.fromCharCode(c.charCodeAt(0) + 0x60),
   );
   digraphs[kata] = v;
 }
@@ -331,7 +331,7 @@ const parseAddress = (raw: string): ParsedAddress => {
     area = area.replace(chomeMatch[0], "");
   }
   const banGoMatch = area.match(
-    /(\d+|[〇零一二三四五六七八九十百千]+)番(\d+|[〇零一二三四五六七八九十百千]+)号?/
+    /(\d+|[〇零一二三四五六七八九十百千]+)番(\d+|[〇零一二三四五六七八九十百千]+)号?/,
   );
   if (banGoMatch) {
     ban = kanjiToNumber(banGoMatch[1]);
@@ -340,7 +340,7 @@ const parseAddress = (raw: string): ParsedAddress => {
   }
 
   const hyphenMatch = area.match(
-    /([\d]+)\s*[-−ｰー－]\s*([\d]+)(?:\s*[-−ｰー－]\s*([\d]+))?/
+    /([\d]+)\s*[-−ｰー－]\s*([\d]+)(?:\s*[-−ｰー－]\s*([\d]+))?/,
   );
   if (hyphenMatch) {
     const n1 = Number(hyphenMatch[1]);
@@ -400,7 +400,7 @@ const areaToRomaji = (area?: string): string => {
 };
 
 const buildEnglishAddress = (
-  a: ParsedAddress
+  a: ParsedAddress,
 ): { english: string; romaji: string } => {
   const partsEn: string[] = [];
   const partsRo: string[] = [];
@@ -415,10 +415,10 @@ const buildEnglishAddress = (
   if (blockHyphen) {
     if (a.chome) {
       partsEn.push(
-        `${a.chome}-chome ${[a.ban, a.go].filter(Boolean).join("-")}`.trim()
+        `${a.chome}-chome ${[a.ban, a.go].filter(Boolean).join("-")}`.trim(),
       );
       partsRo.push(
-        `${a.chome}-chome ${[a.ban, a.go].filter(Boolean).join("-")}`.trim()
+        `${a.chome}-chome ${[a.ban, a.go].filter(Boolean).join("-")}`.trim(),
       );
     } else {
       partsEn.push(blockHyphen);
@@ -498,7 +498,7 @@ const Client = () => {
   // Separated mode state
   const [sepPostal, setSepPostal] = useState("");
   const [sepPrefKanji, setSepPrefKanji] = useState<string | undefined>(
-    undefined
+    undefined,
   );
   const [sepPrefEn, setSepPrefEn] = useState<string | undefined>(undefined);
   const [sepMunicipality, setSepMunicipality] = useState("");

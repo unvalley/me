@@ -56,10 +56,14 @@ export default function Tools() {
           ))}
         </ul>
 
-        <h2 className="text-xl tracking-tight md:leading-14 font-mono">Chores</h2>
+        <h2 className="text-xl tracking-tight md:leading-14 font-mono">
+          Chores
+        </h2>
         <ul>
           <li>
-            <CustomLink href="/tools/jp-address">日本語住所 → 英語（ローマ字）表記に変換</CustomLink>
+            <CustomLink href="/tools/jp-address">
+              日本語住所 → 英語（ローマ字）表記に変換
+            </CustomLink>
             <span> - 海外配送や海外のフォーム入力向けの住所変換ツール</span>
           </li>
         </ul>

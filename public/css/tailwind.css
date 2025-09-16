@@ -6,7 +6,7 @@
   html {
     text-underline-offset: 0.3em;
   }
-  
+
   a:any-link {
     text-decoration-color: oklch(0.67 0 0);
     text-decoration-thickness: 1px;
