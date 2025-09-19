@@ -5,8 +5,11 @@ import type { Book, LayoutMode, SortKey, ScatterItem } from "./types";
 import {
   CARD_H,
   CARD_W,
+  CARD_META_H,
   GRID_MAX_WIDTH,
+  GAP,
   clamp,
+  computeGridColumns,
   computeGridPosition,
   makeInitialScatter,
   sortBooks,
@@ -292,6 +295,9 @@ export const BooksCanvas = () => {
   const [sortKey, setSortKey] = useState<SortKey>("title");
   const [scatter, setScatter] = useState<Record<string, ScatterItem>>({});
   const [active, setActive] = useState<Book | null>(null);
+  // Treat screens narrower than md (768px) as mobile
+  const [isMobile, setIsMobile] = useState(false);
+  // mobile grid columns will adapt between 2-4 based on width
 
   const books = useMemo(() => booksJson as Book[], []);
   const sortedForGrid = useMemo(
@@ -305,6 +311,27 @@ export const BooksCanvas = () => {
     setSortKey(storage.load(STORAGE_KEYS.sort, "title"));
     setScatter(storage.load(STORAGE_KEYS.scatter, {}));
   }, []);
+
+  // Detect mobile based on viewport width
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const set = () => setIsMobile(mq.matches);
+    set();
+    // Safari <14 fallback uses addListener
+    if (mq.addEventListener) mq.addEventListener("change", set);
+    else (mq as any).addListener?.(set);
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener("change", set);
+      else (mq as any).removeListener?.(set);
+    };
+  }, []);
+
+  // Force grid mode on mobile (scatter off)
+  useEffect(() => {
+    if (isMobile && layoutMode !== "grid") {
+      setLayoutMode("grid");
+    }
+  }, [isMobile, layoutMode]);
 
   // Init scatter positions after we know container size
   useEffect(() => {
@@ -346,14 +373,49 @@ export const BooksCanvas = () => {
       string,
       { x: number; y: number; rot: number; z: number }
     > = {};
-    const gridWidth = Math.max(0, Math.min(size.width, GRID_MAX_WIDTH));
-    const leftPad = Math.max(0, Math.floor((size.width - gridWidth) / 2));
+    let gridWidth: number;
+    let leftPad: number;
+    if (isMobile) {
+      const available = Math.max(0, Math.min(size.width, GRID_MAX_WIDTH));
+      const mobileCols = clamp(
+        Math.floor((available + GAP) / (CARD_W + GAP)),
+        2,
+        4
+      );
+      gridWidth = mobileCols * CARD_W + (mobileCols - 1) * GAP;
+      // Wrapper centers on mobile; positions are relative to wrapper
+      leftPad = 0;
+    } else {
+      gridWidth = Math.max(0, Math.min(size.width, GRID_MAX_WIDTH));
+      leftPad = Math.max(0, Math.floor((size.width - gridWidth) / 2));
+    }
     sortedForGrid.forEach((b, i) => {
       const { x, y } = computeGridPosition(i, gridWidth);
       map[b.isbn] = { x: leftPad + x, y, rot: 0, z: 10 + i };
     });
     return map;
-  }, [sortedForGrid, size.width]);
+  }, [sortedForGrid, size.width, isMobile]);
+
+  const gridContentHeight = useMemo(() => {
+    let gridWidth: number;
+    let cols: number;
+    if (isMobile) {
+      const available = Math.max(0, Math.min(size.width, GRID_MAX_WIDTH));
+      const mobileCols = clamp(
+        Math.floor((available + GAP) / (CARD_W + GAP)),
+        2,
+        4
+      );
+      cols = mobileCols;
+      gridWidth = mobileCols * CARD_W + (mobileCols - 1) * GAP;
+    } else {
+      gridWidth = Math.max(0, Math.min(size.width, GRID_MAX_WIDTH));
+      cols = Math.max(1, computeGridColumns(gridWidth));
+    }
+    const rows = Math.max(1, Math.ceil(sortedForGrid.length / cols));
+    const height = rows * (CARD_H + CARD_META_H) + (rows - 1) * GAP;
+    return height;
+  }, [isMobile, size.width, sortedForGrid.length]);
 
   const onDragEnd = (ev: DragEndEvent) => {
     if (layoutMode !== "scatter") return;
@@ -392,6 +454,8 @@ export const BooksCanvas = () => {
   };
 
   const toggleLayout = () => {
+    // Disable scatter on mobile
+    if (isMobile) return;
     setLayoutMode((m) => (m === "scatter" ? "grid" : "scatter"));
   };
 
@@ -418,10 +482,11 @@ export const BooksCanvas = () => {
           <button
             type="button"
             onClick={toggleLayout}
-            className="rounded-full border border-gray-300/60 bg-gray-50/60 px-3 py-1.5 text-sm text-gray-900 shadow-sm hover:bg-gray-50 dark:border-gray-700/60 dark:bg-gray-800/60 dark:text-gray-100 dark:hover:bg-gray-800"
-            aria-label={layoutMode === "grid" ? "Scatter" : "Align"}
+            className="rounded-full border border-gray-300/60 bg-gray-50/60 px-3 py-1.5 text-sm text-gray-900 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed dark:border-gray-700/60 dark:bg-gray-800/60 dark:text-gray-100 dark:hover:bg-gray-800"
+            aria-label={isMobile ? "Align (mobile only)" : layoutMode === "grid" ? "Scatter" : "Align"}
+            disabled={isMobile}
           >
-            {layoutMode === "grid" ? "Scatter" : "Align"}
+            {isMobile ? "Align" : layoutMode === "grid" ? "Scatter" : "Align"}
           </button>
         </div>
       </div>
@@ -429,31 +494,56 @@ export const BooksCanvas = () => {
       {/* Canvas (full-screen under header) */}
       <div
         ref={containerRef}
-        className="fixed left-0 right-0 bottom-0 overflow-hidden bg-gray-50 px-6 pb-6 md:px-10 md:pb-10 dark:bg-gray-900"
+        className="fixed left-0 right-0 bottom-0 overflow-x-hidden overflow-y-auto bg-gray-50 px-6 pb-6 md:px-10 md:pb-10 dark:bg-gray-900"
         style={{ top: topOffset }}
       >
-        <DndContext onDragEnd={onDragEnd} sensors={sensors}>
-          {books.map((b) => {
-            const base =
-              layoutMode === "scatter"
-                ? scatter[b.isbn]
-                : gridBaseByIsbn[b.isbn];
-            if (!base) return null;
-            return (
-              <DraggableCard
-                key={b.isbn}
-                book={b}
-                mode={layoutMode}
-                base={base}
-                container={size}
-                onOpen={setActive}
-                onMove={(id, next) =>
-                  setScatter((prev) => ({ ...prev, [id]: next }))
-                }
-              />
+        {(() => {
+          let targetWidth = Math.max(0, Math.min(size.width, GRID_MAX_WIDTH));
+          if (isMobile) {
+            const available = Math.max(0, Math.min(size.width, GRID_MAX_WIDTH));
+            const mobileCols = clamp(
+              Math.floor((available + GAP) / (CARD_W + GAP)),
+              2,
+              4
             );
-          })}
-        </DndContext>
+            targetWidth = mobileCols * CARD_W + (mobileCols - 1) * GAP;
+          }
+          const scale = isMobile ? Math.min(1, size.width / targetWidth) : 1;
+          const wrapperStyle: React.CSSProperties = isMobile
+            ? {
+                width: targetWidth,
+                height: gridContentHeight * scale,
+                transform: `scale(${scale})`,
+                transformOrigin: "top center",
+              }
+            : { height: gridContentHeight };
+          return (
+            <div className="relative mx-auto" style={wrapperStyle}>
+              <DndContext onDragEnd={onDragEnd} sensors={sensors}>
+                {books.map((b) => {
+                  const base =
+                    layoutMode === "scatter"
+                      ? scatter[b.isbn]
+                      : gridBaseByIsbn[b.isbn];
+                  if (!base) return null;
+                  return (
+                    <DraggableCard
+                      key={b.isbn}
+                      book={b}
+                      mode={layoutMode}
+                      base={base}
+                      container={size}
+                      onOpen={setActive}
+                      onMove={(id, next) =>
+                        setScatter((prev) => ({ ...prev, [id]: next }))
+                      }
+                    />
+                  );
+                })}
+              </DndContext>
+            </div>
+          );
+        })()}
       </div>
 
       {/* Details */}
