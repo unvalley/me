@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { BooksCanvas } from "./Client";
 
 export const metadata: Metadata = {
-  title: "Books Canvas",
+  title: "Books",
   description: "Drag & play with scattered book covers.",
 };
 

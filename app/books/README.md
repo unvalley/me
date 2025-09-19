@@ -1,4 +1,4 @@
-Books Canvas
+Books
 
 - Drag scattered book covers (pointer + keyboard nudge).
 - Click a card to open details (right sheet on desktop, full-screen modal on mobile). 
