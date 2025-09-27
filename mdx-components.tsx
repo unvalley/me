@@ -3,6 +3,7 @@ import type { FC } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { CodeBlock } from "@/components/CodeBlock";
+import { InstagramEmbed } from "@/components/InstagramEmbed";
 
 export const components: Record<string, FC<any>> = {
   h1: (props) => <h1 className="font-semibold mb-7 text-3xl" {...props} />,
@@ -89,6 +90,7 @@ export const components: Record<string, FC<any>> = {
     );
   },
   hr: (props) => <hr className="my-14 w-24 border-gray-300" {...props} />,
+  InstagramEmbed,
 };
 
 export function useMDXComponents(inherited: MDXComponents): MDXComponents {
