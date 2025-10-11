@@ -3,7 +3,14 @@
 import { mkdir, readFile, writeFile, access } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
-const booksJsonPath = join(process.cwd(), "app/books/_data/books.json");
+const booksJsonPath = join(
+  process.cwd(),
+  "app",
+  "(site)",
+  "books",
+  "_data",
+  "books.json",
+);
 const outDir = join(process.cwd(), "public/covers");
 
 async function ensureDir(p: string) {

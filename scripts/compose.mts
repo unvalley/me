@@ -22,10 +22,12 @@ const genFrontMatter = () => {
 
 const fileName = Math.floor(Date.now() / 1000);
 const frontMatter = genFrontMatter();
-if (!fs.existsSync("app/blog/_articles")) {
-  fs.mkdirSync("app/blog/_articles", { recursive: true });
+const articlesDir = "app/(site)/blog/_articles";
+
+if (!fs.existsSync(articlesDir)) {
+  fs.mkdirSync(articlesDir, { recursive: true });
 }
-const filePath = `app/blog/_articles/${fileName}.mdx`;
+const filePath = `${articlesDir}/${fileName}.mdx`;
 fs.writeFile(filePath, frontMatter, { flag: "wx" }, (err) => {
   if (err) {
     throw err;

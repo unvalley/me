@@ -12,7 +12,13 @@ export const metadata: Metadata = {
   description: "Things I blog about",
 };
 
-const articlesDirectory = path.join(process.cwd(), "app", "blog", "_articles");
+const articlesDirectory = path.join(
+  process.cwd(),
+  "app",
+  "(site)",
+  "blog",
+  "_articles",
+);
 
 async function getAllTags() {
   const articles = await fs.readdir(articlesDirectory);

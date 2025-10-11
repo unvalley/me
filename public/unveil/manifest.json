@@ -1,0 +1,13 @@
+{
+  "defaultSlug": "arcteryx",
+  "datasets": [
+    {
+      "slug": "arcteryx",
+      "brand": "Arc'teryx",
+      "updatedAt": "2025-10-05",
+      "recordCount": 9,
+      "sources": ["メルカリ", "ヤフオク! フリマ", "StockX"],
+      "summary": "メルカリ・ヤフオク! フリマ・StockXにあるArc'teryxの出品ログです。"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "defaultSlug": "arcteryx",
+  "datasets": [
+    {
+      "slug": "arcteryx",
+      "brand": "Arc'teryx",
+      "summary": "Arc'teryx の二次流通品ログ",
+      "marketplaces": ["mercari", "yahoo_flea", "rakuten"],
+      "sources": ["メルカリ", "ヤフオク! フリマ", "楽天市場"],
+      "queries": [
+        {
+          "term": "Arc'teryx",
+          "limit": 120
+        },
+        {
+          "term": "Arc'teryx Veilance",
+          "marketplaces": ["mercari"],
+          "updatedAfter": "2025-09-01T00:00:00Z"
+        }
+      ]
+    }
+  ]
+}

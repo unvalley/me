@@ -6,7 +6,13 @@ import { kebabCase } from "@/lib/utils/kebabCase";
 import type { Metadata } from "next";
 import { formatDate } from "@/lib/utils/formatDate";
 
-const articlesDirectory = path.join(process.cwd(), "app", "blog", "_articles");
+const articlesDirectory = path.join(
+  process.cwd(),
+  "app",
+  "(site)",
+  "blog",
+  "_articles",
+);
 
 export async function generateStaticParams() {
   const articles = await fs.readdir(articlesDirectory);

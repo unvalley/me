@@ -11,9 +11,6 @@ import type { Metadata } from "next";
 import siteMetadata from "@/data/siteMetadata";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Providers } from "./providers";
-import { Footer } from "@/components/Footer";
-import { CustomLink } from "@/components/Link";
-import { Navigation } from "@/components/Navigation";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
@@ -80,30 +77,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className="bg-gray-50 antialiased dark:bg-gray-900">
-        <Providers>
-          <div className="mx-auto my-auto max-w-2xl px-4 sm:px-6 xl:max-w-2xl xl:px-0">
-            <div className="flex h-screen flex-col justify-between">
-              <header className="flex items-center justify-between py-10">
-                <CustomLink href="/" aria-label={siteMetadata.headerTitle}>
-                  <div className="flex items-center justify-between">
-                    {typeof siteMetadata.headerTitle === "string" ? (
-                      <div className="text-xl font-mono">
-                        {siteMetadata.headerTitle}
-                      </div>
-                    ) : (
-                      siteMetadata.headerTitle
-                    )}
-                  </div>
-                </CustomLink>
-                <div className="flex items-center text-base leading-5">
-                  <Navigation />
-                </div>
-              </header>
-              <main className="mb-auto">{children}</main>
-              <Footer />
-            </div>
-          </div>
-        </Providers>
+        <Providers>{children}</Providers>
         <GoogleAnalytics gaId={siteMetadata.analytics.googleAnalyticsId} />
       </body>
     </html>

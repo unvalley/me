@@ -5,11 +5,13 @@ import { useState } from "react";
 interface SearchBarProps {
   onSearch: (query: string) => void;
   placeholder?: string;
+  ariaLabel?: string;
 }
 
 export function SearchBar({
   onSearch,
   placeholder = "Search articles...",
+  ariaLabel,
 }: SearchBarProps) {
   const [query, setQuery] = useState("");
 
@@ -22,7 +24,7 @@ export function SearchBar({
   return (
     <div className="relative">
       <input
-        aria-label="Search articles"
+        aria-label={ariaLabel ?? placeholder ?? "Search"}
         type="text"
         value={query}
         onChange={handleChange}

@@ -13,7 +13,13 @@ interface PostMetadata {
   [key: string]: any;
 }
 
-const articlesDirectory = path.join(process.cwd(), "app", "blog", "_articles");
+const articlesDirectory = path.join(
+  process.cwd(),
+  "app",
+  "(site)",
+  "blog",
+  "_articles",
+);
 
 // Load all blog posts
 async function getAllBlogs(): Promise<BlogPost[]> {
@@ -81,7 +87,13 @@ async function generate(): Promise<void> {
                   .replace(".mdx", "")
                   .replace(".md", "")
                   .replace("/feed.xml", "");
-                const route = path === "/index" ? "" : path;
+
+                const withoutGroups = path
+                  .replace(/\/\([^/]+\)\//g, "/")
+                  .replace(/\/\([^/]+\)$/g, "");
+
+                const cleaned = withoutGroups.replace(/\/+/g, "/");
+                const route = cleaned === "/index" ? "" : cleaned;
 
                 // Skip dynamic routes
                 if (route.includes("[") || route.includes("]")) {

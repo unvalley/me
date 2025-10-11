@@ -18,7 +18,6 @@ Keybinds
 
 API swap memo
 
-- Data source: `app/books/_data/books.json` is imported in `app/books/Client.tsx`.
+- Data source: `app/(site)/books/_data/books.json` is imported in `app/(site)/books/Client.tsx`.
 - Replace with a fetcher function that returns `Book[]` and pass into the component.
 - If fetching client-side, add a skeleton or Suspense fallback and keep the same `Book` shape.
-

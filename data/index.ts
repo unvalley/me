@@ -73,6 +73,13 @@ export const talks = [
 export const projectsData = [
   // latest
   {
+    title: "Unveil",
+    description:
+      "Unified search for Arc'teryx resale listings across Mercari, Yahoo! Flea Market, and StockX.",
+    imgSrc: "",
+    href: "/unveil",
+  },
+  {
     title: "Ephe",
     description:
       "An Ephemeral Markdown Paper for today. Less but handy features for plain Markdown lovers.",

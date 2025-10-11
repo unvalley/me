@@ -12,7 +12,13 @@ export const metadata: Metadata = {
   description: siteMetadata.description,
 };
 
-const articlesDirectory = path.join(process.cwd(), "app", "blog", "_articles");
+const articlesDirectory = path.join(
+  process.cwd(),
+  "app",
+  "(site)",
+  "blog",
+  "_articles",
+);
 
 export default async function Home() {
   const articles = await fs.readdir(articlesDirectory);
