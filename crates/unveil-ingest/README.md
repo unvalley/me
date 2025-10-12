@@ -1,11 +1,10 @@
-# Unveil Ingest (Rust)
+# unveil_ingestor
 
-`unveil-ingest` は Arc'teryx などのブランド名をキーワードに、メルカリ / Yahoo!フリマ / 楽天市場の出品情報を取得し JSON スナップショットまたは Netlify で配信しやすい静的データセットを生成する CLI です。Netlify Functions やバッチ環境から呼び出せるよう、Rust + `reqwest` + async で実装しています。
+`unveil_ingetor` はブランド名をキーワードに、メルカリ / Yahoo!フリマ / 楽天市場の出品情報を取得し JSON スナップショットまたは Netlify で配信しやすい静的データセットを生成する CLI です。
 
 ## 使い方（単一ブランドのスナップショット）
 
 ```bash
-# 実行ビルド
 export RAKUTEN_APP_ID="xxxxxxxxxxxxxxxxxxxxxxxx"
 cargo run -p unveil-ingest -- \
   --brand "Arc'teryx" \

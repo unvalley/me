@@ -1,10 +1,10 @@
-export type Marketplace = "mercari" | "yahoo-flea-market" | "rakuten" | "stockx";
+export type Marketplace =
+  | "mercari"
+  | "yahoo-flea-market"
+  | "rakuten"
+  | "stockx";
 
-export type Condition =
-  | "new"
-  | "used-like-new"
-  | "used-good"
-  | "used-fair";
+export type Condition = "new" | "used-like-new" | "used-good" | "used-fair";
 
 export interface UnveilListing {
   id: string;
@@ -41,11 +41,13 @@ export interface UnveilDataset {
 }
 
 export interface UnveilManifest {
-  defaultSlug?: string;
   datasets: UnveilDatasetMeta[];
 }
 
-export const marketplaceMeta: Record<Marketplace, { label: string; region: string }> = {
+export const marketplaceMeta: Record<
+  Marketplace,
+  { label: string; region: string }
+> = {
   mercari: {
     label: "メルカリ",
     region: "JP",
