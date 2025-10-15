@@ -42,6 +42,7 @@ export interface UnveilDataset {
 
 export interface UnveilManifest {
   datasets: UnveilDatasetMeta[];
+  defaultSlug?: string;
 }
 
 export const marketplaceMeta: Record<
@@ -65,3 +66,31 @@ export const marketplaceMeta: Record<
     region: "US",
   },
 };
+
+export interface UnveilBrandSpotlightItem {
+  slug: string;
+  name: string;
+  description?: string;
+  thumbnail?: string;
+  highlights?: string[];
+  aliases?: string[];
+}
+
+export interface UnveilBrandProfile {
+  slug: string;
+  name: string;
+  headline?: string;
+  summary: string;
+  story?: string;
+  heroImage?: string;
+  focusAreas?: string[];
+  foundedIn?: string;
+  headquarters?: string;
+  spotlightItems?: UnveilBrandSpotlightItem[];
+  resources?: Array<{ title: string; url: string }>;
+  seo?: {
+    title?: string;
+    description?: string;
+    keywords?: string[];
+  };
+}

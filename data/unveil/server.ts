@@ -3,16 +3,36 @@ import path from "node:path";
 
 import type { UnveilDataset, UnveilManifest } from "./types";
 
-const DATA_DIR = path.join(process.cwd(), "public", "unveil");
+const UNVEIL_DIR = path.join(process.cwd(), "public", "unveil");
+const PRETTY_DIR = path.join(UNVEIL_DIR, "pretty");
 
-async function readJsonFile<T>(filename: string): Promise<T> {
-  const filePath = path.join(DATA_DIR, filename);
+async function readJsonFile<T>(filePath: string): Promise<T> {
   const contents = await fs.readFile(filePath, "utf8");
   return JSON.parse(contents) as T;
 }
 
+async function readManifest(): Promise<UnveilManifest> {
+  const manifestPath = path.join(UNVEIL_DIR, "manifest.json");
+  return readJsonFile<UnveilManifest>(manifestPath);
+}
+
+async function readDatasetFile(slug: string): Promise<UnveilDataset> {
+  const prettyPath = path.join(PRETTY_DIR, `${slug}.json`);
+  try {
+    return await readJsonFile<UnveilDataset>(prettyPath);
+  } catch (error) {
+    // Fallback for legacy flat layout or missing pretty directory entries.
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+      throw error;
+    }
+
+    const legacyPath = path.join(UNVEIL_DIR, `${slug}.json`);
+    return readJsonFile<UnveilDataset>(legacyPath);
+  }
+}
+
 export async function loadUnveilManifest(): Promise<UnveilManifest> {
-  const manifest = await readJsonFile<UnveilManifest>("manifest.json");
+  const manifest = await readManifest();
   if (!manifest.datasets || manifest.datasets.length === 0) {
     throw new Error("UNVEIL manifest has no dataset entries");
   }
@@ -30,8 +50,11 @@ export async function listUnveilBrandOptions(): Promise<
 }
 
 export async function loadUnveilDataset(slug: string): Promise<UnveilDataset> {
-  const dataset = await readJsonFile<UnveilDataset>(`${slug}.json`);
-  if (!dataset.meta.recordCount || dataset.meta.recordCount !== dataset.listings.length) {
+  const dataset = await readDatasetFile(slug);
+  if (
+    !dataset.meta.recordCount ||
+    dataset.meta.recordCount !== dataset.listings.length
+  ) {
     dataset.meta.recordCount = dataset.listings.length;
   }
   return dataset;
@@ -40,9 +63,11 @@ export async function loadUnveilDataset(slug: string): Promise<UnveilDataset> {
 export async function loadDefaultUnveilDataset(): Promise<UnveilDataset> {
   const manifest = await loadUnveilManifest();
   const fallback = manifest.datasets[0]?.slug;
-  const slug = manifest.defaultSlug ?? fallback;
+  const slug = fallback;
   if (!slug) {
-    throw new Error("UNVEIL manifest is missing defaultSlug and datasets entries");
+    throw new Error(
+      "UNVEIL manifest is missing defaultSlug and datasets entries"
+    );
   }
   return loadUnveilDataset(slug);
 }

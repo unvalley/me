@@ -5,5 +5,7 @@ export type {
   UnveilDatasetMeta,
   UnveilListing,
   UnveilManifest,
+  UnveilBrandProfile,
+  UnveilBrandSpotlightItem,
 } from "./types";
 export { marketplaceMeta } from "./types";

@@ -1,0 +1,44 @@
+{
+  "meta": {
+    "slug": "arcteryx",
+    "name": "Arc'teryx",
+    "description": "Canadian technical outerwear brand known for precision alpine design and durable materials.",
+    "founded": "1989",
+    "headquarters": "North Vancouver, Canada",
+    "website": "https://arcteryx.com",
+    "heroImage": "/unveil/brands/arcteryx/hero.jpg",
+    "keyTechnologies": ["GORE-TEX", "Down Composite Mapping", "Trusaro Seam Technology"],
+    "focusKeywords": ["Arc'teryx", "アークテリクス", "technical outerwear", "beta series", "中古"]
+  },
+  "overview": {
+    "history": "Arc'teryx was founded in North Vancouver in 1989 and quickly became synonymous with progressive alpine gear. The brand is known for innovating harness construction and pushing forward GORE-TEX applications in outerwear.",
+    "designPhilosophy": "Relentless pursuit of performance, clean lines, and purpose-driven silhouettes designed from the alpine outward.",
+    "materials": ["GORE-TEX Pro", "Fortius Air 50", "Dope-dyed nylons"]
+  },
+  "insights": [
+    {
+      "title": "Why the Beta Series Matters",
+      "body": "The Beta line strikes a balance between serious alpine features and everyday wear. Lightweight shells, articulated patterns, and durable face fabrics make the Beta series a go-to for four-season versatility."
+    },
+    {
+      "title": "Sizing Notes for Japanese Buyers",
+      "body": "Arc'teryx uses US/International sizing. For buyers familiar with Japanese brands, consider sizing down one step for a similar fit, or consult the Beta specific size chart when available."
+    }
+  ],
+  "items": [
+    {
+      "slug": "beta-jacket",
+      "name": "Beta Jacket",
+      "thumbnail": "/unveil/items/beta-jacket/thumbnail.jpg",
+      "summary": "Lightweight GORE-TEX All-Round shell. Ideal for shoulder seasons and fast alpine missions.",
+      "focusKeywords": ["Arc'teryx Beta Jacket", "アークテリクス ベータジャケット", "中古"]
+    },
+    {
+      "slug": "beta-ar-jacket",
+      "name": "Beta AR Jacket",
+      "thumbnail": "/unveil/items/beta-ar-jacket/thumbnail.jpg",
+      "summary": "The iconic do-everything alpine shell with reinforced high-wear zones.",
+      "focusKeywords": ["Arc'teryx Beta AR", "ベータ AR ジャケット"]
+    }
+  ]
+}
