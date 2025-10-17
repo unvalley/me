@@ -13,9 +13,6 @@ module.exports = withBundleAnalyzer(
   withMDX({
     reactStrictMode: true,
     pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
-    experimental: {
-      mdxRs: false,
-    },
     transpilePackages: ["shiki"],
     images: {
       remotePatterns: [
